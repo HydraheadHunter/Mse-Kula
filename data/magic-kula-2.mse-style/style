@@ -33,7 +33,7 @@ card dpi: 150
 init script:
 	# Load scripts for image box
 	include file: /magic-default-image.mse-include/scripts
-	
+	include file: variables/standard_variables.txt
 	mana_t := "new"
 	guild_mana := "no"
 	
@@ -49,25 +49,27 @@ set info style:
 
 #Card
 card style:
-	border color:
-		left: 0
-		top : 0
-		width:	375
-		height:	523
-		radius: 18
-		left width:   17
-		right width:  17
-		top width:    17
-		bottom width: 18
-		z index: 4
-		mask: border_mask.png
 	card color:
-		left:	0
-		top:	0
-		width:	375
-		height:	523
-		z index: 0
+		left:		{ card_dim.left		}
+		top:		{ card_dim.top		}
+		width:		{ card_dim.width	}
+		height:		{ card_dim.height	}
+		z index: -1
 		render style: image
 		popup style: in place
 		image: { card_background() }
-	
+	border color:
+		left:		{ card_dim.left		}
+		top:		{ card_dim.top		}
+		width:		{ card_dim.width	}
+		height:		{ card_dim.height	}
+		z index: 0
+		mask: border.png
+	image:
+		left: 		{ image_pos.left	}
+		top: 		{ image_pos.top		}
+		width: 		{ image_pos.width	}
+		height: 	{ image_pos.height	}
+		z index: 1
+		default: {default_image(card.card_color)}
+
