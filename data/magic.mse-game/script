@@ -591,6 +591,7 @@ ex_test := expand_keywords@(
 		})
 text_filter :=
 	# step 1 : remove all automatic tags
+	remove_tag@(tag: "<align")   +
 	remove_tag@(tag: "<sym-auto>") +
 	remove_tag@(tag: "<i-auto>")   +
 	remove_tag@(tag: "<b-auto>")   +
@@ -771,6 +772,7 @@ modal_text_filter := text_filter + modal_lines
 # the flavor text filter
 #  - makes all text italic
 flavor_text_filter :=
+	remove_tag@(tag: "<align")   +
 	# step 1 : remove italic tags
 	remove_tag@(tag: "<i-flavor>")   +
 	# step 2 : surround by <i> tags
