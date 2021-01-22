@@ -1,0 +1,60 @@
+card_dim		:=[ def:	[	left:0,		top:0,		width:375,			height:523			]]
+
+symbol_pos		:=[ def:	[	left:20,	top:29,		width:14,			height:20			],
+			    symbol:	[	left:30,	top:29,		width:14,			height:20			]
+			]
+
+name_pos		:=[ def:	[	left:32,	top:30,		right_max:344,			height:23			],
+			    symbol:	[	left:50,	top:30,		right_max:344,			height:23			]
+			]
+
+cost_pos		:=[ def:	[	right:346,	top:29,		width_min:35,			height:23			]]
+
+image_pos		:=[ def:	[	left:29,	top:60,		width:316,			height:231			],
+			    full:	[	left:0,		top:0,		width:card_dim.def.width,	height:card_dim.def.height	]
+			]
+		  
+indicator_pos		:=[ def:	[	left:31,	top:300,	width:17,			height:17			],
+			    empty:	[	left:20,	top:300,	width:17			height:17			]
+			]
+		
+type_pos		:=[ def:	[	left:32,	top:296,	width_max:310,			height:20			],
+			    indicator:	[	left:52,	top:296,	width_max:290,			height:20			]
+			]
+		
+rarity_pos		:=[ def:	[	right:344,	top:297,	width:25,			height:22			]]
+text_pos		:=[ def:	[	left:29,	top:327,	width:314,			height:154			]]
+watermark_pos		:=[ def:	[	left:117,	top:321,	width:138,			height:166			]]
+stamp_pos		:=[ def:	[	left:165,	top:472,	width:46,			height:26			]]
+pt_pos			:=[ def:	[	left:286,	top:469,	width:60,			height:28			]]
+pt_box_pos		:=[ def:	[													]]
+
+card_code_pos		:=[ def:	[	left:24,	top:488,	width:150,			height:10			]]
+set_code_pos		:=[ def:	[	left:24,	top:498,	width:40,			height:10			]]
+
+credit_pad		:=[ 	arrow_1:4,	illus_1:2,	arrow_2:4,	illus_2:2,		cdcomp:6			,	
+				create:4,	copyright:24										]
+
+artist_arrow_1_pos	:=[	def:	[			top:500,	width:12,		height:7			,		
+						left_base: credit_pad.arrow_1 + set_code_pos.def.left					]]
+illustrator_1_pos	:=[ 	def:	[			top:497,	width_min:25,		height:10			,
+						left_base: credit_pad.illus_1 + artist_arrow_1_pos.def.left_base + artist_arrow_1_pos.def.width	]]
+artist_arrow_2_pos	:=[ 	def:	[			top:500,	width:12,		height:7			,		
+						left_base: credit_pad.arrow_2 + illustrator_1_pos.def.left_base			]]		
+illustrator_2_pos	:=[	def:	[			top:497,	width_min:25,		height:10		
+						left_base: credit_pad.illus_2 +	artist_arrow_2_pos.def.left_base + artist_arrow_2_pos.def.width	]]
+
+artist_arrow_pos	:=[ one:artist_arrow_1_pos, 	two: artist_arrow_2_pos	]
+illustrator_pos		:=[ one:illustrator_1_pos,	two: illustrator_2_pos	]
+			
+creator_com_pos		:=[ one_artist:[ def:[			top:500,	width:11,		height:12			,
+						left_base: credit_pad.create +	illustrator_pos.one.def.left_base				]],
+			    two_artist:[ def:[			top:500,	width:11,		height:12			,
+						left_base: credit_pad.create +  illustrator_pos.two.def.left_base				]]
+			]
+
+creator_credit_pos	:=[ one_artist:[ def:[			top:500,	width_min:25,		height:10			,
+						left_base: credit_pad.cdcomp +  creator_com_pos.one_artist.def.left_base + creator_com_pos.one_artist.def.width ]],
+			    two_artist:[ def:[			top:500,	width_min:25,		height:10			,
+						left_base: credit_pad.cdcomp +  creator_com_pos.two_artist.def.left_base + creator_com_pos.two_artist.def.width ]]
+			]

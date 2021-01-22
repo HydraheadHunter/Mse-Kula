@@ -1,7 +1,0 @@
-card_dim	:=[		left:0,		top:0,		width:375,		height:523	]
-symbol_pos	:=[		left:20,	top:29,		width:20,		height:14	]
-name_pos	:=[ default:[	left:32,	top:30,		right_max:341,		height:23	],
-		    symbol:[	left:50,	top:30,		right_max:341,		height:23	]
-		  ]
-cost_pos	:=[		right:346,	top:29,		width_min:35,		height:23	]
-image_pos	:=[		left:29,	top:60,		width:316,		height:231	]
