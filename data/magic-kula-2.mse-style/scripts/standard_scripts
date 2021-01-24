@@ -1,17 +1,17 @@
-##Control Boolean Functions
-	is_planeswalker		:=	{ contains(card.super_type, match:"Planeswalker") }
-	is_enchantment		:=	{ contains(card.super_type, match:"Enchantment") }
+##Type Boolean Functions
+	is_planeswalker		:=	{ contains(card.super_type, match:"Planeswalker") 		}
+	is_enchantment		:=	{ contains(card.super_type, match:"Enchantment") 		}
 	is_legend 		:=	{ if is_planeswalker() then 	false else contains(card.super_type, match:"Legendary") }
-	is_nyx			:=	{ true and is_enchantment() } 
-	is_nyx_legend		:=	{ is_legend() and is_nyx() }
+	is_nyx			:=	{ true and is_enchantment() 					}
+	is_nyx_legend		:=	{ is_legend() and is_nyx() 					}
+	is_stamped		:=	{ styling.stamp_rares and is_rare()				}
+	
+#Visability boolean functions
+	show_second_artist	:=	{ styling.has_two_artists					}
+	show_indicator		:=	{ (has_identity() and not styling.override_default_show_indicator) or (not( has_identity()) and styling.override_default_show_indicator) }
+	show_creator		:=	{ styling.card_creator						}
 	
 ##Image Finding Functions	
-	decide_blend_directory		:= {
-					if 		is_planeswalker()	then	dir.planeswalker
-					else if 	is_legend() 		then 	dir.legend
-							else				dir.def
-	}
-	
 	decide_border_directory	:= { "border/"+ (
 					if 		is_planeswalker()	then	dir.def
 					else if		is_nyx_legend()		then	dir.legend
@@ -28,7 +28,6 @@
 					else if		is_nyx()		then	dir.nyx
 					else						dir.def
 }
-
 	select_rarity_icon:=[
 			common:			{ if input 
 							then	symbol_variation(symbol: set.symbol, variation: "invertedcommon"	) 
@@ -42,64 +41,25 @@
 			common_inv:		{		symbol_variation(symbol: set.symbol, variation: "invertedcommon"	)}
 		]
 
-
-
-
-decide_symbol_pos	:=[ left:	{ if input then symbol_pos.def.left else symbol_pos.symbol.left	}	]
-decide_name_pos		:=[ left:	{ if input then name_pos.def.left   else name_pos.symbol.left		},
-			    right:	{ name_pos.def.right_max - input				}
-			]
-decide_cost_pos		:=[ width:	{ max( cost_pos.def.width_min, input)							}	]
-decide_identity_pos	:=[ ]
-decide_type_pos		:=[ left:	{  if has_identity() then type_pos.indicator.left      else type_pos.def.left	},
-			    width:	{ (if has_identity() then type_pos.indicator.width_max else type_pos.def.width_max) - max(22,card_style.rarity.content_width)	}
+decide_symbol_pos	:=[ left:	{ if input then symbol_pos.def.left else symbol_pos.symbol.left					}	]
+decide_name_pos		:=[ left:	{ if input then name_pos.def.left   else name_pos.symbol.left					},
+			    right:	{ name_pos.def.right_max - input								}	]
+decide_cost_pos		:=[ width:	{ max( cost_pos.def.width_min, input)								}	]
+decide_identity_pos	:=[ left:	{  if show_indicator() then indicator_pos.def.left       else indicator_pos.empty.left		}	]
+decide_type_pos		:=[ left:	{  if show_indicator() then type_pos.indicator.left      else type_pos.def.left			},
+			    width:	{ (if show_indicator() then type_pos.indicator.width_max else type_pos.def.width_max) - max(22,card_style.rarity.content_width)	}
 			]
 			
-decide_artist_arrow_pos	:=[ one:[ def:[	left:	{ artist_arrow_pos.one.def.left_base + input					}	]],
-			    two:[ def:[	left:	{ artist_arrow_pos.two.def.left_base + input					}	]]
+decide_artist_arrow_pos	:=[ one:[ def:[	left:	{ artist_arrow_pos.one.def.left_base + input						}	]],
+			    two:[ def:[	left:	{ artist_arrow_pos.two.def.left_base + input						}	]]
 			]			
-decide_illustrator_pos	:=[ one:[ def:[	left:	{illustrator_pos.one.def.left_base + input					}
-					width:	{max(illustrator_pos.one.def.width_min, card_style.illustrator.content_width)	}	]],
-			    two:[ def:[ left:	{illustrator_pos.two.def.left_base + input					}	
-					width:	{max(illustrator_pos.two.def.width_min, card_style.illustrator_2.content_width)	}	]]
-			]
-			
-##Non-Standard Text Fields	
-#		is_stamped			:=	{is_rare() and styling.stamp_rares					}
+decide_illustrator_pos	:=[ one:[ def:[	left:	{illustrator_pos.one.def.left_base		+ input					},
+					width:	{max(illustrator_pos.one.def.width_min,		card_style.illustrator.content_width)	}	]],
+			    two:[ def:[ left:	{illustrator_pos.two.def.left_base		+ input					},
+					width:	{max(illustrator_pos.two.def.width_min,		card_style.illustrator_2.content_width)	}	]]]
+decide_creator_com_pos	:=[ def:[	left:	{ creator_com_pos.def.left_base			+ input						}	]]
+decide_creator_credit_pos:=[ def:[	left:	{ creator_credit_pos.def.left_base		+ input 					}	]]
 
-#Collections Credit & Copyright
-	#Card Number
-		determine_card_number		:=	{if is_auto_card_number() then write_card_number() else write_card_number_custom() }
-		is_auto_card_number		:=	{set.automatic_card_numbers and not styling.remove_from_autocount	}
-		write_card_number		:=	{forward_editor(prefix: card_number_m15() + "/" + card_count_m15() + 
-							" " + rarity_code() + " ", field: card.card_code_text)		
-		}
-		write_card_number_custom	:=	{combined_editor(field1: card.custom_card_number, separator: " " + 
-							rarity_code() + " ", field2: card.card_code_text)
-		}
-#	#Artist
-#		calculate_illustrator_left	:=	{illustrator_left_base + card_style.set_code.content_width			}
-#		calculate_illustrator_width	:=	{max(20, card_style.illustrator.content_width)					}
-#	#Second Arrow
-#		show_illustrator_2		:=	{styling.has_two_artists							}
-#		calculate_artist_arrow_2_left	:=	{artist_arrow_2_left_base + card_style.set_code.content_width + 
-#								card_style.illustrator.content_width
-#		}
-#	#Second Artist
-#		calculate_illustrator_2_left	:=	{illustrator_2_left_base + card_style.set_code.content_width + 
-#								card_style.illustrator.content_width
-#		}
-#		calculate_illustrator_2_width	:=	{max(20, card_style.illustrator.content_width)					}
-#	
-#	#Creator Computer
-#		show_card_creator		:=	{styling.card_creator						}
-#		determine_creator_computer_left	:=	{if show_illustrator_2() then calculate_creator_com_two_art_l() else calculate_creator_computer_left() }
-#		calculate_creator_computer_left	:=	{creator_computer_left_base + card_style.set_code.content_width	+ card_style.illustrator.content_width + 
-#								(if show_illustrator_2() then card_style.illustrator_2.content_width else 0)
-#											}
-#		calculate_creator_com_two_art_l	:=	{creator_com_two_art_left_base + card_style.set_code.content_width + card_style.illustrator.content_width + 
-#								(if show_illustrator_2() then card_style.illustrator_2.content_width else 0)
-#											}
 #	
 #	#Creator
 #		determine_creator_left		:=		{if show_illustrator_2() then calculate_creator_two_art_left() else calculate_creator_left()}
@@ -120,3 +80,17 @@ decide_illustrator_pos	:=[ one:[ def:[	left:	{illustrator_pos.one.def.left_base 
 #		}
 #		determine_copyright_width	:=	{if determine_auto_copyright() then 0 else copyright_width }
 #	
+##Non-Standard Text Fields	
+#		is_stamped			:=	{is_rare() and styling.stamp_rares					}
+
+#Collections Credit & Copyright
+	#Card Number
+		determine_card_number		:=	{if is_auto_card_number() then write_card_number() else write_card_number_custom() }
+		is_auto_card_number		:=	{set.automatic_card_numbers and not styling.remove_from_autocount	}
+		write_card_number		:=	{forward_editor(prefix: card_number_m15() + "/" + card_count_m15() + 
+							" " + rarity_code() + " ", field: card.card_code_text)		
+		}
+		write_card_number_custom	:=	{combined_editor(field1: card.custom_card_number, separator: " " + 
+							rarity_code() + " ", field2: card.card_code_text)
+		}
+	

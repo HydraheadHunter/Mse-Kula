@@ -1,0 +1,8 @@
+card field:
+	type: text
+	name: creator
+	save value: false
+	show statistics: false
+	editable: true
+	script: set.creator
+	description: the creator of the set or the creator of the card if different from the creator of the set.
