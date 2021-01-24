@@ -1,0 +1,20 @@
+filter_color	:=	replace@(match:", (multicolor|hybrid|artifact|land|horizontal|vertical|radial|overlay|reversed)", replace:"")
+
+has_identity	:=	{ ( ( filter_color(card.card_color)	!= filter_color(card_color(
+				casting_cost:		card.casting_cost, 
+				rules_text:		card.rule_text,
+				type:			card.super_type,
+				watermark:		card.watermark,
+				card_name:		card.name,
+				default:		"colorless"		)))		or
+			  ( filter_color(card.indicator)	!= filter_color(card_color(
+				casting_cost:		card.casting_cost,
+				rules_text:		card.rule_text,
+				type:			card.super_type,
+				watermark:		card.watermark,
+				card_name:		card.name,
+				default:		"colorless"		)))	)	and
+			    card.indicator	!= "colorless"					and
+			    card.indicator	!= "artifact"					and
+			    card.indicator	!= "land"
+			}

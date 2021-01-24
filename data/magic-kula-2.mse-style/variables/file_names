@@ -12,6 +12,7 @@ stop_align	:=	[
 				stamp:		"stamp/"
 				pt:		"pt/"
 				giblet:		"giblets/"
+				blend:		"blend/"
 				i_identity:	"/magic-identity-new.mse-include/"
 			]
 #Dir+Basic File Names
@@ -21,14 +22,4 @@ stop_align	:=	[
 	artist_arrow_image			:=	"{dir.giblet}artist_arrow.png"
 	artist_arrow_2_image			:=	"{dir.giblet}artist_arrow_2.png" #This is two artist arrows on top of each other.
 	creator_computer_image			:=	"{dir.giblet}creator_computer.png"
-	
-#Standard Font Options
-	white			:= rgb(255,255,255)
-	black			:= rgb(0,0,0)
-	red			:= rgb(255,0,0)
-	beleren_bold		:=[	name:"Beleren Bold", 		size:[ name_line:16,	type_line:13,	pt:16	],	color:black,	]
-	mplantin_textbox	:=[	name:"MPlantin",		size:[ default:14,	scale_down_to:6		],	color:black,	italic_name:"MPlantin-Italic"	]
-	beleren_copyright:=	[	name:"Beleren Small Caps Bold"	size:8,							color:white					]
-	matrix_copyright:=	[	name:"Matrix",			size:7.25,						color:white					]
-
 	

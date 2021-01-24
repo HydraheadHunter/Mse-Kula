@@ -30,31 +30,17 @@ pt_pos			:=[ def:	[	left:286,	top:469,	width:60,			height:28			]]
 pt_box_pos		:=[ def:	[													]]
 
 card_code_pos		:=[ def:	[	left:24,	top:488,	width:150,			height:10			]]
-set_code_pos		:=[ def:	[	left:24,	top:498,	width:40,			height:10			]]
+set_code_pos		:=[ def:	[	left:24,	top:500,	width:40,			height:10			]]
 
-credit_pad		:=[ 	arrow_1:4,	illus_1:2,	arrow_2:4,	illus_2:2,		cdcomp:6			,	
-				create:4,	copyright:24										]
+credit_pad		:=[ 	arrow_1:4,	illus_1:2,	arrow_2:4,	illus_2:2,		cdcomp:4				,
+				create:2,	copyright:24											]
 
-artist_arrow_1_pos	:=[	def:	[			top:500,	width:12,		height:7			,		
-						left_base: credit_pad.arrow_1 + set_code_pos.def.left					]]
-illustrator_1_pos	:=[ 	def:	[			top:497,	width_min:25,		height:10			,
-						left_base: credit_pad.illus_1 + artist_arrow_1_pos.def.left_base + artist_arrow_1_pos.def.width	]]
-artist_arrow_2_pos	:=[ 	def:	[			top:500,	width:12,		height:7			,		
-						left_base: credit_pad.arrow_2 + illustrator_1_pos.def.left_base			]]		
-illustrator_2_pos	:=[	def:	[			top:497,	width_min:25,		height:10		
-						left_base: credit_pad.illus_2 +	artist_arrow_2_pos.def.left_base + artist_arrow_2_pos.def.width	]]
+artist_arrow_1_pos	:=[	def:	[	top:500,	width:12,		height:7,	left_base: credit_pad.arrow_1 + set_code_pos.def.left						 ]]
+illustrator_1_pos	:=[ 	def:	[	top:497,	width_min:25,		height:10,	left_base: credit_pad.illus_1 + artist_arrow_1_pos.def.left_base + artist_arrow_1_pos.def.width	 ]]
+artist_arrow_2_pos	:=[ 	def:	[	top:500,	width:12,		height:7,	left_base: credit_pad.arrow_2 + illustrator_1_pos.def.left_base					 ]]
+illustrator_2_pos	:=[	def:	[	top:497,	width_min:25,		height:10,	left_base: credit_pad.illus_2 + artist_arrow_2_pos.def.left_base + artist_arrow_2_pos.def.width	 ]]
+	artist_arrow_pos	:=[		one:	artist_arrow_1_pos,		two:	artist_arrow_2_pos				]
+	illustrator_pos		:=[		one:	illustrator_1_pos,		two:	illustrator_2_pos				]
 
-artist_arrow_pos	:=[ one:artist_arrow_1_pos, 	two: artist_arrow_2_pos	]
-illustrator_pos		:=[ one:illustrator_1_pos,	two: illustrator_2_pos	]
-			
-creator_com_pos		:=[ one_artist:[ def:[			top:500,	width:11,		height:12			,
-						left_base: credit_pad.create +	illustrator_pos.one.def.left_base				]],
-			    two_artist:[ def:[			top:500,	width:11,		height:12			,
-						left_base: credit_pad.create +  illustrator_pos.two.def.left_base				]]
-			]
-
-creator_credit_pos	:=[ one_artist:[ def:[			top:500,	width_min:25,		height:10			,
-						left_base: credit_pad.cdcomp +  creator_com_pos.one_artist.def.left_base + creator_com_pos.one_artist.def.width ]],
-			    two_artist:[ def:[			top:500,	width_min:25,		height:10			,
-						left_base: credit_pad.cdcomp +  creator_com_pos.two_artist.def.left_base + creator_com_pos.two_artist.def.width ]]
-			]
+creator_com_pos		:=[	def:	[	top:509,	width:11,		height:12,	left_base: credit_pad.cdcomp  + set_code_pos.def.left				  ]]
+creator_credit_pos	:=[	def:	[	top:509,	width_min:25,		height:10,	left_base: credit_pad.create +  creator_com_pos.def.left_base + creator_com_pos.def.width]]
