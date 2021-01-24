@@ -34,8 +34,8 @@ init script:
 	# Should hybrids have a grey name?
 	mask_hybrid_with_land := { styling.grey_hybrid_name }
 	
-	template_prefix := [card: "" card2: "" card3: "fullart/" card4: "fullart/" stamp: "" identity: "/magic-identity-new.mse-include/"]
-	template_suffix := [card: "card.jpg" card2: "card2.jpg" card3: "card.jpg" card4: "card2.jpg" stamp: "stamp.jpg" identity: "identity.png"]
+	template_prefix := [card: "" card2: "" card3: "fullart/" card4: "fullart/" nyx:"nyx/" stamp: "" identity: "/magic-identity-new.mse-include/"]
+	template_suffix := [card: "card.jpg" card2: "card2.jpg" card3: "card.jpg" card4: "card2.jpg" nyx:"nyx.png" stamp: "stamp.jpg" identity: "identity.png"]
 	template      := { template_prefix[type] + input + template_suffix[type] }
 	land_template := { template_prefix[type] + "c" + template_suffix[type] }
 	# Use land templates for previews because they show more contrast
@@ -43,6 +43,7 @@ init script:
 
 	# This will create two seperate card faces
 	card_background2 := { color_background(type:"card2", base_hybrid:card_hybrid) }
+	nyx_background := { color_background(type:"nyx", base_hybrid:card_hybrid) }
 	
 	# Use the normal tap symbol
 	mana_t := {
@@ -77,12 +78,16 @@ init script:
 	is_normal_size := { styling.default_image_size }
 	lv1_chop_top := { pull_comma_array(styling.level_1_chop, cell:0, end:0, default:0)}
 	lv1_chop_bot := { pull_comma_array(styling.level_1_chop, cell:1, end:0, default:0)}
+	lv1_chop_right := { pull_comma_array(styling.level_1_chop, cell:2, end:0, default:0)}
 	lv2_chop_top := { pull_comma_array(styling.level_2_chop, cell:0, end:0, default:0)}
 	lv2_chop_bot := { pull_comma_array(styling.level_2_chop, cell:1, end:0, default:0)}
+	lv2_chop_right := { pull_comma_array(styling.level_2_chop, cell:2, end:0, default:0)}
 	lv3_chop_top := { pull_comma_array(styling.level_3_chop, cell:0, end:0, default:0)}
 	lv3_chop_bot := { pull_comma_array(styling.level_3_chop, cell:1, end:0, default:0)}
+	lv3_chop_right := { pull_comma_array(styling.level_3_chop, cell:2, end:0, default:0)}
 	lv4_chop_top := { pull_comma_array(styling.level_4_chop, cell:0, end:0, default:0)}
 	lv4_chop_bot := { pull_comma_array(styling.level_4_chop, cell:1, end:0, default:0)}
+	lv4_chop_right := { pull_comma_array(styling.level_4_chop, cell:2, end:0, default:0)}
 	loyal_move := { pull_comma_array(styling.move_loyalty_costs, cell:0, end:0, default:0)}
 	loyal_move2 := { pull_comma_array(styling.move_loyalty_costs, cell:1, end:0, default:0)}
 	loyal_move3 := { pull_comma_array(styling.move_loyalty_costs, cell:2, end:0, default:0)}
@@ -120,7 +125,7 @@ init script:
 			+ ( if is_normal_size() then "" else "_wide" ) 
 			+ ( if level_three() or level_four() or slide_two() or slide_three() or slide_four() then "_level") + ".png"
 	}
-	text_size := { 14 -(if styling.separated_text_size = "" then 0 else if contains(styling.separated_text_size, match: ".5") then to_int(split_text(match:".5", styling.separated_text_size).0) else styling.separated_text_size) }
+	text_size := { 14 -(if styling.separated_text_size == "" then 0 else if contains(styling.separated_text_size, match: ".5") then to_int(split_text(match:".5", styling.separated_text_size).0) else styling.separated_text_size) }
 	stripe01 := { 345 + min(pull_comma_array(styling.stripe_coordinate, cell: 0, default:48),105)}
 	stripe12 := { 345 + min(pull_comma_array(styling.stripe_coordinate, cell: 0, default:27),stripe23()-365)}
 	stripe23 := { 345 + min(pull_comma_array(styling.stripe_coordinate, cell: 1, default:80),95)}
@@ -151,14 +156,15 @@ init script:
 	is_skinned := {contains(styling.other_options, match:"godzilla style alias")}
 	use_evobar := {contains(styling.other_options, match: "pokemon evobar") and not is_skinned()}
 	is_clear := {styling.clear or contains(styling.other_options, match:"clear frame")}
-
+	is_nyx := {chosen(styling.other_options, choice:"nyx")}
+	is_vehicle := {chosen(styling.other_options, choice:"vehicle")}
 	paragraph_count := replace@(match:"\n", replace:"~")+
 		filter_text@(match:"~")
 	special_text := {
-		(if card.loyalty_cost_1 != "" then "[" + card.loyalty_cost_1 + "]: ") +(if card.level_1_text != "" and card.level_1_text != card.rule_text then card.level_1_text+"\n" else split_text(match:"\n", card.rule_text).0+"\n")
-			+ ( if card.loyalty_cost_2 != "" then "[" + card.loyalty_cost_2 + "]" + ": ") +(if card.level_2_text != "" then card.level_2_text+"\n" else if contains(paragraph_count(card.rule_text), match:"~") then split_text(match:"\n", card.rule_text).1+"\n")
-			+ ( if card.loyalty_cost_3 != "" then "[" + card.loyalty_cost_3 + "]" + ": ") +(if card.level_3_text != "" then card.level_3_text else if contains(paragraph_count(card.rule_text), match:"~~") then split_text(match:"\n", card.rule_text).2)
-			+ (if has_four_abilities() then "\n" + ( if card.loyalty_cost_4 != "" then "[" + card.loyalty_cost_4 + "]" + ": ") +(if card.level_4_text != "" then card.level_4_text else if contains(paragraph_count(card.rule_text), match:"~~~") then split_text(match:"\n", card.rule_text).3))
+		(if card.loyalty_cost_1 != "" then "[" + card.loyalty_cost_1 + "]: " else "") + (if card.level_1_text != "" and card.level_1_text != card.rule_text then card.level_1_text+"\n" else split_text(match:"\n", card.rule_text).0+"\n")
+			+ (if card.loyalty_cost_2 != "" then "[" + card.loyalty_cost_2 + "]" + ": " else "") + (if card.level_2_text != "" then card.level_2_text+"\n" else if contains(paragraph_count(card.rule_text), match:"~") then split_text(match:"\n", card.rule_text).1+"\n" else "")
+			+ (if card.loyalty_cost_3 != "" then "[" + card.loyalty_cost_3 + "]" + ": " else "") + (if card.level_3_text != "" then card.level_3_text else if contains(paragraph_count(card.rule_text), match:"~~") then split_text(match:"\n", card.rule_text).2 else "")
+			+ (if has_four_abilities() then "\n" + (if card.loyalty_cost_4 != "" then "[" + card.loyalty_cost_4 + "]" + ": " else "") + (if card.level_4_text != "" then card.level_4_text else if contains(paragraph_count(card.rule_text), match:"~~~") then split_text(match:"\n", card.rule_text).3 else "") else "")
 	}
 	pw_font_size := { if styling.separated_text_size != "" then styling.separated_text_size else 12 }
 ############################################################## Set info fields
@@ -233,6 +239,8 @@ styling field:
 	choice: mythic edition fullart
 	choice: godzilla style alias
 	choice: pokemon evobar
+	choice: nyx
+	choice: vehicle
 	initial: un-indent nonloyalty abilities
 styling field:
 	type: text
@@ -535,7 +543,7 @@ card style:
 	level 1 text:
 		left: {if unindent() and card.loyalty_cost_1 == "" then 49 else 63 }
 		top: { if has_four_abilities() then 289-lv1_chop_top()+(if is_clear() then 5 else 0) else 330-lv1_chop_top() }
-		width: { if contains(styling.use_separate_textboxes, match: "no") then 0 else 282+(if unindent() and card.loyalty_cost_1 == "" then 14 else 0) }
+		width: { if contains(styling.use_separate_textboxes, match: "no") then 0 else 282+(if unindent() and card.loyalty_cost_1 == "" then 14 else 0)-(lv1_chop_right()) }
 		bottom: { if contains(styling.use_separate_textboxes, match: "no") then 0 else bottom_of_textbox() }
 		font:
 			name: MPlantin
@@ -566,7 +574,7 @@ card style:
 	level 2 text:
 		left: { if is_level_walker() then (if unindent() and card.loyalty_cost_2 == "" then 49 else 63) else 0 }
 		top: { (if heavy_levels() then stripe30()+10 else if level_four() then stripe31()+10 else if slide_two() then stripe01()+10 else if has_two_abilities() then 404 else stripe12()+10) -lv2_chop_top() }
-		width: { if is_level_walker() then 282+(if unindent() and card.loyalty_cost_2 == "" then 14 else 0) else 0 }
+		width: { if is_level_walker() then 282+(if unindent() and card.loyalty_cost_2 == "" then 14 else 0)-(lv2_chop_right()) else 0 }
 		bottom: { (if heavy_levels() then stripe31()+10 else if level_four() then stripe32()+10 else if has_two_abilities() then 478 else stripe23()+10) - lv2_chop_bot() }
 		font:
 			name: MPlantin
@@ -597,7 +605,7 @@ card style:
 	level 3 text:
 		left: { if is_level_walker() then (if unindent() and card.loyalty_cost_3 == "" then 49 else 63) else 0 }
 		top: { if has_two_abilities() then 0 else (if heavy_levels() then stripe31()+10 else if has_four_abilities() then stripe32()+10 else if is_level_walker() then stripe23()+10 else 430) -lv3_chop_top() }
-		width: { if is_level_walker() then 282+(if unindent() and card.loyalty_cost_3 == "" then 14 else 0) else 0 }
+		width: { if is_level_walker() then 282+(if unindent() and card.loyalty_cost_3 == "" then 14 else 0)-(lv3_chop_right()) else 0 }
 		bottom: { if has_two_abilities() then 0 else (if heavy_levels() then stripe32()+10 else if has_four_abilities() then stripe33()+10 else if is_level_walker() then 478 else 482) - lv3_chop_bot() }
 		font:
 			name: MPlantin
@@ -626,9 +634,9 @@ card style:
 		line height hard max: 1.3
 		line height line max: 1.6
 	level 4 text:
-		left: {if unindent() and card.loyalty_cost_2 == "" then 49 else 63}
+		left: {if unindent() and card.loyalty_cost_4 == "" then 49 else 63}
 		top: { (if heavy_levels() then stripe32()+10 else stripe33()+10) -lv4_chop_top() }
-		width: { if level_four() then 282+(if unindent() and card.loyalty_cost_4 == "" then 14 else 0) else 0 }
+		width: { if level_four() then 282+(if unindent() and card.loyalty_cost_4 == "" then 14 else 0)-(lv4_chop_right()) else 0 }
 		bottom: { if heavy_levels() or level_four() then 475 - lv4_chop_bot() else 0 }
 		font:
 			name: MPlantin
@@ -739,11 +747,10 @@ card style:
 	copyright:
 		right: 350
 		top: 498
-		width: 140
+		width: {if set.automatic_copyright then 0 else 140}
 		height: 10
 		z index: 6
 		alignment: middle right shrink-overflow
-		visible: {not set.automatic_copyright}
 		font:
 			name: Matrix
 			size: 7
@@ -938,6 +945,19 @@ extra card field:
 	choice: evo
 	save value: false
 	editable: false
+extra card field:
+	type: choice
+	name: vehicle overlay
+	choice: car door
+	save value: false
+	editable: false
+extra card field:
+	type: choice
+	name: nyx overlay
+	choice: nyx
+	save value: false
+	editable: false
+	script: card.card_color
 extra card style:
 	card code:
 		left: 24
@@ -1202,11 +1222,10 @@ extra card style:
 	auto copyright:
 		right: 350
 		top: 498
-		width: 140
+		width: {if set.automatic_copyright then 140 else 0}
 		height: 10
 		z index: 6
 		alignment: middle right shrink-overflow
-		visible: {set.automatic_copyright}
 		font:
 			name: Matrix
 			size: 7
@@ -1268,3 +1287,23 @@ extra card style:
 		image: {if is_skinned() then "evobar_flip.png" else "evobar_start.png"}
 		mask: {if is_skinned() then "" else "evobar_mask.png"}
 		visible: {is_skinned() or use_evobar()}
+	nyx overlay:
+		left: 0
+		top: 0
+		width: 375
+		height: 523
+		render style: image
+		image: {nyx_background()}
+		z index: 0
+		visible: {is_nyx()}
+		mask: {"nyx/" + (if has_four_abilities() then "4") + "pw" + (if is_vehicle() then "_v") + "_mask.png"}
+	vehicle overlay:
+		left: 0
+		top: 0
+		width: 375
+		height: 523
+		render style: image
+		image: full_voverlay.png
+		z index: 0
+		mask: {"nyx/" + (if has_four_abilities() then "4") + "pw_mask.png"}
+		visible: {is_vehicle()}

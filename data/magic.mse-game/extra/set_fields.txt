@@ -1,0 +1,4 @@
+set field:
+	type: text
+	name: creator
+	description: The default creator of cards in the set.
