@@ -142,10 +142,10 @@ card style:
 		top: 			{ indicator_pos.def.top			}
 		width:			{ indicator_pos.def.width		}
 		height:			{ indicator_pos.def.height		}
-
 		render style:		  image
-#		visible:		{ has_identity() 			}
-#		image:			{ card_identity() 			}
+		image:			{ card_identity				(directory:dir.i_identity)	}
+		mask:			{ identity_mask				}
+		visible:		{ show_indicator()			}
 	type:
 		z index:		  1
 		left:			{ decide_type_pos.left()		}
