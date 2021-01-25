@@ -104,7 +104,7 @@ card style:
 	name:
 		z index: 		  1
 		left:			{ decide_name_pos.left			(card.card_symbol =="none")			}
-		top:			{ name_pos.def.left			}
+		top:			{ name_pos.def.top			}
 		right:			{ decide_name_pos.right			( card_style.casting_cost.content_width)	}
 		height:			{ name_pos.def.height			}
 		alignment: 		  bottom shrink-overflow
@@ -142,10 +142,10 @@ card style:
 		top: 			{ indicator_pos.def.top			}
 		width:			{ indicator_pos.def.width		}
 		height:			{ indicator_pos.def.height		}
-
 		render style:		  image
-#		visible:		{ has_identity() 			}
-#		image:			{ card_identity() 			}
+		image:			{ card_identity				(directory:dir.i_identity)	}
+		mask:			{ identity_mask				}
+		visible:		{ show_indicator()			}
 	type:
 		z index:		  1
 		left:			{ decide_type_pos.left()		}

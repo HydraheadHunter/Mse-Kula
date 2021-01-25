@@ -15,6 +15,10 @@ stop_align	:=	[
 				blend:		"blend/"
 				i_identity:	"/magic-identity-new.mse-include/"
 			]
+	extension:=	[
+				png:		".png"
+				jpg:		".jpg"
+			]
 #Dir+Basic File Names
 	power_toughness_mask			:=	"{dir.pt}pt_mask.png"
 	identity_mask				:=	"{dir.i_identity}identity_mask.png"
