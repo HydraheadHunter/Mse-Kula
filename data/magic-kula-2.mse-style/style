@@ -99,7 +99,7 @@ card style:
 		height:			{ symbol_pos.def.symbol.height		}
 		render style: 		  image
 		choice images:
-#			tombstone: 	  tombstone.png
+			tombstone: 	{ tombstone_image			}
 	
 	name:
 		z index: 		  1
