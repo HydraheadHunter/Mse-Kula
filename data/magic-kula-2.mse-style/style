@@ -38,7 +38,7 @@ init script:
 	include file: /magic-default-image.mse-include/scripts
 
 	include file: variables/file_names
-	include file: variables/standard_variables
+	include file: variables/complete_standard_variables
 	include file: variables/fonts
 
 	include file: scripts/standard_scripts
@@ -94,9 +94,9 @@ card style:
 	card symbol:
 		z index: 		1
 		left:			{ decide_symbol_pos.left		(card.card_symbol =="none")			}
-		top:			{ symbol_pos.def.top			}
-		width:			{ symbol_pos.def.width			}
-		height:			{ symbol_pos.def.height			}
+		top:			{ symbol_pos.def.symbol.top		}
+		width:			{ symbol_pos.def.symbol.width		}
+		height:			{ symbol_pos.def.symbol.height		}
 		render style: 		  image
 		choice images:
 #			tombstone: 	  tombstone.png
@@ -104,9 +104,9 @@ card style:
 	name:
 		z index: 		  1
 		left:			{ decide_name_pos.left			(card.card_symbol =="none")			}
-		top:			{ name_pos.def.top			}
+		top:			{ name_pos.def.symbol.top		}
 		right:			{ decide_name_pos.right			( card_style.casting_cost.content_width)	}
-		height:			{ name_pos.def.height			}
+		height:			{ name_pos.def.symbol.height		}
 		alignment: 		  bottom shrink-overflow
 		padding bottom: 	  0
 
@@ -139,9 +139,9 @@ card style:
 	indicator:
 		z index:		  2
 		left:			{ decide_identity_pos.left()		}
-		top: 			{ indicator_pos.def.top			}
-		width:			{ indicator_pos.def.width		}
-		height:			{ indicator_pos.def.height		}
+		top: 			{ indicator_pos.def.indicator.top	}
+		width:			{ indicator_pos.def.indicator.width	}
+		height:			{ indicator_pos.def.indicator.height	}
 		render style:		  image
 		image:			{ card_identity				(directory:dir.i_identity)	}
 		mask:			{ identity_mask				}
@@ -149,9 +149,9 @@ card style:
 	type:
 		z index:		  1
 		left:			{ decide_type_pos.left()		}
-		top:			{ type_pos.def.top			}
+		top:			{ type_pos.def.indicator.top		}
 		width:			{ decide_type_pos.width()		}
-		height:			{ type_pos.def.height			}
+		height:			{ type_pos.def.indicator.height		}
 		alignment:		  top shrink-overflow
 		padding top:		  2
 		font:
@@ -248,10 +248,10 @@ card style:
 card style:
 	pt:
 		z index:		  2
-		left:			{ pt_pos.def.left			}
-		top:			{ pt_pos.def.top			}
-		width:			{ pt_pos.def.width			}
-		height:			{ pt_pos.def.height			}
+		left:			{ pt_1_pos.def.text.left		}
+		top:			{ pt_1_pos.def.text.top			}
+		width:			{ pt_1_pos.def.text.width		}
+		height:			{ pt_1_pos.def.text.height		}
 		alignment: 		  center middle shrink-overflow
 		font:
 			name: 		{ beleren_bold_font.name		}
@@ -267,10 +267,10 @@ extra card field:
 extra card style:
 	pt box:
 		z index: 		  1
-		left: 			  273
-		top: 			  466
-		width: 			  81
-		height:			  42
+		left:			{ pt_1_pos.def.box.left			}
+		top:			{ pt_1_pos.def.box.top			}
+		width:			{ pt_1_pos.def.box.width		}
+		height:			{ pt_1_pos.def.box.height		}
 		render style: 		  image
 		image:	 		{ card_ptbox(directory:"pt/", blend_directory:dir.blend) }
 		mask:			{ power_toughness_mask		}
@@ -367,7 +367,7 @@ card style:
 	illustrator:
 		z index: 		1
 		left: 			{ decide_illustrator_pos.one.def.left			( card_style.set_code.content_width )	}
-		top: 			 {illustrator_pos.one.def.top				}
+		top: 			{ illustrator_pos.one.def.top				}
 		width: 			{ decide_illustrator_pos.one.def.width()		}
 		height: 		{ illustrator_pos.one.def.height			}
 
@@ -401,7 +401,7 @@ extra card style:
 		visible:		{ show_second_artist()					}
 card style:	
 	illustrator 2:
-		z index: 		1
+		z index: 		  1
 		left: 			{ decide_illustrator_pos.two.def.left			( card_style.set_code.content_width + card_style.illustrator.content_width)}
 		top: 			{ illustrator_pos.two.def.top				}
 		width: 			{ decide_illustrator_pos.two.def.width()		}
@@ -422,7 +422,7 @@ extra card field:
 	type:				  choice
 	name:				  creator computer
 	editable:			  false
-	save value:				  false
+	save value:			  false
 	choice:				  white
 extra card style:
 	creator computer:

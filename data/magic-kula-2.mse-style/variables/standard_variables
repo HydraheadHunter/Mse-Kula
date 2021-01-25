@@ -1,36 +1,38 @@
-card_dim		:=[ def:	[	left:0,		top:0,		width:375,			height:523			]]
+card_dim		:=[ def:	[		left:0,		top:0,		width:375,			height:523			]]
 
-symbol_pos		:=[ def:	[	left:20,	top:29,		width:14,			height:20			],
-			    symbol:	[	left:30,	top:29,		width:14,			height:20			]
-			]
+symbol_pos		:=[ def:[ no_symbol:[		left:20,	top:29,		width:14,			height:20			],
+				  symbol   :[		left:30,	top:29,		width:14,			height:20			]
+			]]
 
-name_pos		:=[ def:	[	left:32,	top:30,		right_max:341,			height:23			],
-			    symbol:	[	left:50,	top:30,		right_max:341,			height:23			]
-			]
+name_pos		:=[ def:[ no_symbol:[		left:32,	top:30,		right_max:341,			height:23			],
+				  symbol   :[		left:50,	top:30,		right_max:341,			height:23			]
+			]]
 
-cost_pos		:=[ def:	[	right:346,	top:29,		width_min:35,			height:23			]]
+cost_pos		:=[ def:	[		right:346,	top:29,		width_min:35,			height:23			]]
 
-image_pos		:=[ def:	[	left:29,	top:60,		width:316,			height:231			],
-			    full:	[	left:0,		top:0,		width:card_dim.def.width,	height:card_dim.def.height	]
+image_pos		:=[ def:	[		left:29,	top:60,		width:316,			height:231			],
+			    full_art:	[		left:0,		top:0,		width:card_dim.def.width,	height:card_dim.def.height	]
 			]
 		  
-indicator_pos		:=[ def:	[	left:31,	top:300,	width:17,			height:17			],
-			    empty:	[	left:20,	top:300,	width:17			height:17			]
-			]
+indicator_pos		:=[def:[ no_indicator:	[	left:31,	top:300,	width:17,			height:17			],
+				 indicator:	[	left:20,	top:300,	width:17			height:17			]
+			]]		
+type_pos		:=[ def:[ no_indicator:	[	left:32,	top:296,	width_max:310,			height:20			],
+				  indicator:	[	left:52,	top:296,	width_max:290,			height:20			]
+			]]
 		
-type_pos		:=[ def:	[	left:32,	top:296,	width_max:310,			height:20			],
-			    indicator:	[	left:52,	top:296,	width_max:290,			height:20			]
+rarity_pos		:=[ def:	[		right:344,	top:297,	width:25,			height:22			]]
+text_pos		:=[ def:	[		left:29,	top:327,	width:314,			height:154			]]
+watermark_pos		:=[ def:	[		left:117,	top:321,	width:138,			height:166			]]
+stamp_pos		:=[ def:	[		left:165,	top:472,	width:46,			height:26			]]
+pt_1_pos		:=[ def: [ text:[		left:286,	top:469,	width:60,			height:28			]
+				   box:	[		left:273,	top:466,	width:81,			height:42			]
+				]												
 			]
-		
-rarity_pos		:=[ def:	[	right:344,	top:297,	width:25,			height:22			]]
-text_pos		:=[ def:	[	left:29,	top:327,	width:314,			height:154			]]
-watermark_pos		:=[ def:	[	left:117,	top:321,	width:138,			height:166			]]
-stamp_pos		:=[ def:	[	left:165,	top:472,	width:46,			height:26			]]
-pt_pos			:=[ def:	[	left:286,	top:469,	width:60,			height:28			]]
-pt_box_pos		:=[ def:	[													]]
 
-card_code_pos		:=[ def:	[	left:24,	top:498,	width:42,			height:10			]]
-set_code_pos		:=[ def:	[	left:24,	top:510,	width:40,			height:10			]]
+
+card_code_pos		:=[ def:	[		left:24,	top:498,	width:42,			height:10			]]
+set_code_pos		:=[ def:	[		left:24,	top:510,	width:40,			height:10			]]
 
 credit_pad		:=[ 	arrow_1:4,	illus_1:2,	arrow_2:4,	illus_2:2,			cdcomp:5			,
 				create:2,	copyright:24											]
