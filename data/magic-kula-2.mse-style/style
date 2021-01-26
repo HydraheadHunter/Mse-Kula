@@ -42,6 +42,7 @@ init script:
 	include file: variables/fonts
 
 	include file: scripts/standard_scripts
+	include file: scripts/complete_standard_scripts
 	include file: scripts/text_alignment
 	include file: scripts/override_script
 
