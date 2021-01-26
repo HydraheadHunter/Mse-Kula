@@ -6,583 +6,513 @@
 
 card_dim		:=[ def:			[	left: 0,	top:0,		width:375,			height:523			]]
 
-symbol_pos		:=[ def:	[symbol:	[	left:30,	top:29,		width:14,			height:20			],
-					 no_symbol:	[	left:20,	top:29,		width:14,			height:20			]
-			],
-			    tall_text:	[symbol:	[],
-					  no_symbol:	[],
-			],
-			 very_tall_text:[symbol:	[],
-					  no_symbol:	[],
-			],
-			    leveler:	[symbol:	[],
-					  no_symbol:	[],
-			],
-			  kamigawa_flip:[ symbol:	[],
-					  no_symbol:	[],
-			],
-			    adventure:	[ symbol:	[],
-					  no_symbol:	[],
-			],
-			    split_fuse:	[symbol:	[],
-					  no_symbol:	[],
-			],
-			    aftermath:	[ symbol:	[],
-					  no_symbol:	[],
-			],
-			    full_art:	[ symbol:	[],
-					  no_symbol:	[],
-			],
-			    mutate:	[ symbol:	[],
-					  no_symbol:	[],
-			],
-			    saga:	[symbol:	[two:	[],
-							three:	[],
-							four:	[],
-					],
-					  no_symbol:	[two:	[],
-							three:	[],
-							four:	[],
+symbol_pos		:=[ def:	[ symbol:	[	left:30,	top:29,		width:14,			height:20			]
+					  no_symbol:	[	left:20,	top:29,		width:14,			height:20			]
+					]					
+			    planeswalker:[ symbol:	[short:	[]		
+							 normal:[]		
+							 tall:	[]		
+					]					
+					  no_symbol:	[short:	[]		
+							 normal:[]		
+							 tall:	[]		
 					]
-				],
-			    planeswalker:[symbol:	[short:	[],
-							 normal:[],
-							 tall:	[],
-					],
-					  no_symbol:	[short:	[],
-							 normal:[],
-							 tall:	[],
-					],
+				]						
+			    split_fuse:	[ symbol:	[]			
+					  no_symbol:	[]			
 				]
 			]
+symbol_pos		:=[ def: 			symbol_pos.def		
+			    leveler:			symbol_pos.def		
+			    adventure:			symbol_pos.def		
+			    kamigawa_flip:		symbol_pos.def		
+			    saga:	[symbol:	[two:	symbol_pos.def	
+							three:	symbol_pos.def	
+							four:	symbol_pos.def	
+					]					
+					no_symbol:	[two:	symbol_pos.def	
+							three:	symbol_pos.def	
+							four:	symbol_pos.def	
+					]					
+				]						
+			    planeswalker:		symbol_pos.planeswalker	
+			    tall_text:			symbol_pos.def		
+			    full_art:			symbol_pos.full_art	
+			    mutate:			symbol_pos.def		
+			    aftermath:			symbol_pos.def		
+			    split_fuse:			symbol_pos.split_fuse	
+			]							
 
 
-name_pos		:=[ def:	[symbol:	[	left:50,	top:30,		right_max:341,			height:23			],
-					 no_symbol:	[	left:32,	top:30,		right_max:341,			height:23			],
-			],
-			    tall_text:	[symbol:	[],
-					  no_symbol:	[],
-			],
-			 very_tall_text:[symbol:	[],
-					  no_symbol:	[],
-			],
-			    leveler:	[symbol:	[],
-					  no_symbol:	[],
-			],
-			  kamigawa_flip:[ symbol:	[],
-					  no_symbol:	[],
-			],
-			    adventure:	[ symbol:	[],
-					  no_symbol:	[],
-			],
-			    split_fuse:	[symbol:	[],
-					  no_symbol:	[],
-			],
-			    aftermath:	[ symbol:	[],
-					  no_symbol:	[],
-			],
-			    full_art:	[ symbol:	[],
-					  no_symbol:	[],
-			],
-			    mutate:	[ symbol:	[],
-					  no_symbol:	[],
-			],
-			    saga:	[symbol:	[two:	[],
-							three:	[],
-							four:	[],
-					],
-					  no_symbol:	[two:	[],
-							three:	[],
-							four:	[],
-					]
-				],
-			    planeswalker:[symbol:	[short:	[],
-							 normal:[],
-							 tall:	[],
-					],
-					  no_symbol:	[short:	[],
-							 normal:[],
-							 tall:	[],
-					],
-				]
+name_pos		:=[ def:	[symbol:	[	left:50,	top:30,		right_max:341,			height:23			]
+					 no_symbol:	[	left:32,	top:30,		right_max:341,			height:23			]
+					]					
+			    planeswalker:[symbol:	[short:	[]		
+							 normal:[]		
+							 tall:	[]		
+					]					
+					  no_symbol:	[short:	[]		
+							 normal:[]		
+							 tall:	[]		
+					]					
+				]						
+			    full_art:	[ symbol:	[]
+					  no_symbol:	[]
+					]					
+			    split_fuse:	[ symbol:	[]			
+					  no_symbol:	[]			
+				]						
+			]							
+name_pos		:=[ def: 			name_pos.def		
+			    leveler:			name_pos.def		
+			    adventure:			name_pos.def		
+			    kamigawa_flip:		name_pos.def		
+			    mutate:			name_pos.def		
+			    saga:	[symbol:	[two:	name_pos.def	
+							three:	name_pos.def	
+							four:	name_pos.def	
+					]					
+					no_symbol:	[two:	name_pos.def	
+							three:	name_pos.def	
+							four:	name_pos.def	
+					]					
+				]						
+			    planeswalker:		name_pos.planeswalker	
+			    tall_text:			name_pos.def		
+			    full_art:			name_pos.full_art	
+			    aftermath:			name_pos.def		
+			    split_fuse:			name_pos.split_fuse	
 			]
 
 
 cost_pos		:=[ def:			[	right:346,	top:29,		width_min:35,			height:23			],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
-			]
-
-
-image_pos		:=[ def:			[	left:29,	top:60,		width:316,			height:231			],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[	left:0,		top:0,		width:card_dim.def.width,	height:card_dim.def.height	],
-			    mutate:			[],
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
-			]
-
-
-indicator_pos		:=[ def:	[indicator:	[	left:31,	top:300,	width:17,			height:17			],
-					 no_indicator:	[	left:20,	top:300,	width:17			height:17			],
-			],
-			    tall_text:	[indicator:	[],
-					  no_indicator:	[],
-			],
-			 very_tall_text:[indicator:	[],
-					  no_indicator:	[],
-			],
-			    leveler:	[indicator:	[],
-					  no_indicator:	[],
-			],
-			  kamigawa_flip:[ indicator:	[],
-					  no_indicator:	[],
-			],
-			    adventure:	[ indicator:	[],
-					  no_sym:	[],
-			],
-			    split_fuse:	[indicator:	[],
-					  no_indicator:	[],
-			],
-			    aftermath:	[ indicator:	[],
-					  no_indicator:	[],
-			],
-			    full_art:	[ indicator:	[],
-					  no_indicator:	[],
-			],
-			    mutate:	[ indicator:	[],
-					  no_indicator:	[],
-			],
-			    saga:	[indicator:	[two:	[],
-							three:	[],
-							four:	[],
-					],
-					  no_indicator:	[two:	[],
-							three:	[],
-							four:	[],
+			    kamigawa_flip:		[]			
+			    full_art:			[]			
+			    split_fuse:			[]			
+			    planeswalker:[	short:	[]			
+						normal:	[]			
+						tall:	[]			
 					]
-				],
-			    planeswalker:[indicator:	[short:	[],
-							 normal:[],
-							 tall:	[],
-					],
-					  no_indicator:	[short:	[],
-							 normal:[],
-							 tall:	[],
-					],
-				]
+			]
+cost_pos		:=[ def:			cost_pos.def		
+			    leveler:			cost_pos.def		
+			    adventure:			cost_pos.def		
+			    kamigawa_flip:		cost_pos.def		
+			    saga:	[symbol:	[two:	cost_pos.def	
+							three:	cost_pos.def	
+							four:	cost_pos.def	
+					]					
+					no_symbol:	[two:	cost_pos.def	
+							three:	cost_pos.def	
+							four:	cost_pos.def	
+					]
+				]						
+			    planeswalker:		cost_pos.planeswalker	
+			    tall_text:			cost_pos.def		
+			    full_art:			cost_pos.full_art	
+			    mutate:			cost_pos.def		
+			    aftermath:			cost_pos.def		
+			    split_fuse:			cost_pos.split_fuse	
 			]
 
-type_pos		:=[ def:	[indicator:	[	left:52,	top:296,	width_max:290,			height:20			],
-					 no_indicator:	[	left:32,	top:296,	width_max:310,			height:20			],
-			],
-			    tall_text:	[indicator:	[],
-					  no_indicator:	[],
-			],
-			 very_tall_text:[indicator:	[],
-					  no_indicator:	[],
-			],
-			    leveler:	[indicator:	[],
-					  no_indicator:	[],
-			],
-			  kamigawa_flip:[ indicator:	[],
-					  no_indicator:	[],
-			],
-			    adventure:	[ indicator:	[],
-					  no_sym:	[],
-			],
-			    split_fuse:	[indicator:	[],
-					  no_indicator:	[],
-			],
-			    aftermath:	[ indicator:	[],
-					  no_indicator:	[],
-			],
-			    full_art:	[ indicator:	[],
-					  no_indicator:	[],
-			],
-			    mutate:	[ indicator:	[],
-					  no_indicator:	[],
-			],
-			    saga:	[indicator:	[two:	[],
-							three:	[],
-							four:	[],
-					],
-					  no_indicator:	[two:	[],
-							three:	[],
-							four:	[],
-					]
-				],
-			    planeswalker:[indicator:	[short:	[],
-							 normal:[],
-							 tall:	[],
-					],
-					  no_indicator:	[short:	[],
-							 normal:[],
-							 tall:	[],
-					],
+
+
+image_pos		:=[ def:			[	left:29,	top:60,		width:316,			height:231			]
+			    kamigawa_flip:		[]			
+			    saga:	 [	two:	[]			
+						three:	[]			
+						four:	[]				]
+			    planeswalker:[	short:	[]			
+						normal:	[]			
+						tall:	[]				]
+			    tall_text:			[]			
+			    very_tall_text:		[]			
+			    full_art:			[	left:0,		top:0,		width:card_dim.def.width,	height:card_dim.def.height	]
+			    aftermath:			[]			
+			    split_fuse:			[]			
+			
+			]
+image_pos		:=[ def:			image_pos.def		
+			    leveler:			image_pos.def		
+			    adventure:			image_pos.def		
+			    kamigawa_flip:		image_pos.kamigawa_flip	
+			    saga:			image_pos.saga		
+			    planeswalker:		image_pos.planeswalker	
+			    tall_text:			image_pos.tall_text	
+			    very_tall_text:		image_pos.very_tall_text
+			    full_art:			image_pos.full_art	
+			    mutate:			image_pos.full_art	
+			    aftermath:			image_pos.aftermath	
+			    split_fuse:			image_pos.split_fuse	
+			
+			]
+
+
+indicator_pos		:=[ def:	[indicator:	[	left:31,	top:300,	width:17,			height:17			]
+					 no_indicator:	[	left:20,	top:300,	width:17			height:17			]	]
+			    leveler:	[indicator:	[]
+					  no_indicator:	[]	]
+			  kamigawa_flip:[ indicator:	[]
+					  no_indicator:	[]	]
+			    adventure:	[ indicator:	[]
+					  no_sym:	[]	]
+			    saga:	[indicator:	[two:	[]
+							three:	[]
+							four:	[]	]
+					  no_indicator:	[two:	[]
+							three:	[]
+							four:	[]	]	]
+			    planeswalker:[indicator:	[short:	[]
+							 normal:[]
+							 tall:	[]	]
+					  no_indicator:	[short:	[]
+							 normal:[]
+							 tall:	[]	]	]
+			    tall_text:	[indicator:	[]
+					  no_indicator:	[]	]
+			 very_tall_text:[indicator:	[]
+					  no_indicator:	[]	]
+			    full_art:	[ indicator:	[]
+					  no_indicator:	[]	]
+			    mutate:	[ indicator:	[]
+					  no_indicator:	[]	]
+			    split_fuse:	[indicator:	[]
+					  no_indicator:	[]	]
+			    aftermath:	[ indicator:	[]
+					  no_indicator:	[]	]
+			]
+
+
+type_pos		:=[ def:	[indicator:	[	left:52,	top:296,	width_max:290,			height:20			]
+					 no_indicator:	[	left:32,	top:296,	width_max:310,			height:20			]	]
+			    leveler:	[indicator:	[]
+					  no_indicator:	[]	]
+			    adventure:	[ indicator:	[]
+					  no_sym:	[]	]
+			  kamigawa_flip:[ indicator:	[]
+					  no_indicator:	[]	]
+			    saga:	[ indicator:	[two:	[]
+							three:	[]
+							four:	[]	]
+					  no_indicator:	[two:	[]
+							three:	[]
+							four:	[]	]	]
+			    planeswalker:[ indicator:	[short:	[]
+							 normal:[]
+							 tall:	[]	]
+					  no_indicator:	[short:	[]
+							 normal:[]
+							 tall:	[]	]	]
+			    tall_text:	[ indicator:	[]
+					  no_indicator:	[]	]
+			 very_tall_text:[ indicator:	[]
+					  no_indicator:	[]	]
+			    full_art:	[ indicator:	[]
+					  no_indicator:	[]	]
+			    mutate:	[ indicator:	[]
+					  no_indicator:	[]	]
+			    aftermath:	[ indicator:	[]
+					  no_indicator:	[]	]
+			    split_fuse:	[ indicator:	[]
+					  no_indicator:	[]
 				]
 			]
 
 
-rarity_pos		:=[ def:			[	right:344,	top:297,	width:25,			height:22			],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+rarity_pos		:=[ def:			[	right:344,	top:297,	width:25,			height:22			]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]	]
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]	]
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    aftermath:			[]
+			    split_fuse:			[]
 			]
 
 
-text_pos		:=[ def:			[	left:29,	top:327,	width:314,			height:154			],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+text_pos		:=[ def:			[	left:29,	top:327,	width:314,			height:154			]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]	]
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]	]
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    aftermath:			[]
+			    split_fuse:			[]
+			    full_art:			[]
+			    mutate:			[]
 			]
 
 
-watermark_pos		:=[ def:			[	left:117,	top:321,	width:138,			height:166			],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+watermark_pos		:=[ def:			[	left:117,	top:321,	width:138,			height:166			]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]
+					]
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]
+					]
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    aftermath:			[]
+			    split_fuse:			[]
 			]
 			
-stamp_pos		:=[ def:			[	left:165,	top:472,	width:46,			height:26			],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+stamp_pos		:=[ def:			[	left:165,	top:472,	width:46,			height:26			]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]	]
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]	]
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    aftermath:			[]
+			    split_fuse:			[]
 			]
 
 
-pt_1_pos		:=[ def:		[ text:	[	left:286,	top:469,	width:60,			height:28			],
-						  box:	[	left:273,	top:466,	width:81,			height:42			],
-						],
-			    tall_text:		[ text:	[],
-						  box:	[]
-						],
-			    very_tall_text:	[ text:	[],
-						  box:	[],
-						],
-			    leveler:		[ text:	[],
-						  box:	[],
-						],
-			    kamigawa_flip:	[ text:	[],
-						  box:	[],
-						],
-			    adventure:		[ text:	[],
-						  box:	[],
-						],
-			    split_fuse:		[ text:	[],
-						  box:	[],
-						],
-			    aftermath:		[ text:	[],
-						  box:	[],
-						],
-			    full_art:		[ text:	[],
-						  box:	[],
-						],
-			    mutate:		[ text:	[],
-						  box:	[],
-						]
+pt_1_pos		:=[ def:		[ text:	[	left:286,	top:469,	width:60,			height:28			]
+						  box:	[	left:273,	top:466,	width:81,			height:42			]	]
+			    leveler:		[ text:	[]	 
+						  box:	[]	]
+			    adventure:		[ text:	[]	 
+						  box:	[]	]
+			    kamigawa_flip:	[ text:	[]	 
+						  box:	[]	]
+			    tall_text:		[ text:	[]	 
+						  box:	[]	]
+			    very_tall_text:	[ text:	[]	 
+						  box:	[]	]
+			    full_art:		[ text:	[]	 
+						  box:	[]	]
+			    mutate:		[ text:	[]	 
+						  box:	[]	]
+			    split_fuse:		[ text:	[]	 
+						  box:	[]	]
+			    aftermath:		[ text:	[]	 
+						  box:	[]	]
 			] #Saga and planeswalker omitted
 
 
-card_code_pos		:=[ def:			[	left:24,	top:498,	width:42,			height:10			],
-			    tall_text:			[	left:24,	top:510,	width:40,			height:10			],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    very_full_art:		[],
-			    mutate:			[],
-			    
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+card_code_pos		:=[ def:			[	left:24,	top:498,	width:42,			height:10			]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]	]
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]	]
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    split_fuse:			[]
+			    aftermath:			[]
 			]
 
 
-set_code_pos		:=[ def:			[	left:24,	top:510,	width:40,			height:10			],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+set_code_pos		:=[ def:			[	left:24,	top:510,	width:40,			height:10			]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]	]
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]	]
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    split_fuse:			[]
+			    aftermath:			[]
 			]
 
 
-credit_pad		:=[ def:		[ arrow_1:4,	illus_1:2,	arrow_2:4,	illus_2:2,	cdcomp:5,	create:2,	copyright:24	],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+credit_pad		:=[ def:		[ arrow_1:4,	illus_1:2,	arrow_2:4,	illus_2:2,	cdcomp:5,	create:2,	copyright:24	]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]
+					]		  
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]
+					]		  
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    split_fuse:			[]
+			    aftermath:			[]
 			]
 
 
-artist_arrow_1_pos	:=[ def:			[	top:501,	width:12,	height:7,	left_base: credit_pad.def.arrow_1 + set_code_pos.def.left						],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+artist_arrow_1_pos	:=[ def:			[	top:501,	width:12,	height:7,	left_base: credit_pad.def.arrow_1 + set_code_pos.def.left	]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]
+					]		  
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]
+					]		  
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    split_fuse:			[]
+			    aftermath:			[]
 			]
 
 
-illustrator_1_pos	:=[ def:			[	top:498,	width_min:25,	height:10,	left_base: credit_pad.def.illus_1 + artist_arrow_1_pos.def.left_base + artist_arrow_1_pos.def.width	],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+illustrator_1_pos	:=[ def:			[	top:498,	width_min:25,	height:10,	left_base: credit_pad.def.illus_1 + artist_arrow_1_pos.def.left_base + artist_arrow_1_pos.def.width	]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]
+					]		  
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]
+					]		  
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    split_fuse:			[]
+			    aftermath:			[]
 			]
 
 
-artist_arrow_2_pos	:=[ def:			[	top:501,	width:12,	height:7,	left_base: credit_pad.def.arrow_2 + illustrator_1_pos.def.left_base					],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+artist_arrow_2_pos	:=[ def:			[	top:501,	width:12,	height:7,	left_base: credit_pad.def.arrow_2 + illustrator_1_pos.def.left_base					]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]
+					]		  
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]
+					]		  
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    split_fuse:			[]
+			    aftermath:			[]
 			]
 
 
-illustrator_2_pos	:=[ def:			[	top:498,	width_min:25,	height:10,	left_base: credit_pad.def.illus_2 + artist_arrow_2_pos.def.left_base + artist_arrow_2_pos.def.width	],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+illustrator_2_pos	:=[ def:			[	top:498,	width_min:25,	height:10,	left_base: credit_pad.def.illus_2 + artist_arrow_2_pos.def.left_base + artist_arrow_2_pos.def.width	]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]	]
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]	]
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    split_fuse:			[]
+			    aftermath:			[]
 			]
 	artist_arrow_pos	:=[	one:	artist_arrow_1_pos,	two:	artist_arrow_2_pos			]
 	illustrator_pos		:=[	one:	illustrator_1_pos,	two:	illustrator_2_pos			]
 
-creator_com_pos		:=[ def:			[	top:509,	width:11,	height:12,	left_base: credit_pad.def.cdcomp  + set_code_pos.def.left							],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+creator_com_pos		:=[ def:			[	top:509,	width:11,	height:12,	left_base: credit_pad.def.cdcomp  + set_code_pos.def.left							]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]	]
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]	]
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    split_fuse:			[]
+			    aftermath:			[]
 			]
 
 
-creator_credit_pos	:=[ def:			[	top:509,	width_min:25,	height:10,	left_base: credit_pad.def.create +  creator_com_pos.def.left_base + creator_com_pos.def.width	],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+creator_credit_pos	:=[ def:			[	top:509,	width_min:25,	height:10,	left_base: credit_pad.def.create +  creator_com_pos.def.left_base + creator_com_pos.def.width	]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]	]
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]	]
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    split_fuse:			[]
+			    aftermath:			[]
 			]
 
 
-copyright_pos		:=[ def:			[],
-			    tall_text:			[],
-			    very_tall_text:		[],
-			    leveler:			[],
-			    kamigawa_flip:		[],
-			    adventure:			[],
-			    split_fuse:			[],
-			    aftermath:			[],
-			    full_art:			[],
-			    mutate:			[],
-			    
-			    saga:	 [	two:	[],
-						three:	[],
-						four:	[],
-					],
-			    planeswalker:[	short:	[],
-						normal:	[],
-						tall:	[],
-					],
+copyright_pos		:=[ def:			[]
+			    leveler:			[]
+			    adventure:			[]
+			    kamigawa_flip:		[]
+			    saga:	 [	two:	[]
+						three:	[]
+						four:	[]	]
+			    planeswalker:[	short:	[]
+						normal:	[]
+						tall:	[]	]
+			    tall_text:			[]
+			    very_tall_text:		[]
+			    full_art:			[]
+			    mutate:			[]
+			    split_fuse:			[]
+			    aftermath:			[]
 			]

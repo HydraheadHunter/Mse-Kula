@@ -103,7 +103,7 @@ card style:
 	
 	name:
 		z index: 		  1
-		left:			{ decide_name_pos.left			(card.card_symbol =="none")			}
+		left:			{ decide_name_pos.left			(card.card_symbol == "none")			}
 		top:			{ name_pos.def.symbol.top		}
 		right:			{ decide_name_pos.right			( card_style.casting_cost.content_width)	}
 		height:			{ name_pos.def.symbol.height		}

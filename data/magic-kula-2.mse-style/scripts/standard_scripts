@@ -41,11 +41,11 @@
 			common_inv:		{		symbol_variation(symbol: set.symbol, variation: "invertedcommon"	)}
 		]
 
-decide_symbol_pos	:=[ left:	{ if input then symbol_pos.def.no_symbol.left else symbol_pos.def.symbol.left					}	]
-decide_name_pos		:=[ left:	{ if input then name_pos.def.no_symbol.left   else name_pos.def.symbol.left					},
-			    right:	{ name_pos.def.no_symbol.right_max - input									}	]
-decide_cost_pos		:=[ width:	{ max( cost_pos.def.width_min, input)										}	]
-decide_identity_pos	:=[ left:	{  if show_indicator() then indicator_pos.def.indicator.left       else indicator_pos.def.no_indicator.left	}	]
+decide_symbol_pos	:=[ left:	{ if input then symbol_pos.def.no_symbol.left else symbol_pos.def.symbol.left			}	]
+decide_name_pos		:=[ left:	{ if input then name_pos.def.no_symbol.left   else name_pos.def.symbol.left			},
+			    right:	{ name_pos.def.symbol.right_max - input								}	]
+decide_cost_pos		:=[ width:	{ max( cost_pos.def.width_min, input)								}	]
+decide_identity_pos	:=[ left:	{  if show_indicator() then indicator_pos.def.indicator.left       else indicator_pos.def.no_indicator.left }	]
 decide_type_pos		:=[ left:	{  if show_indicator() then type_pos.def.indicator.left      else type_pos.def.no_indicator.left		},
 			    width:	{ (if show_indicator() then type_pos.def.indicator.width_max else type_pos.def.no_indicator.width_max) - max(22,card_style.rarity.content_width)	}
 			]
@@ -57,31 +57,9 @@ decide_illustrator_pos	:=[ one:[ def:[	left:	{illustrator_pos.one.def.left_base	
 					width:	{max(illustrator_pos.one.def.width_min,		card_style.illustrator.content_width)	}	]],
 			    two:[ def:[ left:	{illustrator_pos.two.def.left_base		+ input					},
 					width:	{max(illustrator_pos.two.def.width_min,		card_style.illustrator_2.content_width)	}	]]]
-decide_creator_com_pos	:=[ def:[	left:	{ creator_com_pos.def.left_base			+ input					}	]]
-decide_creator_credit_pos:=[ def:[	left:	{ creator_credit_pos.def.left_base		+ input 				}	]]
+decide_creator_com_pos	:=[ def:[	left:	{ creator_com_pos.def.left_base			+ input						}	]]
+decide_creator_credit_pos:=[ def:[	left:	{ creator_credit_pos.def.left_base		+ input 					}	]]
 
-#	
-#	#Creator
-#		determine_creator_left		:=		{if show_illustrator_2() then calculate_creator_two_art_left() else calculate_creator_left()}
-#		calculate_creator_left		:=	{creator_left_base 		+ card_style.set_code.content_width	+ card_style.illustrator.content_width }
-#		calculate_creator_two_art_left	:=	{creator_two_art_left_base	+ card_style.set_code.content_width	+ card_style.illustrator.content_width 
-#											+ card_style.illustrator_2.content_width
-#							}
-#		calculate_creator_width		:=	{max(20, card_style.creator.content_width)	}
-#	#Copyright
-#		determine_auto_copyright	:= 	{set.automatic_copyright	}
-#		determine_copyright_top		:=	{
-#									#if is_leveler() and not lone_pt() then 488 
-#									#else if (starting_loyalty() and card.loyalty != "") 
-#									#or (card.pt != "" and not starting_loyalty()) then 500 
-#									#else 488 }
-#								if card.pt!="" then		power_toughness_copyright_top
-#								else					default_copyright_top
-#		}
-#		determine_copyright_width	:=	{if determine_auto_copyright() then 0 else copyright_width }
-#	
-##Non-Standard Text Fields	
-#		is_stamped			:=	{is_rare() and styling.stamp_rares					}
 
 #Collections Credit & Copyright
 	#Card Number
