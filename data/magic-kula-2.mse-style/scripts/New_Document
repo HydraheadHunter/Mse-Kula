@@ -1,0 +1,120 @@
+
+switch_symbol_pos		:=	{(	if		chosen(choice:"leveler",		input)			then		leveler			
+							else if	chosen(choice:"adventure",	input)			then		adventure			
+							else if	chosen(choice:"kami flip",	input)			then		kamigawa_flip		
+							else if	chosen(choice:"aftermath",	input)			then		aftermath			
+							else if	chosen(choice:"split",		input)			then		split			
+							else if	chosen(choice:"saga",		input)			then		saga				
+							else if	chosen(choice:"planeswalker",	input)			then		planeswalker		
+							else														default		)	.symbol
+					}
+
+switch_name_pos		:=	{(	if		chosen(choice:"leveler",		input)			then		leveler			
+							else if	chosen(choice:"adventure",	input)			then		adventure			
+							else if	chosen(choice:"kami flip",	input)			then		kamigawa_flip		
+							else if	chosen(choice:"aftermath",	input)			then		aftermath			
+							else if	chosen(choice:"split",		input)			then		split			
+							else if	chosen(choice:"saga",		input)			then		saga				
+							else if	chosen(choice:"planeswalker",	input)			then		planeswalker		
+							else														default		)	.name
+					}
+
+switch_cast_cost_pos	:=	{(	if		chosen(choice:"leveler",		input)			then		leveler			
+							else if	chosen(choice:"adventure",	input)			then		adventure			
+							else if	chosen(choice:"kami flip",	input)			then		kamigawa_flip		
+							else if	chosen(choice:"aftermath",	input)			then		aftermath			
+							else if	chosen(choice:"split",		input)			then		split			
+							else if	chosen(choice:"saga",		input)			then		saga				
+							else if	chosen(choice:"planeswalker",	input)			then		planeswalker		
+							else														default		)	.cast_cost
+					}
+
+switch_image_pos		:=	{(	if		chosen(choice:"leveler",		input)			then		leveler			
+							else if	chosen(choice:"adventure",	input)			then		adventure			
+							else if	chosen(choice:"kami flip",	input)			then		kamigawa_flip		
+							else if	chosen(choice:"aftermath",	input)			then		aftermath			
+							else if	chosen(choice:"split",		input)			then		split			
+							else if	chosen(choice:"saga",		input)			then		saga				
+							else if	chosen(choice:"planeswalker",	input)			then		planeswalker		
+							else														default		)	.image
+					}
+
+switch_indicator_pos	:=	{(	if		chosen(choice:"leveler",		input)			then		leveler			
+							else if	chosen(choice:"adventure",	input)			then		adventure			
+							else if	chosen(choice:"kami flip",	input)			then		kamigawa_flip		
+							else if	chosen(choice:"aftermath",	input)			then		aftermath			
+							else if	chosen(choice:"split",		input)			then		split			
+							else if	chosen(choice:"saga",		input)			then		saga				
+							else if	chosen(choice:"planeswalker",	input)			then		planeswalker		
+							else														default		)	.indicator
+					}
+
+switch_type_pos		:=	{(	if		chosen(choice:"leveler",		input)			then		leveler			
+							else if	chosen(choice:"adventure",	input)			then		adventure			
+							else if	chosen(choice:"kami flip",	input)			then		kamigawa_flip		
+							else if	chosen(choice:"aftermath",	input)			then		aftermath			
+							else if	chosen(choice:"split",		input)			then		split			
+							else if	chosen(choice:"saga",		input)			then		saga				
+							else if	chosen(choice:"planeswalker",	input)			then		planeswalker		
+							else														default		)	.type
+					}
+
+switch_rarity_pos		:=	{(	if		chosen(choice:"leveler",		input)			then		leveler			
+							else if	chosen(choice:"adventure",	input)			then		adventure			
+							else if	chosen(choice:"kami flip",	input)			then		kamigawa_flip		
+							else if	chosen(choice:"aftermath",	input)			then		aftermath			
+							else if	chosen(choice:"split",		input)			then		split			
+							else if	chosen(choice:"saga",		input)			then		saga				
+							else if	chosen(choice:"planeswalker",	input)			then		planeswalker		
+							else														default		)	.rarity
+					}
+
+switch_text_pos		:=	{(	if		chosen(choice:"leveler",		input)			then		leveler			
+							else if	chosen(choice:"adventure",	input)			then		adventure			
+							else if	chosen(choice:"kami flip",	input)			then		kamigawa_flip		
+							else if	chosen(choice:"aftermath",	input)			then		aftermath			
+							else if	chosen(choice:"split",		input)			then		split			
+							else if	chosen(choice:"saga",		input)			then		saga				
+							else if	chosen(choice:"planeswalker",	input)			then		planeswalker		
+							else														default		)	.text
+					}
+
+switch_watermark_pos	:=	{(	if		chosen(choice:"leveler",		input)			then		leveler			
+							else if	chosen(choice:"adventure",	input)			then		adventure			
+							else if	chosen(choice:"kami flip",	input)			then		kamigawa_flip		
+							else if	chosen(choice:"aftermath",	input)			then		aftermath			
+							else if	chosen(choice:"split",		input)			then		split			
+							else if	chosen(choice:"saga",		input)			then		saga				
+							else if	chosen(choice:"planeswalker",	input)			then		planeswalker		
+							else														default		)	.watermark
+					}
+
+switch_stamp_pos		:=	{(	if		chosen(choice:"leveler",		input)			then		leveler			
+							else if	chosen(choice:"adventure",	input)			then		adventure			
+							else if	chosen(choice:"kami flip",	input)			then		kamigawa_flip		
+							else if	chosen(choice:"aftermath",	input)			then		aftermath			
+							else if	chosen(choice:"split",		input)			then		split			
+							else if	chosen(choice:"saga",		input)			then		saga				
+							else if	chosen(choice:"planeswalker",	input)			then		planeswalker		
+							else														default		)	.stamp
+					}
+
+switch_pt_1_pos		:=	{(	if		chosen(choice:"leveler",		input)			then		leveler			
+							else if	chosen(choice:"adventure",	input)			then		adventure			
+							else if	chosen(choice:"kami flip",	input)			then		kamigawa_flip		
+							else if	chosen(choice:"aftermath",	input)			then		aftermath			
+							else if	chosen(choice:"split",		input)			then		split			
+							else if	chosen(choice:"saga",		input)			then		saga				
+							else if	chosen(choice:"planeswalker",	input)			then		planeswalker		
+							else														default		)	.pt_1
+					}
+
+switch_credit_pos		:=	{(	if		chosen(choice:"leveler",		input)			then		leveler			
+							else if	chosen(choice:"adventure",	input)			then		adventure			
+							else if	chosen(choice:"kami flip",	input)			then		kamigawa_flip		
+							else if	chosen(choice:"aftermath",	input)			then		aftermath			
+							else if	chosen(choice:"split",		input)			then		split			
+							else if	chosen(choice:"saga",		input)			then		saga				
+							else if	chosen(choice:"planeswalker",	input)			then		planeswalker		
+							else														default		)	.credit
+					}

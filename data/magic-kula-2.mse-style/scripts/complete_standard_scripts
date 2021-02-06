@@ -79,8 +79,6 @@ switch_cost_pos	:=[ def: 			switch_cost_pos.def
 		    aftermath:			switch_cost_pos.def			
 		    split_fuse:			switch_cost_pos.split_fuse		
 			]
-
-
 			
 			
 			

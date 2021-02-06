@@ -1,0 +1,269 @@
+card_dim		:=[	default:	[		left: 0,		top:0,	width:375,	height:523	]
+				sideways:	[		left: 0,		top:0,	width:523,	height:375	]
+		]
+
+###################################################################################################################
+###################################################################################################################
+	pad				:=[			arrow_1:4,illus_1:2,arrow_2:4,illus_2:2,cdcomp:5,create:2,copyright:24											]
+	set_code_d		:=[			left:24,	top:510,		width:40,		height:10																]
+	artist_arrow_1_d	:=[			top:501,	width:12,		height:7,		left_base:	pad.arrow_1 + set_code_d.left			]
+	illustrator_1_d	:=[			top:498,	width_min:25,	height:10,	left_base:	pad.illus_1 + artist_arrow_1_d.left_base + artist_arrow_1_d.width	]
+	artist_arrow_2_d	:=[			top:501,	width:12,		height:7,		left_base:	pad.arrow_2 + illustrator_1_d.left_base	]	
+	illustrator_2_d	:=[			top:498,	width_min:25,	height:10,	left_base:	pad.illus_2 + artist_arrow_2_d.left_base + artist_arrow_2_d.width	]
+	creator_com_d		:=[			top:509,	width:11,		height:12,	left_base:	pad.cdcomp + set_code_d.left									]
+						
+credit		:=[	def	:[	card_code		:	[			left:24,	top:498,		width:42,		height:10																]
+						set_code		:	set_code_d
+						pad			:	pad
+						artist_arrow	:[	one	:	artist_arrow_1_d,	two	:	artist_arrow_2_d		]
+						illustrator	:[	one	:	illustrator_1_d ,	two	:	illustrator_2_d		]
+						creator_com	:[	one	:[	]
+										two	:[	]
+										new	:[	top:509,	width:11,		height:12,	left_base:	pad.cdcomp + set_code_d.left]
+				]
+						creator		:[	one	:[	]
+										two	:[	]
+										new	:[	top:509,	width_min:25,	height:10,	left_base:	pad.create + creator_com_d.left_base + creator_com_d.width	]
+				]
+						copyright		:[			]
+			]
+			#	side	:[	credit_pad	:[],card_code		:[],set_code		:[],artist_arrow_1	:[],illustrator_1	:[],artist_arrow_2	:[],illustrator_2	:[],artist_arrow	:[	one	:[	],two	:[	]	]
+			#			illustrator	:[	one	:[	],	two	:[	]					]
+			#			creator_computer:[	one	:[	],	two	:[	],	new	:[	]		]
+			#			creator		:[		one	:[	],	two	:[	],	new	:[	]	]
+			#			copyright		:[			]
+			#]
+		]
+
+###################################################################################################################
+###################################################################################################################
+
+default		:=[	symbol	:[	ye_sym	:[	left:30,		top:29,	width:14,		height:20		]
+							no_sym	:[	left:20,		top:29,	width:14,		height:20		]
+				]
+				name		:[	ye_sym	:[	left:50,		top:30,	right_max:341,	height:23		]
+							no_sym	:[	left:32,		top:30,	right_max:341,	height:23		]
+				]
+				cast_cost	:[				right:348,	top:29,	width_min:35,	height:23		]
+				image	:[				left:29,		top:60,	width:316,	height:231	]
+				indicator	:[	ye_ind	:[	left:31,		top:300,	width:17,		height:17		]
+							no_ind	:[	left:20,		top:300,	width:17		height:17		]
+				]
+				type		:[	ye_ind	:[	left:52,		top:296,	width_max:290,	height:20		]
+							no_ind	:[	left:32,		top:296,	width_max:310,	height:20		]
+				]
+				rarity	:[				right:344,	top:297,	width:25,		height:22		]
+				text		:[				left:29,		top:327,	width:314,	height:154	]
+				watermark	:[				left:117,		top:321,	width:138,	height:166	]
+				stamp	:[				left:165,		top:472,	width:46,		height:26		]
+				pt_1		:[	text		:[	left:286,		top:469,	width:60,		height:28		]
+							box		:[	left:273,		top:466,	width:81,		height:42		]
+				]
+				credit	:	credit.def
+			]
+
+leveler		:=[	symbol	:	default.symbol
+				name		:	default.name
+				cast_cost	:	default.cast_cost
+				image	:	default.image
+				indicator	:	default.indicator
+				type		:	default.type
+				rarity	:	default.rarity
+				text		:[	ye_pt	:[	left:29,		top:327,	width:277,	height:52		]
+							no_pt	:[	left:29		top:327,	width:342,	height:52		]
+				]
+				text_2	:[	lev_pt	:[	left:103,		top:379,	width:174,	height:51		]
+							ye_lev	:[	left:103,		top:379,	width:239,	height:51		]
+							ye_pt	:[	left:29,		top:379,	width:246,	height:51		]
+							no_lpt	:[	left:29,		top:379,	width:313,	height:51		]
+				]
+				text_3	:[	lev_pt	:[	left:103,		top:430,	width:174,	height:51		]
+							ye_lev	:[	left:103,		top:430,	width:239,	height:51		]
+							ye_pt	:[	left:29,		top:430,	width:246,	height:51		]
+							no_lpt	:[	left:29,		top:430,	width:313,	height:51		]
+				]
+				level_1	:[				left:38,		top:400,	width:34,		height:22		]
+				level_2	:[				left:38,		top:450,	width:34,		height:22		]
+				label_1	:[				left:50,		top:391,	width:10,		height:10		]
+				label_2	:[				left:50,		top:441,	width:10,		height:10		]
+				watermark	:	default.watermark
+				stamp	:	default.stamp
+				pt		:[	text		:[	left:284,		top:339,	width:60,		height:28		]
+							box		:[	left:271,		top:336,	width:81,		height:42		]
+				]
+				
+				pt_2		:[	text		:[	left:284,	   top:390.5,	width:60,		height:28		]
+							box		:[	left:271,	   top:387.5,	width:81,		height:42		]
+				]
+				
+				pt_3		:[	text		:[	left:284,	    top:441.5,	width:60,		height:28		]
+							box		:[	left:271,	    top:438.5,	width:81,		height:42		]
+				]
+				credit	:	credit.default
+			]
+
+adventure		:=[	color_2	:[	def		:[	left:20,		top:327,	width:169,	height:155	]
+							rev		:[	left:187,		top:319,	width:169,	height:155	]
+				]
+				symbol	:	default.symbol
+				name		:	default.name
+				name_2	:[	def		:[	left:32,		top:328,	right_max:178,	height:20		]
+							rev		:[	left:197,		top:328,	right_max:28,	height:20		]
+				]
+				cast_cost	:	default.cast_cost
+			    cast_cost_2:[	def		:[	right:180,	top:328,	width_min:35,	height:23		]
+							rev		:[	right:345,	top:328,	width_min:35,	height:23		]
+				]
+				image	:	default.image
+				indicator	:	default.indicator
+			    indicator_2:[	def		:[	ye_ind	:[	left:30,	top:355,	width:15,	height:15	]
+										no_ind	:[	left:0,	top:355,	width:15,	height:15	]
+							]
+							rev		:[	ye_ind	:[	left:195,	top:355,	width:15,	height:15	]
+										no_ind	:[	left:165,	top:355,	width:15,	height:15	]
+							]
+				]
+				type		:	default.type
+				type_2	:[	def		:[	ye_ind	:[	left:52,	top:352,	width:135,height:20	]
+										no_ind	:[	left:32,	top:352,	width:155,height:20	]
+							]
+							rev		:[	ye_ind	:[	left:217,	top:352,	width:135,height:20	]
+										no_ind	:[	left:197,	top:352,	width:155,height:20	]
+							]
+				]
+				rarity	:	default.rarity
+				text		:[	def		:[	left:200,		top:328,	width:143,	height:106	]
+							rev		:[	left:27,		top:328,	width:143,	height:106	]
+				]
+				text_2	:[	def		:[	left:29,		top:375,	width:157,	height:106	]
+							rev		:[	left:190,		top:375,	width:157,	height:106	]
+				]
+				watermark	:[				left:188,		top:328,	width:168,	height:153	]
+			    watermark_2:[				left:20,		top:328,	width:168,	height:153	]
+				stamp	:	default.stamp
+				pt_1		:	default.pt_1
+				credit	:	credit.default
+			]
+
+kamigawa_flip	:=[	symbol	:	default.symbol
+				name		:	default.name
+				cast_cost	:	default.cast_cost
+				image	:	[]
+				indicator	:	[]
+				type		:	[]
+				rarity	:	[]
+				text		:	[]
+				watermark	:	[]
+				stamp	:	default.stamp
+				pt_1		:	[]
+				credit	:	credit.default
+			]
+
+saga			:=[	symbol	:	default.symbol
+				name		:	default.name
+				cast_cost	:	default.cast_cost
+				image	:[				left:188,		top:60,	width:157,	height:379	]
+				indicator	:[	ye_ind	:[	left:30,		top:449,	width:17,		height:17		]
+							no_ind	:[	left:20,		top:449,	width:17,		height:17		]
+				]
+				type		:[	ye_ind	:[	left:52,		top:444,	width_max:290,	height:20		]
+							no_ind	:[	left:30		top:444,	width_max:310,	height:20		]
+				]
+				rarity	:[				right:345,	top:445,	width:22,		height:22		]
+				text		:[				left:0,		top:0,	width:0,		height:0		]
+				watermark	:[	def		:[	left:45,		top:60,	width:133,	height:378	]
+							wide		:[	left:29,		top:60,	width:157,	height:378	]
+				]
+				chapter	:[				left:30,		top:60,	width:153,	height:96		]
+				level_1	:[				left:45,		top:155,	width:138,	bottom_max:249	]
+				level_2	:[				left:45,	 top_max:249,	width:138,	bottom_max:343	]
+				level_3	:[				left:45,	 top_max:343,	width:138,	bottom_max:437	]
+				level_4	:[				left:45,	 top_max:437,	width:138,	bottom:437	]
+				pt_1		:[	text		:[	left:286,		top:469,	width:60,		height:28		]
+							box		:[	left:273,		top:466,	width:81,		height:42		]
+				]
+				loyalty	:[	text		:[	left:326,		top:468,	width:13,		height:34		]
+							box		:[	left:302,		top:466,	width:60,		height:38		]
+				]
+				stamp	:[				left:170,		top:474,	width:36,		height:22		]
+				chapter	:[	one		:[	left:14,		top:185,	width:30,		height:34		]
+							two		:[	left:14,	 top_def:279,	width:30,		height:34		]
+							three	:[	left:14,	 top_def:373,	width:30,		height:34		]
+							four		:[	left:14,	 top_def:600,	width:30,		height:34		]
+							five		:[	left:14,	 top_def:600,	width:30,		height:34		]
+							six		:[	left:14,	 top_def:600,	width:30,		height:34		]
+							custom	:[	left:14,	 top_def:600,	width:30,		height:34		]
+				]
+				line		:[	one		:[	left:42,	 top_def:154,	width:143,	height:3		]
+							two		:[	left:42,	 top_def:248,	width:143,	height:3		]
+							three	:[	left:42,	 top_def:342,	width:143,	height:3		]
+							beyond	:[	left:42,	 top_def:600,	width:143,	height:3		]
+				]
+			]
+
+planeswalker_s	:=[	temp:0]
+
+planeswalker_n	:=[	temp:0]
+
+planeswalker_t	:=[	temp:0]
+
+short_text	:=[	symbol	:	default.symbol
+				name		:	default.name
+				cast_cost	:	default.cast_cost
+			]
+
+long_text		:=[	symbol	:	default.symbol
+				name		:	default.name
+				cast_cost	:	default.cast_cost
+			]
+
+full_art		:=[	symbol	:	default.symbol
+				name		:	default.name
+				cast_cost	:	default.cast_cost
+			]
+
+mutate		:=[	symbol	:	default.symbol
+				name		:	default.name
+				cast_cost	:	default.cast_cost
+			]
+
+aftermath		:=[	color_1	:[				left:0,		top:0,	width:375,	height:285				]
+				color_2	:[				left:0,		top:285,	width:375,	height:238				]
+				symbol	:	default.symbol
+				symbol_2	:[	ye_sym	:[	left:341,		top:294,	width:14,		height:20		angle:270		]
+				]
+				name		:	default.name
+				name_2	:[	ye_sym	:[	left:342,		top:313,	width_max:181,	height:21,	angle:270		]
+				]
+				cast_cost	:	default.cast_cost
+			    cast_cost_2:[				left:342,	 top_max:474,	width_min:27,	height:21,	angle:270		]
+				image	:[				left:29,		top:59,	width:317,	height:117				]
+				image_2	:[				left:314,		top:295,	width:183,	height:108,	angle:270		]
+				indicator	:[	ye_ind	:[	left:29,		top:186,	width:17,		height:17,				]
+							no_ind	:[	left:9,		top:186,	width:17,		height:17					]
+				]
+			    indicator_2:[	ye_ind	:[	left:179,		top:295,	width:17,		height:17					]
+							no_ind	:[	left:179,		top:280,	width:17,		height:17					]
+				]
+				type		:[	ye_ind	:[	left:50,		top:185,	width_max:290,	height:20,				]
+							no_ind	:[	left:30,		top:185,	width_max:310,	height:20					]
+				]
+				type_2	:[	ye_ind	:[	left:198,		top:316,	width_max:204,	height:15		angle:270		]
+							no_ind	:[	left:198,		top:296,	width_max:217,	height:15		angle:270		]
+				]
+				rarity	:[				right:344,	top:183,	width:22,		height:22					]
+				text		:[				left:28,		top:214,	width:317,	height:65					]
+				text_2	:[				left:167,		top:296,	width:182,	height:140,	angle:270		]
+				watermark	:[				left:136.5,	top:210,	width:104.5,	height:70					]
+			    watermark_2:[				left:167,		top:351,	width:66,		height:145,	angle:270		]
+				stamp	:[				left:170,		top:480,	width:35,		height:18					]
+				pt		:[	text		:[	left:303,		top:262,	width:42,		height:21					]
+							box		:[	left:294,		top:260,	width:57,		height:29					]
+				]
+				pt_2		:[	text		:[	left:41,		top:438,	width:43,		height:21,	angle:270		]
+							box		:[	left:42,		top:432,	width:53,		height:29,	angle:270		]
+				]
+				
+			]
+
+split_fuse	:=[	]

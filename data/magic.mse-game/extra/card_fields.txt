@@ -6,3 +6,18 @@ card field:
 	editable: true
 	script: set.creator
 	description: the creator of the set or the creator of the card if different from the creator of the set.
+card field:
+	type: multiple choice
+	name: style prototype
+	show statistics: false
+	editable: true
+	empty choice			:	basic
+	#choice				:	leveler
+	#choice				:	adventure
+	#choice				:	kami flip
+	#choice				:	aftermath
+	#choice				:	  
+	#	name			:	split
+	#	line below		:	true
+	choice				:	saga
+	#choice				:	tall text
