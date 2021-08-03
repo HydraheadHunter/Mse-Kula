@@ -41,7 +41,6 @@ init script:
 	include file: variables/complete_variables
 	include file: variables/fonts
 
-
 	include file: scripts/standard_scripts
 	include file: scripts/complete_standard_scripts
 	include file: scripts/text_alignment
@@ -91,15 +90,11 @@ card style:
 		mask				:	{ decide_border_directory() + "border.png"	}
 	image:
 		z index			:	  2
-		left				:	{ switch_image_pos			( card.style_prototype ).left}
-		#.left		}
-		top				:	{ switch_image_pos			( card.style_prototype ).top}
-		#.top			}
-		width			:	{ switch_image_pos( card.style_prototype ).width}
-		#.width		}
-		height			:	{ switch_image_pos( card.style_prototype ).height}
-		#.height		}
-		default			:	{ default_image(card.card_color)}
+		left				:	{ switch_image_pos			( card.style_prototype )		.left		}
+		top				:	{ switch_image_pos			( card.style_prototype )		.top			}
+		width			:	{ switch_image_pos			( card.style_prototype )		.width		}
+		height			:	{ switch_image_pos			( card.style_prototype )		.height		}
+		default			:	{ default_image			(card.card_color)						}
 extra card field:
 	type					:	  choice
 	name					:	  stamp
@@ -266,10 +261,10 @@ card style:
 card style:
 	pt					:
 		z index			:	  2
-		left				:	{ switch_pt_1_pos		(card.style_prototype)		.text.left			}
-		top				:	{ switch_pt_1_pos		(card.style_prototype)		.text.top				}
-		width			:	{ switch_pt_1_pos		(card.style_prototype)		.text.width			}
-		height			:	{ switch_pt_1_pos		(card.style_prototype)		.text.height			}
+		left				:	{ switch_pt_1_pos			(card.style_prototype)		.text.left		}
+		top				:	{ switch_pt_1_pos			(card.style_prototype)		.text.top			}
+		width			:	{ switch_pt_1_pos			(card.style_prototype)		.text.width		}
+		height			:	{ switch_pt_1_pos			(card.style_prototype)		.text.height		}
 		alignment			:	  center middle shrink-overflow
 		font:
 			name			:	{ beleren_bold_font.name			}
@@ -285,10 +280,10 @@ extra card field:
 extra card style:
 	pt box:
 		z index			:	  1
-		left				:	{ switch_pt_1_pos		(card.style_prototype)		.box.left				}
-		top				:	{ switch_pt_1_pos		(card.style_prototype)		.box.top				}
-		width			:	{ switch_pt_1_pos		(card.style_prototype)		.box.width			}
-		height			:	{ switch_pt_1_pos		(card.style_prototype)		.box.height			}
+		left				:	{ switch_pt_1_pos			(card.style_prototype)		.box.left			}
+		top				:	{ switch_pt_1_pos			(card.style_prototype)		.box.top			}
+		width			:	{ switch_pt_1_pos			(card.style_prototype)		.box.width		}
+		height			:	{ switch_pt_1_pos			(card.style_prototype)		.box.height		}
 		render style		:	  image
 		image			:	{ card_ptbox(directory:"pt/", blend_directory:dir.blend) }
 		mask				:	{ power_toughness_mask		}
@@ -324,25 +319,16 @@ extra card field:
 extra card style:
 	foil stamp:
 		z index			:	  2
-		left				:	{ switch_stamp_pos			(card.style_prototype)		.left			}
-		top				:	{ switch_stamp_pos			(card.style_prototype)		.top				}
-		width			:	{ switch_stamp_pos			(card.style_prototype)		.width			}
-		height			:	{ switch_stamp_pos			(card.style_prototype)		.height			}
+		left				:	{ switch_stamp_pos			(card.style_prototype)		.left				}
+		top				:	{ switch_stamp_pos			(card.style_prototype)		.top					}
+		width			:	{ switch_stamp_pos			(card.style_prototype)		.width				}
+		height			:	{ switch_stamp_pos			(card.style_prototype)		.height				}
 		visible			:	{ is_stamped() }
 		render style		:	  image
 		image			:	  stamp/foil_stamp.png
 
-extra card field:
-	type					:	  text
-	name					:	  card code
-	save value			:	  false
-	script				:
-		if set.automatic_card_numbers then
-			forward_editor(prefix: card_number_m15() + "/" + card_count_m15() + " " + rarity_code() + " ", field: card.card_code_text)
-		else
-			combined_editor(field1: card.custom_card_number, separator: " " + rarity_code() + " ", field2: card.card_code_text)
 
-extra card style:
+card style:
 	card code:
 		z index			:	  1
 		left				:	{ switch_credit_pos			(card.style_prototype)		.card_code.left		}
@@ -358,9 +344,9 @@ card style:
 	set code:
 		z index			:	  1
 		left				:	{ switch_credit_pos			(card.style_prototype)		.set_code.left			}
-		top				:	{ switch_credit_pos			(card.style_prototype)		.set_code.top				}
-		width			:	{ switch_credit_pos			(card.style_prototype)		.set_code.width			}
-		height			:	{ switch_credit_pos			(card.style_prototype)		.set_code.height			}
+		top				:	{ switch_credit_pos			(card.style_prototype)		.set_code.top			}
+		width			:	{ switch_credit_pos			(card.style_prototype)		.set_code.width		}
+		height			:	{ switch_credit_pos			(card.style_prototype)		.set_code.height		}
 		font:
 			name			:	  Relay-Medium
 			size			:	  7
@@ -375,19 +361,19 @@ extra card field:
 extra card style:
 	artist arrow:
 		z index			:	  1
-		left				:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.one.left_base		}
-		top				:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.one.top				}
-		width			:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.one.width			}
-		height			:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.one.height			}
+		left				:	{ decide_artist_arrow_pos.one.def.left	( max(card_style.card_code.content_width,card_style.set_code.content_width) )			}
+		top				:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.one.top		}
+		width			:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.one.width		}
+		height			:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.one.height		}
 		render style		:	  image
 		image			:	{ artist_arrow_image					}
 card style:	
 	illustrator:
 		z index			:	  1
-		left				:	{ switch_credit_pos			(card.style_prototype)		.illustrator.one.left_base		}
-		top				:	{ switch_credit_pos			(card.style_prototype)		.illustrator.one.top				}
-		width			:	{ switch_credit_pos			(card.style_prototype)		.illustrator.one.width_min			}
-		height			:	{ switch_credit_pos			(card.style_prototype)		.illustrator.one.height			}
+		left				:	{ decide_illustrator_pos.one.def.left	( max(card_style.card_code.content_width,card_style.set_code.content_width) )			}
+		top				:	{ switch_credit_pos			(card.style_prototype)		.illustrator.one.top		}
+		width			:	{ switch_credit_pos			(card.style_prototype)		.illustrator.one.width_min	}
+		height			:	{ switch_credit_pos			(card.style_prototype)		.illustrator.one.height		}
 		font:
 			name			:	{ beleren_bold_sc_font.name				}
 			size			:	{ beleren_bold_sc_font.size.def			}
@@ -408,20 +394,20 @@ styling style:
 extra card style:
 	artist arrow 2:
 		z index			:	  1
-		left				:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.two.left_base			}
-		top				:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.two.top				}
-		width			:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.two.width			}
-		height			:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.two.height			}
+		left				:	{ decide_artist_arrow_pos.two.def.left	( max(card_style.card_code.content_width,card_style.set_code.content_width) +card_style.illustrator.content_width)	}
+		top				:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.two.top		}
+		width			:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.two.width		}
+		height			:	{ switch_credit_pos			(card.style_prototype)		.artist_arrow.two.height		}
 		render style		:	  image
 		image			:	{ artist_arrow_image					}
 		visible			:	{ show_second_artist()					}
 card style:	
 	illustrator 2:
 		z index			:	  1
-		left				:	{ switch_credit_pos			(card.style_prototype)		.illustrator.two.left_base		}
-		top				:	{ switch_credit_pos			(card.style_prototype)		.illustrator.two.top				}
-		width			:	{ switch_credit_pos			(card.style_prototype)		.illustrator.two.width_min			}
-		height			:	{ switch_credit_pos			(card.style_prototype)		.illustrator.two.height			}
+		left				:	{ decide_illustrator_pos.two.def.left	( max(card_style.card_code.content_width,card_style.set_code.content_width) +card_style.illustrator.content_width)	}
+		top				:	{ switch_credit_pos			(card.style_prototype)		.illustrator.two.top		}
+		width			:	{ switch_credit_pos			(card.style_prototype)		.illustrator.two.width_min	}
+		height			:	{ switch_credit_pos			(card.style_prototype)		.illustrator.two.height		}
 		font:
 			name			:	{ beleren_bold_sc_font.name				}
 			size			:	{ beleren_bold_sc_font.size.def			}
@@ -443,19 +429,19 @@ extra card field:
 extra card style:
 	creator computer:
 		z index			:	  1
-		left				:	{ switch_credit_pos			(card.style_prototype)		.creator_com.new.left_base			}
-		top				:	{ switch_credit_pos			(card.style_prototype)		.creator_com.new.top				}
-		width			:	{ switch_credit_pos			(card.style_prototype)		.creator_com.new.width			}
-		height			:	{ switch_credit_pos			(card.style_prototype)		.creator_com.new.height			}
+		left				:	{ decide_creator_com_pos.def.left	(max(card_style.card_code.content_width,card_style.set_code.content_width))	}
+		top				:	{ switch_credit_pos			(card.style_prototype)		.creator_com.new.top		}
+		width			:	{ switch_credit_pos			(card.style_prototype)		.creator_com.new.width		}
+		height			:	{ switch_credit_pos			(card.style_prototype)		.creator_com.new.height		}
 		render style		:	  image
 		image			:	{ creator_computer_image				}
 		visible			:	{ show_creator()					}
 card style:
 	creator:
 		z index			:	  1
-		left				:	{ switch_credit_pos			(card.style_prototype)		.creator.new.left_base		}
-		top				:	{ switch_credit_pos			(card.style_prototype)		.creator.new.top				}
-		width			:	{ switch_credit_pos			(card.style_prototype)		.creator.new.width_min			}
+		left				:	{ decide_creator_credit_pos.def.left	(max(card_style.card_code.content_width,card_style.set_code.content_width))		}
+		top				:	{ switch_credit_pos			(card.style_prototype)		.creator.new.top			}
+		width			:	{ switch_credit_pos			(card.style_prototype)		.creator.new.width_min		}
 		height			:	{ switch_credit_pos			(card.style_prototype)		.creator.new.height			}
 		font:
 			name			:	{ beleren_bold_sc_font.name				}
