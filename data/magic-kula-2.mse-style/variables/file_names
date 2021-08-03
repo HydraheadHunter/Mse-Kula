@@ -22,6 +22,7 @@ stop_align	:=	[
 #Dir+Basic File Names
 	power_toughness_mask			:=	"{dir.pt}pt_mask.png"
 	identity_mask				:=	"{dir.i_identity}identity_mask.png"
+	tombstone_image				:=	"{dir.giblet}tombstone.png"
 	foil_stamp_image			:=	"{dir.stamp}foil_stamp.png"
 	artist_arrow_image			:=	"{dir.giblet}artist_arrow.png"
 	artist_arrow_2_image			:=	"{dir.giblet}artist_arrow_2.png" #This is two artist arrows on top of each other.
