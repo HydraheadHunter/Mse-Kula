@@ -118,7 +118,7 @@ card style:
 		z index			:	  1
 		left				:	{ switch_name_pos			(card.style_prototype)		.no_sym.left		}
 		top				:	{ switch_name_pos			(card.style_prototype)		.no_sym.top		}
-		right			:	{ switch_name_pos			(card.style_prototype)		.no_sym.right_max	}
+		right			:	{ decide_name_pos.right		(card_style.casting_cost.content_width)			}
 		height			:	{ switch_name_pos			(card.style_prototype)		.no_sym.height		}
 		alignment			:	  bottom shrink-overflow
 		padding bottom		:	  0
@@ -142,6 +142,7 @@ card style:
 			alignment		:	  middle right
 		always symbol		:	  true
 		padding top		:	  0
+
 #Type Line
 styling field:
 	type					:	  boolean
@@ -222,7 +223,6 @@ styling field:
 	choice				:	  right
 	initial				:	  left
 	
-
 card style:
 	text:
 		z index			:	  2

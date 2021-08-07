@@ -43,7 +43,7 @@
 
 decide_symbol_pos	:=	[ left:	{ if input then symbol_pos.def.no_symbol.left else symbol_pos.def.symbol.left			}	]
 decide_name_pos	:=	[ left:	{ if input then name_pos.def.no_symbol.left   else name_pos.def.symbol.left			},
-					  right:	{ name_pos.def.symbol.right_max - input											}	]
+					  right:	{ default.name.ye_sym.right_max - input											}	]
 decide_cost_pos	:=	[ width:	{ max( cost_pos.def.width_min, input)								}	]
 decide_identity_pos	:=	[ left:	{  if show_indicator() then indicator_pos.def.indicator.left	else indicator_pos.def.no_indicator.left }	]
 decide_type_pos	:=	[ left:	{  if show_indicator() then type_pos.def.indicator.left     	else type_pos.def.no_indicator.left		},
