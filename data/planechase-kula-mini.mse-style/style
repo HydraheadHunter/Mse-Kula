@@ -1,4 +1,4 @@
-﻿mse version: 0.3.8
+﻿mse version: 2.1.0
 game: planechase
 short name: Planechase
 full name: Kula Mini Cards
@@ -9,7 +9,7 @@ position hint: 02
 version: 2020-10-13
 depends on:
 	package: planechase.mse-game
-	version: 2009-08-11
+	version: 2020-10-13
 depends on:
 	package: magic-mana-small.mse-symbol-font
 	version: 2009-08-10
@@ -33,7 +33,7 @@ init script:
 	is_phenomenon	:=	{ contains(card.type, match:"Phenomenon") }
 	card_shape	:=	{ "plane card" }
 	
-	include file: variables.txt
+	include file: variables
 ############################################################## Set info fields
 set info style:
 	symbol:

@@ -1,15 +1,15 @@
-﻿mse version: 0.3.8
+﻿mse version: 2.1.0
 game: planechase
 short name: DF Planechase
 full name: Double Face Kula Mini Cards
 installer group: Magic Planes/normal style
 icon: card-sample.png
-position hint: 02
+position hint: 03
 
-version: 2018-06-02
+version: 2020-10-13
 depends on:
 	package: planechase.mse-game
-	version: 2009-08-11
+	version: 2020-10-13
 depends on:
 	package: magic-mana-small.mse-symbol-font
 	version: 2009-08-10
@@ -35,9 +35,11 @@ init script:
 	guild_mana := { styling.use_guild_mana_symbols }
 
 	is_phenomenon	:=	{ contains(card.type, match:"Phenomenon") }
+	is_phenomenon_2:=	{ contains(card.type_2, match:"Phenomenon") }
 	card_shape	:=	{ "plane card" }
 	
-	include file: /planechase-kula-mini.mse-style/variables.txt
+	include file: /planechase-kula-mini.mse-style/variables
+	include file: doublefaced phenomenon checks
 ############################################################## Set info fields
 set info style:
 	symbol:
@@ -328,7 +330,7 @@ card style:
 		width:			{image_pos.width	}
 		height:			{image_pos.height	}
 		z index:			 -1
-		mask:			 { if is_phenomenon() then "image_mask_nom.png" else "image_mask_" + styling.chaos_break + ".png" }
+		mask:			 { if is_phenomenon_2() then "image_mask_nom.png" else "image_mask_" + styling.chaos_break + ".png" }
 	type_2:
 		left:			{type_pos.left		}
 		top:				{type_pos.top +375	}
@@ -364,7 +366,7 @@ card style:
 		left:			{text_pos.left		}
 		top:				{text_pos.top +375		}
 		width:			{text_pos.width	}
-		height:			{ decide_text_height() }
+		height:			{ decide_text_height_2() }
 		font:
 			name:		 MPlantin
 			italic name:	 MPlantin-Italic
@@ -380,10 +382,10 @@ card style:
 		line height soft:	 1.0
 		
 	chaos text_2:
-		left:			{decide_chaos_pos().left		}
-		bottom:			{decide_chaos_pos().bot +375		}
-		width:			{decide_chaos_pos().width	}
-		height:			{decide_chaos_pos().height	}
+		left:			{decide_chaos_pos_2().left		}
+		bottom:			{decide_chaos_pos_2().bot +375		}
+		width:			{decide_chaos_pos_2().width	}
+		height:			{decide_chaos_pos_2().height	}
 		font:
 			name:		 MPlantin
 			italic name:	 MPlantin-Italic
@@ -481,15 +483,15 @@ extra card style:
 		choice images:
 			frame:		 card.png
 	chaos symbol_2:
-		left:			{decide_chaos_sym_pos().left		}
-		top:				{decide_chaos_sym_pos().top +375		}
-		width:			{decide_chaos_sym_pos().width		}
-		height:			{decide_chaos_sym_pos().height	}
+		left:			{decide_chaos_sym_pos_2().left		}
+		top:				{decide_chaos_sym_pos_2().top +375		}
+		width:			{decide_chaos_sym_pos_2().width		}
+		height:			{decide_chaos_sym_pos_2().height	}
 		z index:			 6
 		render style:		 image
 		choice images:
 			chaos: /magic-mana-small.mse-symbol-font/mana_chaos.png
-		visible:			{not(is_phenomenon())	}
+		visible:			{not(is_phenomenon_2())	}
 	artist arrow_2:
 		left:			{artist_arrow_pos.left - card_style.illustrator.content_width * 0.5 }
 		top:				{artist_arrow_pos.top +375			}
