@@ -1,0 +1,35 @@
+﻿mse version: 2.0.0
+short name: Planes
+full name: Magic Plane Cards
+installer group: Magic Planes/game files
+icon: card-sample.png
+position hint: 02
+
+version: 2014-03-25
+depends on:
+	package:magic.mse-game
+
+#By Pichoro
+############################################################## Functions & filters
+# General functions
+init script: include file:script
+
+include file: /magic.mse-game/keywords
+include file: /magic.mse-game/auto_replace
+include file: set_fields
+include file: card_fields
+include file: card_fields_2
+include file: word_list
+include file: default_style
+include file: extra_statistics
+
+############################################################## Card pack items
+pack type:
+	name: card
+	filter: card.name != ""
+############################################################## Card packs
+pack type:
+	name: booster pack
+	item:
+		name: card
+		amount: 1
