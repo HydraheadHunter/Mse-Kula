@@ -1,12 +1,12 @@
 background_pos:= 		[left:0,		top:0,	width:523,	height:375	]
 
-name_pos:=			[left:84,		top:16,	width:354,	height:30		]
-image_pos:=			[left:16		top:15,	width:492.5,	height:344	]
-type_pos:=			[left:114,	top:246,	width:294,	height:21		]
-rarity_pos:=			[right:408,	top:253,	width:28,		height:14		]
+name_pos:=			[left:35,		top:16,	width:453,	height:30		]
+image_pos:=			[left:0		top:0,	width:523,	height:375	]
+type_pos:=			[left:96,		top:246,	width:334,	height:21		]
+rarity_pos:=			[right:424,	top:255,	width:28,		height:14		]
 
-text_h:=											    [phen:84, low:48, mid:42, high:32]
-text_pos:=			[left:62,		top:268,	width:411,	height:text_h	]
+text_h:=											    [phen:80, low:48, mid:42, high:32]
+text_pos:=			[left:26,		top:270,	width:477,	height:text_h	]
 	decide_text_height:={
 						if is_phenomenon()					then text_pos.height.phen
 						else if styling.chaos_break=="high"	then text_pos.height.high
@@ -15,9 +15,9 @@ text_pos:=			[left:62,		top:268,	width:411,	height:text_h	]
 					}
 chaos_text_pos:=	[ 
 				phen:[left:0,		bot:0,	width:0,		height:0		],
-				low: [left:94,		bot:347,	width:369.5,	height:28		],
-				mid: [left:94,		bot:347,	width:369.5,	height:31.5	],
-				high:[left:94,		bot:347,	width:369.5,	height:44		],
+				low: [left:63,		bot:347,	width:436.5,	height:28		],
+				mid: [left:63,		bot:347,	width:436.5,	height:31.5	],
+				high:[left:63,		bot:347,	width:436.5,	height:44		],
 				]
 	decide_chaos_pos:={
 						if is_phenomenon()					then chaos_text_pos.phen
@@ -50,9 +50,9 @@ card_code_pos:=		[left:cc_l,	top:362,	width:81,		height:12		]
 
 chaos_symbol_pos:=	[
 				phen:[left:0,		top:0,	width:0,		height:0		],
-				low: [left:62,		top:324,	width:25,		height:22		],
-				mid: [left:62,		top:320,	width:25,		height:22		],
-				high:[left:62,		top:314,	width:25,		height:22		],
+				low: [left:31,		top:324,	width:25,		height:22		],
+				mid: [left:31,		top:320,	width:25,		height:22		],
+				high:[left:31,		top:314,	width:25,		height:22		],
 				]
 	decide_chaos_sym_pos:={
 						if is_phenomenon()					then chaos_symbol_pos.phen

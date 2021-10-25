@@ -125,7 +125,7 @@ card style:
 		width:			{image_pos.width	}
 		height:			{image_pos.height	}
 		z index:			 -1
-		mask:			 { if is_phenomenon() then "image_mask_nom.png" else "image_mask_" + styling.chaos_break + ".png" }
+		mask:			 planechase_mask.png
 	type:
 		left:			{type_pos.left		}
 		top:				{type_pos.top		}
@@ -273,10 +273,10 @@ extra card style:
 		top:				{background_pos.top				}
 		width:			{background_pos.width			}
 		height:			{background_pos.height			}
-		z index:			 0
+		z index:			 -2
 		render style:		 image
 		choice images:
-			frame:		 card.png
+			frame:		 planechase_day.png
 	chaos symbol:
 		left:			{decide_chaos_sym_pos().left		}
 		top:				{decide_chaos_sym_pos().top		}
@@ -330,7 +330,7 @@ card style:
 		width:			{image_pos.width	}
 		height:			{image_pos.height	}
 		z index:			 -1
-		mask:			 { if is_phenomenon_2() then "image_mask_nom.png" else "image_mask_" + styling.chaos_break + ".png" }
+		mask:			 planechase_mask.png
 	type_2:
 		left:			{type_pos.left		}
 		top:				{type_pos.top +375	}
@@ -478,10 +478,10 @@ extra card style:
 		top:				{background_pos.top +375				}
 		width:			{background_pos.width			}
 		height:			{background_pos.height			}
-		z index:			 0
+		z index:			 -2
 		render style:		 image
 		choice images:
-			frame:		 card.png
+			frame:		 planechase_night.png
 	chaos symbol_2:
 		left:			{decide_chaos_sym_pos_2().left		}
 		top:				{decide_chaos_sym_pos_2().top +375		}
@@ -493,7 +493,7 @@ extra card style:
 			chaos: /magic-mana-small.mse-symbol-font/mana_chaos.png
 		visible:			{not(is_phenomenon_2())	}
 	artist arrow_2:
-		left:			{artist_arrow_pos.left - card_style.illustrator.content_width * 0.5 }
+		left:			{artist_arrow_pos.left - card_style.illustrator_2.content_width * 0.5 }
 		top:				{artist_arrow_pos.top +375			}
 		width:			{artist_arrow_pos.width			}
 		height:			{artist_arrow_pos.height			}

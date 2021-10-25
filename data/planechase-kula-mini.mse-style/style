@@ -119,7 +119,8 @@ card style:
 		width:			{image_pos.width	}
 		height:			{image_pos.height	}
 		z index:			 -1
-		mask:			 { if is_phenomenon() then "image_mask_nom.png" else "image_mask_" + styling.chaos_break + ".png" }
+		mask:			 planechase_mask.png
+#		mask:			 { if is_phenomenon() then "image_mask_nom.png" else "image_mask_" + styling.chaos_break + ".png" }
 	type:
 		left:			{type_pos.left		}
 		top:				{type_pos.top		}
@@ -267,10 +268,10 @@ extra card style:
 		top:				{background_pos.top				}
 		width:			{background_pos.width			}
 		height:			{background_pos.height			}
-		z index:			 0
+		z index:			 -2
 		render style:		 image
 		choice images:
-			frame:		 card.png
+			frame:		 planechase_day.png
 	chaos symbol:
 		left:			{decide_chaos_sym_pos().left		}
 		top:				{decide_chaos_sym_pos().top		}
