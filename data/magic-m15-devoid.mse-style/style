@@ -4,9 +4,9 @@ short name: M15 Devoid
 full name: Devoid Cards
 icon: card-sample.png
 installer group: magic/m15 style/devoid cards
-position hint: 002
+position hint: 012
 
-version: 2015-12-20
+version: 2018-02-10
 depends on:
 	package: magic.mse-game
 	version: 2014-06-25
@@ -25,6 +25,9 @@ depends on:
 depends on:
 	package: magic-mana-small.mse-symbol-font
 	version: 2007-09-23
+depends on:
+	package: magic-mainframe-extras.mse-include
+	version: 2018-01-01
 
 card width: 375
 card height: 523
@@ -63,7 +66,23 @@ init script:
 	
 	# Is the card a promo card?
 	is_promo := { styling.promo }
+	has_identity := { styling.color_indicator_dot }
+	is_unsorted := {styling.remove_from_autocount}
 	
+	chop_top := {if styling.chop_top == "" then 0 else if comma_count(styling.chop_top) == "," or comma_count(styling.chop_top) == ",," then split_text(match:",", styling.chop_top).0 else styling.chop_top}
+	chop_bot := {if comma_count(styling.chop_top) == ",," then split_text(match:",", styling.chop_top).1 else if styling.chop_bottom == "" then 0 else styling.chop_bottom}
+	top_of_textbox := {327 - (-chop_top()) }
+	bottom_of_textbox := {481 - chop_bot() }
+	##### flavor bar stuff
+	bar_offset := {if styling_offset() == "-" then 0 else if styling_offset() != "" then -styling_offset() else 0}
+	styling_offset := { replace(styling.flavor_bar_offset, match:"(u|d)+", replace: "") }
+	offset_lines := {offset_counter(styling.flavor_bar_offset)}
+
+	shrink_type := {if styling.shrink_typeline_text != "" then to_int(styling.shrink_typeline_text) else 0 }
+	shrink_name := {if styling.shrink_name_text != "" then to_int(styling.shrink_name_text) else 0 }
+	use_main_rarity := { contains(set.mainframe_rarity_name, match: ".png")}
+	un_png := replace@(match:".png", replace: "")
+
 ############################################################## Set info fields
 set info style:
 	symbol:
@@ -74,6 +93,40 @@ set info style:
 			fill color:   rgb(255,255,255)
 			border color: rgb(0,0,0)
 ############################################################## Extra style options
+styling field:
+	type: text
+	name: chop top
+	description: Shrinks the textbox X pixels from the top OR shrinks "top,bottom,"
+styling field:
+	type: text
+	name: chop bottom
+	description: Shrinks the textbox X pixels from the bottom.
+styling field:
+	type: text
+	name: flavor bar offset
+	description: Move the flavor bar up X pixels. Use negative to move down.
+styling field:
+	type: text
+	name: shrink name text
+	description: Reduces the name text N points.
+styling field:
+	type: text
+	name: shrink typeline text
+	description: Reduces the typeline text N points.
+styling field:
+	type: boolean
+	name: use holofoil stamps
+	description: Change to no to disable rare holofoil stamps
+styling field:
+	type: boolean
+	name: color indicator dot
+	description: Use the color indicator dot
+	initial: no
+styling field:
+	type: boolean
+	name: remove from autocount
+	description: Removes the automatic card number for specific cards, to allow for overcounted cards like in Planeswalker Decks.
+	initial: no
 styling field:
 	type: boolean
 	name: grey hybrid name
@@ -175,13 +228,13 @@ card style:
 		left: { if card.card_symbol=="none" then 32 else 50 }
 		top: 30
 		right:  { 341 - card_style.casting_cost.content_width }
-		height: 23
+		height: { 23 - to_int(0.5 * shrink_name())}
 		alignment: bottom shrink-overflow
 		padding bottom: 0
 		z index: 1
 		font:
 			name: Beleren Bold
-			size: 16
+			size: { 16 - shrink_name() }
 			color: black
 	casting cost:
 		right: 346
@@ -228,15 +281,15 @@ card style:
 		image: { card_identity() }
 	type:
 		left: 36
-		top: 294
+		top: { 294 + shrink_type() }
 		width: { 307 - max(22,card_style.rarity.content_width) }
-		height: 20
+		height: { 20 - shrink_type() }
 		alignment: top shrink-overflow
 		z index: 2
 		padding top: 2
 		font:
 			name: Beleren Bold
-			size: 13
+			size: { 13 - shrink_type() }
 			color: black
 			separator color: rgb(128,128,128)
 	rarity:
@@ -251,22 +304,40 @@ card style:
 			# Images based on the set symbol
 			basic land:
 				script:
-					if styling.inverted_common_symbol then symbol_variation(symbol: set.symbol, variation: "invertedcommon")
+					if use_main_rarity() then "/magic-mainframe-extras.mse-include/" + un_png(set.mainframe_rarity_name) + "c.png"
+					else if styling.inverted_common_symbol then symbol_variation(symbol: set.symbol, variation: "invertedcommon")
 					else symbol_variation(symbol: set.symbol, variation: "common")
 			common:
 				script:
-					if styling.inverted_common_symbol then symbol_variation(symbol: set.symbol, variation: "invertedcommon")
+					if use_main_rarity() then "/magic-mainframe-extras.mse-include/" + un_png(set.mainframe_rarity_name) + "c.png"
+					else if styling.inverted_common_symbol then symbol_variation(symbol: set.symbol, variation: "invertedcommon")
 					else symbol_variation(symbol: set.symbol, variation: "common")
-			uncommon:   script: symbol_variation(symbol: set.symbol, variation: "uncommon")
-			rare:       script: symbol_variation(symbol: set.symbol, variation: "rare")
-			mythic rare:       script: symbol_variation(symbol: set.symbol, variation: "mythic rare")
-			special:    script: symbol_variation(symbol: set.symbol, variation: "special")
+			uncommon:
+				script:
+					if use_main_rarity() then "/magic-mainframe-extras.mse-include/" + un_png(set.mainframe_rarity_name) + "u.png"
+					else symbol_variation(symbol: set.symbol, variation: "uncommon")
+			rare:
+				script:
+					if use_main_rarity() then "/magic-mainframe-extras.mse-include/" + un_png(set.mainframe_rarity_name) + "r.png"
+					else symbol_variation(symbol: set.symbol, variation: "rare")
+			mythic rare:
+				script:
+					if use_main_rarity() then "/magic-mainframe-extras.mse-include/" + un_png(set.mainframe_rarity_name) + "m.png"
+					else symbol_variation(symbol: set.symbol, variation: "mythic rare")
+			special:
+				script:
+					if use_main_rarity() then "/magic-mainframe-extras.mse-include/" + un_png(set.mainframe_rarity_name) + "s.png"
+					else symbol_variation(symbol: set.symbol, variation: "special")
+			masterpiece:
+				script:
+					if use_main_rarity() then "/magic-mainframe-extras.mse-include/" + un_png(set.mainframe_rarity_name) + "mp.png"
+					else symbol_variation(symbol: set.masterpiece_symbol, variation: "mythic rare")
 	############################# Text box
 	text:
 		left: 29
-		top: 327
+		top: { top_of_textbox() }
 		width: 314
-		height: 154
+		bottom: { bottom_of_textbox() }
 		font:
 			name: MPlantin
 			italic name: MPlantin-Italic
@@ -345,6 +416,7 @@ card style:
 		width: 140
 		height: 10
 		z index: 2
+		visible: {not set.automatic_copyright}
 		alignment: middle right shrink-overflow
 		font:
 			name: Matrix
@@ -357,7 +429,7 @@ extra card field:
 	name: card code
 	save value: false
 	script:
-		if set.automatic_card_numbers then
+		if set.automatic_card_numbers and not styling.remove_from_autocount then
 			forward_editor(prefix: card_number_m15() + "/" + card_count_m15() + " " + rarity_code() + " ", field: card.card_code_text)
 		else
 			combined_editor(field1: card.custom_card_number, separator: " " + rarity_code() + " ", field2: card.card_code_text)
@@ -391,6 +463,20 @@ extra card field:
 	choice: foil
 	save value: false
 	editable: false
+extra card field:
+	type: text
+	name: auto copyright
+	script: set.copyright
+	save value: false
+	editable: false
+	show statistics: false
+extra card field:
+	type: choice
+	name: flavor bar
+	choice: bar
+	editable: false
+	save value: false
+	show statistics: false
 extra card style:
 	card code:
 		left: 24
@@ -426,7 +512,7 @@ extra card style:
 		width: 46
 		height: 26
 		z index: 1
-		visible: { is_rare() }
+		visible: { is_rare() and styling.use_holofoil_stamps }
 		render style: image
 		image: { card_stamp() }
 	foil stamp:
@@ -435,7 +521,7 @@ extra card style:
 		width: 46
 		height: 26
 		z index: 1
-		visible: { is_rare() }
+		visible: { is_rare() and styling.use_holofoil_stamps }
 		render style: image
 		image: foil_stamp.png
 	foil layer:
@@ -447,3 +533,25 @@ extra card style:
 		render style: image
 		image: {if styling.overlay == "" then nil else styling.overlay + "/overlay.png"}
 		mask: { if is_rare() then "foil_mask_rare.png" else "foil_mask.png" }
+	auto copyright:
+		right: 350
+		top: { if card.pt != "" then 500 else 488 }
+		width: 140
+		height: 10
+		z index: 2
+		alignment: middle right shrink-overflow
+		visible: {set.automatic_copyright}
+		font:
+			name: Matrix
+			size: 7
+			color: white
+			weight: bold
+	flavor bar:
+		left: 0
+		top: { bar_equation() }
+		width: 375
+		height: 1
+		z index: 1
+		render style: image
+		image: bar.png
+		visible: { card.rule_text != "" and remove_tags(card.flavor_text) != "" and set.use_flavor_bar }

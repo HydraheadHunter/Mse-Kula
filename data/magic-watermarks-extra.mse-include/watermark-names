@@ -15,6 +15,7 @@ choice:
 	choice: purple
 	choice: orange
 	choice: pink
+	choice: colorless
 	choice: snow
 choice:
 	name: transparent mana symbol

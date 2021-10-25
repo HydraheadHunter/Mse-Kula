@@ -6,10 +6,10 @@ installer group: magic/m15 style/emblems
 icon: card-sample.png
 position hint: 090
 
-version: 2018-06-01
+version: 2020-04-25
 depends on:
 	package: magic.mse-game
-	version: 2014-06-25
+	version: 2020-04-25
 depends on:
 	package: magic-mana-small.mse-symbol-font
 	version: 2007-09-23
@@ -39,10 +39,9 @@ init script:
 	un_png := replace@(match:".png", replace: "")
 	remove_rarity := { styling.remove_rarity_symbol}
 	########## Flavor bar stuff
-	lines_of_flavor := { to_int((length_of_flavor() / char_per_line()) + 0.99) + (if length(split_text(match:"\n", flavor_text()).1) >= max(43,char_per_line()-4) then 2 else if split_text(match:"\n", flavor_text()).1 != "" then length(soft_break_filter(card.flavor_text)) else 0) + length(filter_text(styling.flavor_bar_offset, match:"u")) - length(filter_text(styling.flavor_bar_offset, match:"d")) + (if contains(card.notes, match:"!fbu") then 1 else 0)}
 	bar_offset := {if styling_offset() == "-" then 0 else if styling_offset() != "" then -styling_offset() else 0}
 	styling_offset := { replace(styling.flavor_bar_offset, match:"(u|d)+", replace: "") }
-	bar_equation := { top_of_textbox() + padding_height() + card_style.text.content_height - height_of_flavor() + linebreak_height() - uneven_correction() + correction_coeff() + bar_offset()  + hard_flavor_break() +1 }
+	offset_lines := {offset_counter(styling.flavor_bar_offset)}
 
 	normal_mask := {styling.mask == "default"}
 	upload_mask := { styling.mask == "upload"}
@@ -294,10 +293,9 @@ card style:
 	copyright:
 		right: 350
 		top: { if card.pt != "" then 500 else 488 }
-		width: 140
+		width: {if set.automatic_copyright then 0 else 140}
 		height: 10
 		z index: 4
-		visible: {not set.automatic_copyright}
 		alignment: middle right shrink-overflow
 		font:
 			name: Matrix
@@ -417,10 +415,9 @@ extra card style:
 	auto copyright:
 		right: 350
 		top: { if card.pt != "" then 500 else 488 }
-		width: 140
+		width: {if set.automatic_copyright then 140 else 0}
 		height: 10
 		z index: 4
-		visible: {set.automatic_copyright}
 		alignment: middle right shrink-overflow
 		font:
 			name: Matrix

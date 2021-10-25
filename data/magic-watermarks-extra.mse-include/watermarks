@@ -10,6 +10,7 @@ choice images:
 	mana symbol purple:			/magic-watermarks-extra.mse-include/watermark_p.png
 	mana symbol orange:		/magic-watermarks-extra.mse-include/watermark_o.png
 	mana symbol pink:		/magic-watermarks-extra.mse-include/watermark_k.png
+	mana symbol colorless:		/magic-watermarks.mse-include/watermark_c.png
 	mana symbol snow:			script: set_combine(combine:"shadow", input:"/magic-watermarks.mse-include/watermark_s.png")
 
 	transparent mana symbol white:		script: set_alpha(alpha: 0.4, input:"/magic-watermarks.mse-include/watermark_w.png")

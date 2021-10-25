@@ -666,9 +666,9 @@ card style:
 		line height line: 1.5
 		line height soft: 0.9
 	watermark:
-		left: 17
+		left: 40
 		top: { if use_fuse() then 235 else 238}
-		width: 232
+		width: 222
 		height: { if use_fuse() then 85 else 103 }
 		z index: 1
 		render style: image
@@ -676,7 +676,7 @@ card style:
 		alignment: middle center
 		include file: /magic-watermarks.mse-include/watermarks
 	watermark 2:
-		left: 271
+		left: 274
 		top: { if use_fuse() then 235 else 238}
 		width: 232
 		height: { if use_fuse() then 85 else 103 }
@@ -724,12 +724,11 @@ card style:
 		visible: { contains(styling.other_options, match:"two illustrators") }
 	copyright:
 		left: 32
-		top: 154
-		width: 200
+		top: 214
+		width: {if set.automatic_copyright then 0 else 140}
 		height: 7
 		z index: 2
 		angle: 270
-		visible: {not set.automatic_copyright}
 		alignment: middle right shrink-overflow
 		font:
 			name: Matrix
@@ -893,7 +892,7 @@ extra card style:
 		visible: { use_fuse() }
 	stamp:
 		left: 40
-		top: 197
+		top: 164
 		width: 46
 		height: 26
 		angle: 270
@@ -932,12 +931,11 @@ extra card style:
 		visible: { use_fuse() and not styling.use_fuse_arrows }
 	auto copyright:
 		left: 32
-		top: 154
-		width: 200
+		top: 214
+		width: {if set.automatic_copyright then 140 else 0}
 		height: 7
 		z index: 3
 		angle: 270
-		visible: {set.automatic_copyright}
 		alignment: middle right shrink-overflow
 		font:
 			name: Matrix

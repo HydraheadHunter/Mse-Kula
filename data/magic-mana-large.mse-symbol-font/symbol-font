@@ -1,13 +1,77 @@
 ﻿mse version: 0.3.9
-version: 2015-12-13
+version: 2020-02-07
 # Symbol font in the 'popup' style, used for casting costs on modern cards
 short name: popup style
 installer group: magic/Mana symbols/popup style
 position hint: 002
 icon: mana_r.png
+depends on:
+	package: magic-mainframe-extras.mse-include
+	version: 2018-01-01
 
 image font size: 135
 horizontal space: 2
+
+#######Custom Mana Symbols
+### Colored
+symbol:
+	code: V/W
+	image: {"/magic-mainframe-extras.mse-include/" + v_mana_loc() + "large/" + v_mana_name() + "_w.png"}
+	image font size: 120
+	enabled: {use_large_v_mana() and use_color_v_mana()}
+symbol:
+	code: V/U
+	image: {"/magic-mainframe-extras.mse-include/" + v_mana_loc() + "large/" + v_mana_name() + "_u.png"}
+	image font size: 120
+	enabled: {use_large_v_mana() and use_color_v_mana()}
+symbol:
+	code: V/B
+	image: {"/magic-mainframe-extras.mse-include/" + v_mana_loc() + "large/" + v_mana_name() + "_b.png"}
+	image font size: 120
+	enabled: {use_large_v_mana() and use_color_v_mana()}
+symbol:
+	code: V/R
+	image: {"/magic-mainframe-extras.mse-include/" + v_mana_loc() + "large/" + v_mana_name() + "_r.png"}
+	image font size: 120
+	enabled: {use_large_v_mana() and use_color_v_mana()}
+symbol:
+	code: V/G
+	image: {"/magic-mainframe-extras.mse-include/" + v_mana_loc() + "large/" + v_mana_name() + "_g.png"}
+	image font size: 120
+	enabled: {use_large_v_mana() and use_color_v_mana()}
+### Hybrid
+symbol:
+	code: V/W
+	image: { masked_blend(dark: "/magic-mainframe-extras.mse-include/" + v_mana_loc() + "large/" + v_mana_name() + "_h.png", light: "mana_ww.png", mask: "mask_hybrid.png") }
+	image font size: 145
+	enabled: {use_large_v_mana() and use_hybrid_v_mana()}
+symbol:
+	code: V/U
+	image: { masked_blend(dark: "/magic-mainframe-extras.mse-include/" + v_mana_loc() + "large/" + v_mana_name() + "_h.png", light: "mana_uu.png", mask: "mask_hybrid.png") }
+	image font size: 145
+	enabled: {use_large_v_mana() and use_hybrid_v_mana()}
+symbol:
+	code: V/B
+	image: { masked_blend(dark: "/magic-mainframe-extras.mse-include/" + v_mana_loc() + "large/" + v_mana_name() + "_h.png", light: "mana_bb.png", mask: "mask_hybrid.png") }
+	image font size: 145
+	enabled: {use_large_v_mana() and use_hybrid_v_mana()}
+symbol:
+	code: V/R
+	image: { masked_blend(dark: "/magic-mainframe-extras.mse-include/" + v_mana_loc() + "large/" + v_mana_name() + "_h.png", light: "mana_rr.png", mask: "mask_hybrid.png") }
+	image font size: 145
+	enabled: {use_large_v_mana() and use_hybrid_v_mana()}
+symbol:
+	code: V/G
+	image: { masked_blend(dark: "/magic-mainframe-extras.mse-include/" + v_mana_loc() + "large/" + v_mana_name() + "_h.png", light: "mana_gg.png", mask: "mask_hybrid.png") }
+	image font size: 145
+	enabled: {use_large_v_mana() and use_hybrid_v_mana()}
+
+symbol:
+	code: V
+	image: {"/magic-mainframe-extras.mse-include/" + v_mana_loc() + "large/" + v_mana_name() + ".png"}
+	image font size: 120
+	enabled: {use_large_v_mana()}
+#######Normal Mana Symbols
 symbol:
 	code: T
 	image: mana_t_older.png
@@ -37,6 +101,10 @@ symbol:
 	code: chaos
 	image: mana_chaos.png
 	image font size: 151.69
+###################################################################################### Prismatic Symbols
+symbol:
+	code: W/U/B/R/G
+	image: mana_wubrg.png
 symbol:
 	code: B/G/W
 	image: mana_bgw.png
@@ -279,6 +347,26 @@ symbol:
 	image: mana_phyg.png
 	image font size: 120
 symbol:
+	code: L/W
+	image: mana_loyal_w.png
+	image font size: 120
+symbol:
+	code: L/U
+	image: mana_loyal_u.png
+	image font size: 120
+symbol:
+	code: L/B
+	image: mana_loyal_b.png
+	image font size: 120
+symbol:
+	code: L/R
+	image: mana_loyal_r.png
+	image font size: 120
+symbol:
+	code: L/G
+	image: mana_loyal_g.png
+	image font size: 120
+symbol:
 	code: H
 	image: mana_phyc.png
 	image font size: 120
@@ -303,9 +391,6 @@ symbol:
 symbol:
 	code: S
 	image: mana_s.png
-symbol:
-	code: V
-	image: mana_v.png
 symbol:
 	code: 2/W
 	image: 2W.png
@@ -402,6 +487,21 @@ symbol:
 		max stretch: 0.5
 	image font size: 145
 symbol:
+	image: { masked_blend(dark: "mana_circle_large.png", light: "mana_ss.png", mask: "mask_hybrid.png") }
+	code: ([XYZ0-9])/S
+	regex: yes
+	draw text: 1
+	text margin left:   -.30
+	text margin right:  .2
+	text margin top:    -.14
+	text margin bottom: .34
+	text font:
+		name: MPlantin
+		size: .6
+		color: black
+		max stretch: 0.5
+	image font size: 145
+symbol:
 	image: { masked_blend(dark: "mana_circle_large.png", light: "mana_cc.png", mask: "mask_hybrid.png") }
 	code: ([XYZ0-9])/C
 	regex: yes
@@ -423,39 +523,85 @@ symbol:
 	draw text: 0
 	text margin left:   .23
 	text margin right:  .21
-	text margin top:    -.10
+	text margin top:    -.15
 	text margin bottom: -.06
 	text font:
 		name: MPlantin
 		size: 1
 		color: rgb(0,0,0)
+		max stretch: 0.9
 symbol:
 	code: I
 	image: mana_infinite.png
 symbol:
+	code: 100
+	image: 100.png
+symbol:
+	code: 99
+	image: 99.png
+symbol:
+	code: 30
+	image: 30.png
+symbol:
+	code: 29
+	image: 29.png
+symbol:
+	code: 28
+	image: 28.png
+symbol:
+	code: 27
+	image: 27.png
+symbol:
+	code: 26
+	image: 26.png
+symbol:
+	code: 25
+	image: 25.png
+symbol:
+	code: 24
+	image: 24.png
+symbol:
+	code: 23
+	image: 23.png
+symbol:
+	code: 22
+	image: 22.png
+symbol:
+	code: 21
+	image: 21.png
+symbol:
+	code: 20
+	image: 20.png
+symbol:
+	code: 19
+	image: 19.png
+symbol:
+	code: 18
+	image: 18.png
+symbol:
 	code: 15
 	image: 15.png
-	enabled: {ancestral_mana()}
+symbol:
+	code: 16
+	image: 16.png
+symbol:
+	code: 15
+	image: 15.png
 symbol:
 	code: 14
 	image: 14.png
-	enabled: {ancestral_mana()}
 symbol:
 	code: 13
 	image: 13.png
-	enabled: {ancestral_mana()}
 symbol:
 	code: 12
 	image: 12.png
-	enabled: {ancestral_mana()}
 symbol:
 	code: 11
 	image: 11.png
-	enabled: {ancestral_mana()}
 symbol:
 	code: 10
 	image: 10.png
-	enabled: {ancestral_mana()}
 symbol:
 	code: 9
 	image: 9.png
@@ -559,7 +705,6 @@ insert symbol menu:
 	item: R
 	item: G
 	item: S
-	item: V
 	item:
 		type: line
 	item:

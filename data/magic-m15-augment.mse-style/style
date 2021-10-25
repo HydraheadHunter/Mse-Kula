@@ -4,9 +4,9 @@ short name: M15 Augment
 full name: Augment After M15
 icon: card-sample.png
 installer group: magic/m15 style/augment cards
-position hint: 009
+position hint: 033
 
-version: 2015-12-20
+version: 2018-02-09
 depends on:
 	package: magic.mse-game
 	version: 2014-06-25
@@ -68,7 +68,8 @@ init script:
 		replace@(
 			match: "<atom-cardname><nospellcheck>CARDNAME</nospellcheck></atom-cardname>"
 			replace: "<atom-cardname><nospellcheck>" + (if card.name=="" then "CARDNAME" else card.name) + "</nospellcheck></atom-cardname>")
-	
+	has_identity := { styling.color_indicator_dot }
+	is_unsorted := {styling.remove_from_autocount}
 ############################################################## Set info fields
 set info style:
 	symbol:
@@ -79,6 +80,20 @@ set info style:
 			fill color:   rgb(255,255,255)
 			border color: rgb(0,0,0)
 ############################################################## Extra style options
+styling field:
+	type: boolean
+	name: use holofoil stamps
+	description: Change to no to disable rare holofoil stamps
+styling field:
+	type: boolean
+	name: color indicator dot
+	description: Use the color indicator dot
+	initial: no
+styling field:
+	type: boolean
+	name: remove from autocount
+	description: Removes the automatic card number for specific cards, to allow for overcounted cards like in Planeswalker Decks.
+	initial: no
 styling field:
 	type: boolean
 	name: grey hybrid name
@@ -210,7 +225,7 @@ card style:
 		top: 300
 		width: 17
 		height: 17
-		z index: 2
+		z index: 1
 		render style: image
 		visible: { has_identity() }
 		image: { card_identity() }
@@ -249,12 +264,75 @@ card style:
 			rare:       script: symbol_variation(symbol: set.symbol, variation: "rare")
 			mythic rare:       script: symbol_variation(symbol: set.symbol, variation: "mythic rare")
 			special:    script: symbol_variation(symbol: set.symbol, variation: "special")
+			masterpiece: script: symbol_variation(symbol: set.masterpiece_symbol, variation: "mythic rare")
 	############################# Text box
 	rule text:
 		left: {if card.casting_cost != "" then 103 else 29}
 		top: 327
 		right: 342
 		height: 52
+		font:
+			name: MPlantin
+			italic name: MPlantin-Italic
+			size: 14
+			scale down to: 6
+			color: black
+		symbol font:
+			name: { styling.text_box_mana_symbols }
+			size: 14
+		alignment:
+			script:
+				if (styling.center_text == "short text only" and
+				   not contains(match:"\n", card.rule_text) and
+				   card.flavor_text == "<i-flavor></i-flavor>" and
+				   card_style.text.content_lines <= 2) or
+				   styling.center_text == "always"
+				then "middle center"
+				else "middle left"
+		z index: 2
+		padding left:   6
+		padding right:  4
+		line height hard: 1.2
+		line height line: 1.5
+		line height soft: 0.9
+		line height hard max: 1.3
+		line height line max: 1.6
+	level 2 text:
+		left: {if card.casting_cost_2 != "" then 103 else 29}
+		top: 379
+		right: 342
+		height: 51
+		font:
+			name: MPlantin
+			italic name: MPlantin-Italic
+			size: 14
+			scale down to: 6
+			color: black
+		symbol font:
+			name: { styling.text_box_mana_symbols }
+			size: 14
+		alignment:
+			script:
+				if (styling.center_text == "short text only" and
+				   not contains(match:"\n", card.rule_text) and
+				   card.flavor_text == "<i-flavor></i-flavor>" and
+				   card_style.text.content_lines <= 2) or
+				   styling.center_text == "always"
+				then "middle center"
+				else "middle left"
+		z index: 2
+		padding left:   6
+		padding right:  4
+		line height hard: 1.2
+		line height line: 1.5
+		line height soft: 0.9
+		line height hard max: 1.3
+		line height line max: 1.6
+	level 3 text:
+		left: {if card.casting_cost_3 != "" then 103 else 29}
+		top: 430
+		right: 342
+		height: 51
 		font:
 			name: MPlantin
 			italic name: MPlantin-Italic
@@ -361,6 +439,7 @@ card style:
 		width: 140
 		height: 10
 		z index: 2
+		visible: {not set.automatic_copyright}
 		alignment: middle right shrink-overflow
 		font:
 			name: Matrix
@@ -372,7 +451,11 @@ extra card field:
 	type: text
 	name: card code
 	save value: false
-	script: forward_editor(prefix: card_number_m15() + "/" + card_count_m15() + " " + rarity_code() + " ", field: card.card_code_text)
+	script:
+		if set.automatic_card_numbers and not styling.remove_from_autocount then
+			forward_editor(prefix: card_number_m15() + "/" + card_count_m15() + " " + rarity_code() + " ", field: card.card_code_text)
+		else
+			combined_editor(field1: card.custom_card_number, separator: " " + rarity_code() + " ", field2: card.card_code_text)
 extra card field:
 	type: choice
 	name: artist arrow
@@ -415,23 +498,13 @@ extra card field:
 	choice: foil
 	save value: false
 	editable: false
-# Forward the second rule text so we can intercept and replace card.name_2 with card.name.
 extra card field:
 	type: text
-	name: forwarded rule text 2
-	multi line: true
+	name: auto copyright
+	script: set.copyright
 	save value: false
-	script: card_name_replace(forward_editor(field: card.rule_text_2))
-	description: The second rules text box
-# Combine rule text 3 and flavor text to allow flavor on augments.
-extra card field:
-	type: text
-	name: rule text 3 with flavor
-	multi line: true
-	save value: false
-	script:
-		combined_editor(field1: card.rule_text_3, separator: "<line>\n</line>", field2: card.flavor_text)
-	description: The third rules text box and flavor text for the card; use up and down arrows to switch
+	editable: false
+	show statistics: false
 extra card style:
 	card code:
 		left: 24
@@ -485,7 +558,7 @@ extra card style:
 		width: 46
 		height: 26
 		z index: 1
-		visible: { is_rare() }
+		visible: { is_rare() and styling.use_holofoil_stamps}
 		render style: image
 		image: { card_stamp() }
 	foil stamp:
@@ -494,7 +567,7 @@ extra card style:
 		width: 46
 		height: 26
 		z index: 1
-		visible: { is_rare() }
+		visible: { is_rare() and styling.use_holofoil_stamps }
 		render style: image
 		image: foil_stamp.png
 	foil layer:
@@ -506,65 +579,17 @@ extra card style:
 		render style: image
 		image: {if styling.overlay == "" then nil else styling.overlay + "/overlay.png"}
 		mask: { if is_rare() then "foil_mask_rare.png" else "foil_mask.png" }
-	forwarded rule text 2:
-		left: {if card.casting_cost_2 != "" then 103 else 29}
-		top: 379
-		right: 342
-		height: 51
-		font:
-			name: MPlantin
-			italic name: MPlantin-Italic
-			size: 14
-			scale down to: 6
-			color: black
-		symbol font:
-			name: { styling.text_box_mana_symbols }
-			size: 14
-		alignment:
-			script:
-				if (styling.center_text == "short text only" and
-				   not contains(match:"\n", card.rule_text) and
-				   card.flavor_text == "<i-flavor></i-flavor>" and
-				   card_style.text.content_lines <= 2) or
-				   styling.center_text == "always"
-				then "middle center"
-				else "middle left"
+	auto copyright:
+		right: 350
+		top: { if card.pt != "" then 500 else 488 }
+		width: 140
+		height: 10
 		z index: 2
-		padding left:   6
-		padding right:  4
-		line height hard: 1.2
-		line height line: 1.5
-		line height soft: 0.9
-		line height hard max: 1.3
-		line height line max: 1.6
-	rule text 3 with flavor:
-		left: {if card.casting_cost_3 != "" then 103 else 29}
-		top: 430
-		right: 342
-		height: 51
+		alignment: middle right shrink-overflow
+		visible: {set.automatic_copyright}
 		font:
-			name: MPlantin
-			italic name: MPlantin-Italic
-			size: 14
-			scale down to: 6
-			color: black
-		symbol font:
-			name: { styling.text_box_mana_symbols }
-			size: 14
-		alignment:
-			script:
-				if (styling.center_text == "short text only" and
-				   not contains(match:"\n", card.rule_text) and
-				   card.flavor_text == "<i-flavor></i-flavor>" and
-				   card_style.text.content_lines <= 2) or
-				   styling.center_text == "always"
-				then "middle center"
-				else "middle left"
-		z index: 2
-		padding left:   6
-		padding right:  4
-		line height hard: 1.2
-		line height line: 1.5
-		line height soft: 0.9
-		line height hard max: 1.3
-		line height line max: 1.6
+			name: Matrix
+			size: 7
+			color: white
+			weight: bold
+

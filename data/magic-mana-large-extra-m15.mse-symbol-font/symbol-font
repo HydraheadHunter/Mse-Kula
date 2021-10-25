@@ -556,47 +556,6 @@ symbol:
 	code: G/U
 	image: { masked_blend(dark: "mana_gg.png", light: "mana_uu.png", mask: "mask_hybrid.png") }
 	image font size: 145
-###################################################################################### Inverse Hybrid Symbols
-symbol:
-	code: U|W
-	image: { masked_blend(dark: "mana_uu.png", light: "mana_ww.png", mask: "mask_hybrid.png") }
-	image font size: 145
-symbol:
-	code: B|U
-	image: { masked_blend(dark: "mana_bb.png", light: "mana_uu.png", mask: "mask_hybrid.png") }
-	image font size: 145
-symbol:
-	code: R|B
-	image: { masked_blend(dark: "mana_rr.png", light: "mana_bb.png", mask: "mask_hybrid.png") }
-	image font size: 145
-symbol:
-	code: G|R
-	image: { masked_blend(dark: "mana_gg.png", light: "mana_rr.png", mask: "mask_hybrid.png") }
-	image font size: 145
-symbol:
-	code: W|G
-	image: { masked_blend(dark: "mana_ww.png", light: "mana_gg.png", mask: "mask_hybrid.png") }
-	image font size: 145
-symbol:
-	code: B|W
-	image: { masked_blend(dark: "mana_bb.png", light: "mana_ww.png", mask: "mask_hybrid.png") }
-	image font size: 145
-symbol:
-	code: R|U
-	image: { masked_blend(dark: "mana_rr.png", light: "mana_uu.png", mask: "mask_hybrid.png") }
-	image font size: 145
-symbol:
-	code: G|B
-	image: { masked_blend(dark: "mana_gg.png", light: "mana_bb.png", mask: "mask_hybrid.png") }
-	image font size: 145
-symbol:
-	code: W|R
-	image: { masked_blend(dark: "mana_ww.png", light: "mana_rr.png", mask: "mask_hybrid.png") }
-	image font size: 145
-symbol:
-	code: U|G
-	image: { masked_blend(dark: "mana_uu.png", light: "mana_gg.png", mask: "mask_hybrid.png") }
-	image font size: 145
 ###################################################################################### Purple Hybrid Symbols
 symbol:
 	code: P/W

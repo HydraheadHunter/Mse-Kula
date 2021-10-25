@@ -1,12 +1,12 @@
 ﻿mse version: 2.0.0
 game: magic
-short name: EDM Meld (3-in-1)
+short name: EMN Meld (3-in-1)
 full name: M15 Style Meld cards (3-in-1) 
 icon: card-sample.png
-position hint: 002
+position hint: 066
 installer group: magic/m15 style/double faced
 
-version: 2016-20-06
+version: 2018-02-22
 depends on:
 	package: magic.mse-game
 	version: 2014-06-25
@@ -70,7 +70,9 @@ init script:
 	has_pt_2 := { card.power_2 != "" or card.toughness_2 != "" }
 	
 	card_shape := { "two-sided" }
-	
+	has_identity := { styling.color_indicator_dot }
+	has_identity_2 := {styling.color_indicator_dot_2 }
+	is_unsorted := {styling.remove_from_autocount}
 ############################################################## Set info fields
 set info style:
 	symbol:
@@ -81,6 +83,25 @@ set info style:
 			fill color:   rgb(255,255,255)
 			border color: rgb(0,0,0)
 ############################################################## Extra style options
+styling field:
+	type: boolean
+	name: use holofoil stamps
+	description: Change to no to disable rare holofoil stamps
+styling field:
+	type: boolean
+	name: remove from autocount
+	description: Removes the automatic card number for specific cards, to allow for overcounted cards like in Planeswalker Decks.
+	initial: no
+styling field:
+	type: boolean
+	name: color indicator dot
+	description: Use the color indicator dot
+	initial: no
+styling field:
+	type: boolean
+	name: color indicator dot 2
+	description: Use the second color indicator dot
+	initial: no
 styling field:
 	type: boolean
 	name: three cards
@@ -419,6 +440,7 @@ card style:
 			rare:       script: symbol_variation(symbol: set.symbol, variation: "rare")
 			mythic rare:       script: symbol_variation(symbol: set.symbol, variation: "mythic rare")
 			special:    script: symbol_variation(symbol: set.symbol, variation: "special")
+			masterpiece: script: symbol_variation(symbol: set.masterpiece_symbol, variation: "mythic rare")
 	rarity 3:
 		right: 172
 		top: 412
@@ -441,6 +463,7 @@ card style:
 			rare:       script: symbol_variation(symbol: set.symbol, variation: "rare")
 			mythic rare:       script: symbol_variation(symbol: set.symbol, variation: "mythic rare")
 			special:    script: symbol_variation(symbol: set.symbol, variation: "special")
+			masterpiece: script: symbol_variation(symbol: set.masterpiece_symbol, variation: "mythic rare")
 		visible: { styling.three_cards }
 	rarity 2:
 		right: 535
@@ -463,13 +486,14 @@ card style:
 			uncommon:   script: symbol_variation(symbol: set.symbol, variation: "uncommon")
 			rare:       script: symbol_variation(symbol: set.symbol, variation: "rare")
 			mythic rare:       script: symbol_variation(symbol: set.symbol, variation: "mythic rare")
+			masterpiece: script: symbol_variation(symbol: set.masterpiece_symbol, variation: "mythic rare")
 			special:    script: symbol_variation(symbol: set.symbol, variation: "special")
 	indicator:
 		left: {if styling.three_cards == "yes" then 15 else 31}
 		top: {if styling.three_cards == "yes" then 150 else 300}
 		width: {if styling.three_cards == "yes" then 8 else 17}
 		height: {if styling.three_cards == "yes" then 8 else 17}
-		z index: 12
+		z index: 11
 		render style: image
 		visible: { has_identity() }
 		image: { card_identity() }
@@ -698,6 +722,7 @@ card style:
 		width: {if styling.three_cards == "yes" then 70 else 140}
 		height: {if styling.three_cards == "yes" then 5 else 10}
 		z index: 12
+		visible: {not set.automatic_copyright}
 		alignment: middle right shrink-overflow
 		font:
 			name: Matrix
@@ -727,7 +752,7 @@ card style:
 			size: 3.5
 			color: white
 			weight: bold
-		visible: { styling.three_cards }
+		visible: { styling.three_cards and not set.automatic_copyright}
 	illustrator 3:
 		left: { 238 + card_style.set_code_3.content_width }
 		top: 497
@@ -744,6 +769,7 @@ card style:
 		width: 140
 		height: 10
 		z index: 2
+		visible: {not set.automatic_copyright}
 		alignment: middle right shrink-overflow
 		font:
 			name: Matrix
@@ -756,7 +782,11 @@ extra card field:
 	name: card code
 	editable: false
 	save value: false
-	script: forward_editor(prefix: card_number_m15() + "a/" + card_count_m15() + " " + rarity_code() + " ", field: card.card_code_text)
+	script:
+		if set.automatic_card_numbers and not styling.remove_from_autocount then
+			forward_editor(prefix: card_number_m15() + "a/" + card_count_m15() + " " + rarity_code() + " ", field: card.card_code_text)
+		else
+			combined_editor(field1: card.custom_card_number, separator: " " + rarity_code() + " ", field2: card.card_code_text)
 extra card field:
 	type: choice
 	name: artist arrow
@@ -768,13 +798,21 @@ extra card field:
 	name: card code 2
 	editable: false
 	save value: false
-	script: forward_editor(prefix: card_number_m15() + "b/" + card_count_m15() + " " + rarity_code() + " ", field: card.card_code_text)
+	script:
+		if set.automatic_card_numbers and not styling.remove_from_autocount then
+			forward_editor(prefix: card_number_m15() + "b/" + card_count_m15() + " " + rarity_code() + " ", field: card.card_code_text)
+		else
+			combined_editor(field1: card.custom_card_number, separator: " " + rarity_code() + " ", field2: card.card_code_text)
 extra card field:
 	type: text
 	name: card code 3
 	editable: false
 	save value: false
-	script: forward_editor(prefix: card_number_m15() + "b/" + card_count_m15() + " " + rarity_code() + " ", field: card.card_code_text)
+	script:
+		if set.automatic_card_numbers and not styling.remove_from_autocount then
+			forward_editor(prefix: card_number_m15() + "b/" + card_count_m15() + " " + rarity_code() + " ", field: card.card_code_text)
+		else
+			combined_editor(field1: card.custom_card_number, separator: " " + rarity_code() + " ", field2: card.card_code_text)
 extra card field:
 	type: choice
 	name: artist arrow 2
@@ -900,6 +938,27 @@ extra card field
 
 	editable: false
 	save value: false
+extra card field:
+	type: text
+	name: auto copyright
+	script: set.copyright
+	save value: false
+	editable: false
+	show statistics: false
+extra card field:
+	type: text
+	name: auto copyright 2
+	script: set.copyright
+	save value: false
+	editable: false
+	show statistics: false
+extra card field:
+	type: text
+	name: auto copyright 3
+	script: set.copyright
+	save value: false
+	editable: false
+	show statistics: false
 #################################	
 extra card style:
 ################################# Meld Card Styles
@@ -1063,7 +1122,7 @@ extra card style:
 		width: {if styling.three_cards == "yes" then 23 else 46}
 		height: {if styling.three_cards == "yes" then 13 else 26}
 		z index: 11
-		visible: { is_rare() }
+		visible: { is_rare() and styling.use_holofoil_stamps }
 		render style: image
 		image: { card_stamp() }
 	foil stamp:
@@ -1072,7 +1131,7 @@ extra card style:
 		width: {if styling.three_cards == "yes" then 23 else 46}
 		height: {if styling.three_cards == "yes" then 13 else 26}
 		z index: 11
-		visible: { is_rare() }
+		visible: { is_rare() and styling.use_holofoil_stamps }
 		render style: image
 		image: foil_stamp.png
 	stamp 2:
@@ -1081,7 +1140,7 @@ extra card style:
 		width: 23
 		height: 13
 		z index: 1
-		visible: { if styling.three_cards == "yes" and card.rarity_3 == "rare" then true else if styling.three_cards == "yes" and card.rarity_3 == "mythic rare" then true else false }
+		visible: { if styling.three_cards == "yes" and card.rarity_3 == "rare" and styling.use_holofoil_stamps then true else if styling.three_cards == "yes" and card.rarity_3 == "mythic rare" and styling.use_holofoil_stamps then true else false }
 		render style: image
 		image: { card_stamp() }
 	foil stamp 2:
@@ -1090,6 +1149,45 @@ extra card style:
 		width: 23
 		height: 13
 		z index: 1
-		visible: { if styling.three_cards == "yes" and card.rarity_3 == "rare" then true else if styling.three_cards == "yes" and card.rarity_3 == "mythic rare" then true else false }
+		visible: { if styling.three_cards == "yes" and card.rarity_3 == "rare" and styling.use_holofoil_stamps then true else if styling.three_cards == "yes" and card.rarity_3 == "mythic rare" and styling.use_holofoil_stamps then true else false }
 		render style: image
 		image: foil_stamp.png
+	auto copyright:
+		right: {if styling.three_cards == "yes" then 175 else 350}
+		top: { if styling.three_cards == "yes" then if card.pt != "" then 252 else 244 else if card.pt != "" then 500 else 488 }
+		width: {if styling.three_cards == "yes" then 70 else 140}
+		height: {if styling.three_cards == "yes" then 5 else 10}
+		z index: 12
+		visible: {set.automatic_copyright}
+		alignment: middle right shrink-overflow
+		font:
+			name: Matrix
+			size: {if styling.three_cards == "yes" then 3.5 else 7}
+			color: white
+			weight: bold
+	auto copyright 2:
+		right: 175
+		top: { if card.pt_2 != "" then 512 else 506}
+		width: 70
+		height: 5
+		z index: 2
+		alignment: middle right shrink-overflow
+		font:
+			name: Matrix
+			size: 3.5
+			color: white
+			weight: bold
+		visible: { styling.three_cards and set.automatic_copyright}
+	auto copyright 3:
+		right: 541
+		top: { if card.pt_3 != "" then 502 else 490}
+		width: 140
+		height: 10
+		z index: 2
+		visible: {set.automatic_copyright}
+		alignment: middle right shrink-overflow
+		font:
+			name: Matrix
+			size: 7
+			color: white
+			weight: bold

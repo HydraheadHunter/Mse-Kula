@@ -62,7 +62,7 @@ init script:
 	# Is the card a promo card?
 	is_promo := { styling.promo }
 	
-	card_shape := { "split" }
+	card_shape := { "aftermath" }
 	has_two_artists := { card_style.illustrator_2 != "" }
 	
 	has_identity := { styling.color_indicator_dot }
@@ -535,10 +535,9 @@ card style:
 	copyright:
 		right: 350
 		top: 488
-		width: 140
+		width: {if set.automatic_copyright then 0 else 140}
 		height: 10
 		z index: 2
-		visible: {not set.automatic_copyright}
 		alignment: middle right shrink-overflow
 		font:
 			name: Matrix
@@ -669,11 +668,10 @@ extra card style:
 	auto copyright:
 		right: 350
 		top: 488
-		width: 140
+		width: {if set.automatic_copyright then 140 else 0}
 		height: 10
 		z index: 2
 		alignment: middle right shrink-overflow
-		visible: {set.automatic_copyright}
 		font:
 			name: Matrix
 			size: 7

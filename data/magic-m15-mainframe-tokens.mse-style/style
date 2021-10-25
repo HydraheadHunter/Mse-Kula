@@ -6,7 +6,7 @@ icon: card-sample.png
 installer group: magic/m15 style/tokens
 position hint: 004
 
-version: 2018-06-01
+version: 2020-05-10
 depends on:
 	package: magic.mse-game
 	version: 2014-06-25
@@ -28,7 +28,7 @@ card height: 523
 card dpi: 150
 ##### Nyx Tokens by Honchkrow/ThisisSakon
 ##### Flavor Bar image by SirnightNano
-##### M20 base tokens by silverback_ape
+##### M20 base tokens and Vehicle background by silverback_ape
 ##### M20 Clear tokens by Femme Fatale
 ############################################################## Extra scripts
 init script:
@@ -38,8 +38,8 @@ init script:
 	# Load scripts for image box
 	include file: /magic-default-image.mse-include/scripts
 	
-	template_prefix := [card: "" card2: "" card3: "" card4: "nyx/" card5: "nyx/" card6:"nyx/" card7: "m20/" card8: "m20/" card9: "m20/" pt:""]
-	template_suffix := [card: "card.jpg", card2: "card2.jpg", card3: "card3.jpg", card4: "card.jpg", card5: "card2.jpg", card6: "card3.jpg", card7: "card.png", card8: "card2.png", card9: "card3.png", pt: "pt.png"]
+	template_prefix := [alias: "alias/" crown:"crowns/" card: "" card2: "" card3: "" card4: "nyx/" card5: "nyx/" card6:"nyx/" card7: "m20/" card8: "m20/" card9: "m20/" snowtexture:"snow/" pt:""]
+	template_suffix := [alias: "alias.png", crown:"crown.png" card: "card.jpg", card2: "card2.jpg", card3: "card3.jpg", card4: "nyx.png", card5: "card2.jpg", card6: "card3.jpg", card7: "card.png", card8: "card2.png", card9: "card3.png", snowtexture:"snow.png" pt: "pt.png"]
 	template      := { template_prefix[type] + (if is_m20() and input == "w" and (contains(card.card_color, match:"multicolor") or contains(card.card_color, match:"hybrid")) then "h" else input) + template_suffix[type] }
 	land_template := { template_prefix[type] + (if input == "a" then "c" else if is_m20() and input == "w" then "h" else input) + template_suffix[type] }
 	
@@ -59,24 +59,27 @@ init script:
 	is_clear := { styling.use_clear_frames }
 	is_unsorted := {styling.remove_from_autocount}
 	is_m20 := {contains(styling.frames, match: "M20")}
+	is_snow := {contains(styling.frames, match: "snow") and not is_m20()}
 	is_tall := {contains(styling.frames, match: "tall")}
 	is_textless := {card.rule_text == "" and remove_tags(card.flavor_text) == ""}
 	is_clear := {contains(styling.frames, match: "clear")}
 	mtgo_abil := {contains(styling.frames, match: "MTGO Ability") and not is_m20()}
 	is_legend := {(contains(styling.frames, match: "legend") or (set.auto_legends and contains(card.super_type, match:"Legendary")))}
-	is_nyx := {contains(styling.frames, match: "nyx") and not is_clear()}
+	is_nyx := {contains(styling.frames, match: "nyx") and not is_clear() and not is_m20()}
+	is_vehicle := {contains(styling.frames, match: "vehicle") and not is_m20()}
 	is_copy := {contains(styling.frames, match: "copy")}
 	text_shape := {
 		if is_m20() and is_tall() then "9"
 		else if is_m20() and is_textless() then "7"
 		else if is_m20() then "8"
-		else if is_nyx() and is_tall() then "6"
-		else if is_nyx() and is_textless() then "4"
-		else if is_nyx() then "5"
 		else if is_tall() then "3"
 		else if is_textless() then ""
 		else "2"
 	}
+	crown_background := {color_background(type:"crown", base_hybrid:card_hybrid)}
+	alias_bar := { color_background(type:"alias",     base_hybrid:card_hybrid) }
+	use_evobar := {chosen(styling.other_options, choice:"pokemon evobar") and not is_skinned()}
+	is_skinned := {chosen(styling.other_options, choice:"godzilla style alias")}
 	########## Mainframe stuff
 	use_main_rarity := { contains(set.mainframe_rarity_name, match: ".png")}
 	un_png := replace@(match:".png", replace: "")
@@ -86,10 +89,7 @@ init script:
 	pre_stamp := { contains(styling.other_options, match:"prerelease")}
 	shrink_type := {if styling.shrink_typeline_text != "" then to_int(styling.shrink_typeline_text) else 0 }
 	shrink_name := {if styling.shrink_name_text != "" then to_int(styling.shrink_name_text) else 0 }
-	########## Flavor bar stuff
-	bar_offset := {if styling_offset() == "-" then 0 else if styling_offset() != "" then -styling_offset() else 0}
-	styling_offset := { replace(styling.flavor_bar_offset, match:"(u|d)+", replace: "") }
-	offset_lines := {offset_counter(styling.flavor_bar_offset)}
+	use_vorthos := {chosen(styling.other_options, choice:"vorthos box")}
 
 ############################################################## Set info fields
 set info style:
@@ -110,7 +110,9 @@ styling field:
 	choice: clear
 	choice: M20
 	choice: MTGO Ability
+	choice: vehicle
 	choice: nyx
+	choice: snow
 styling field:
 	type: multiple choice
 	name: other options
@@ -118,6 +120,9 @@ styling field:
 	choice: remove rarity symbol
 	choice: prerelease stamp
 	choice: ancestral generic mana
+	choice: vorthos box
+	choice: godzilla style alias
+	choice: pokemon evobar
 styling field:
 	type: boolean
 	name: remove from autocount
@@ -135,10 +140,6 @@ styling field:
 	type: text
 	name: shrink font size
 	description: Reduces the fontsize text N points.
-styling field:
-	type: text
-	name: flavor bar offset
-	description: Move the flavor bar down X pixels. Use negative to move up.
 styling field:
 	type: text
 	name: popout image style
@@ -250,12 +251,26 @@ card style:
 		alignment: { if is_copy() or mtgo_abil() then "bottom shrink-overflow" else "bottom center"}
 		padding bottom: -2
 		padding top: 2
-		z index: 2
+		z index: 5
 		font:
 			name: { if is_copy() or mtgo_abil() then "Beleren Bold" else "Beleren Small Caps Bold" }
 			size: { (if is_copy() or mtgo_abil() then 18 else 19) - shrink_name()}
 			color: {if is_m20() and card.card_color == "white" and not is_clear() then "black" else if is_m20() then "white" else rgb(255,239,128)}
 		always symbol: true
+	alias: 
+		left: {if is_skinned() then 45 else 19}
+		top: {if is_m20() and is_skinned() then (if is_legend() then 57 else 51) else 52}
+		width: {if is_skinned() then 285 else if use_evobar() then max(100, card_style.alias.content_width) else 0}
+		height: 20
+		alignment: { (if is_skinned() then "center" else "") + "bottom shrink-overflow"}
+		padding bottom: 0
+		z index: 3
+		font:
+			name: {if use_evobar() then "Matrix" else "MPlantin-Italic"}
+			size: {if use_evobar() then 10 else 9}
+			style: {if use_evobar() then "italic" else "bold"}
+			weight: {if use_evobar() then "italic" else "bold"}
+			color: {if use_evobar() then "black" else "white"}
 	casting cost:
 		right: 344
 		top: 29
@@ -270,7 +285,7 @@ card style:
 			size: 15
 			alignment: middle right
 		always symbol: true
-		z index: 2
+		z index: 7
 		padding top: 0
 	############################# Image
 	image:
@@ -278,7 +293,7 @@ card style:
 		top: { if is_clear() or is_m20() then 0 else 62 }
 		width: { if is_clear() or is_m20() then 375 else 317 }
 		height: { if is_clear() or is_m20() then 523 else if is_tall() then 229 else if is_textless() then 363 else 289}
-		mask: { if is_clear() or is_m20() then "clear_image_mask.png" else "imagemask" + (if is_tall() then "3" else if is_textless() then "" else "2") + ".png" }
+		mask: { (if is_m20() then "m20_" else if is_clear() then "clear_" else "") + "imagemask" + (if is_clear() and not is_m20() then "" else if is_tall() then "3" else if is_textless() then "" else "2") + ".png" }
 		z index: -1
 		default: { if is_clear() then "" else default_image(card.card_color)}
 	mainframe image:
@@ -297,7 +312,7 @@ card style:
 			 else if is_textless() then 429
 			 else if is_clear() then 354
 			 else 354)
-			 + (if is_m20() and not is_tall() then 1 else if is_m20() and is_clear() then 2)
+			 + (if is_m20() and is_textless() then 1 else if is_m20() and not is_tall() then 2 else if is_m20() and is_clear() then 2)
 			 + shrink_type()}
 		width: { 311 - ( if contains(styling.other_options, match:"remove rarity") then 0 else max(22,card_style.rarity.content_width)) }
 		height: { 20 - shrink_type()}
@@ -312,13 +327,15 @@ card style:
 			color: { if mtgo_abil() then rgb(255,239,128) else "black"}
 			separator color: red
 	rarity:
-		right: 343
+		right: 344
 		top:
 			{
-				if is_tall() and is_clear() then 296
-				else if is_tall() then 297
-				else if is_textless() then 431
-				else 356}
+				(if is_tall() and is_clear() then 296
+				else if is_tall() then (if is_m20() then 298 else if is_clear() then 296 else 297)
+				else if is_textless() then (if is_m20() then 432 else 431)
+				else if is_m20() then 358
+				else 356)
+			}
 		width: { if contains(styling.other_options, match:"remove rarity") then 0 else 44}
 		height: 22
 		z index: 2
@@ -420,7 +437,7 @@ card style:
 		font:
 			name: Beleren Bold
 			size: 16
-			color: black
+			color: {if is_vehicle() then "white" else "black"}
 			separator color: red
 	############################# Card sorting / numbering
 	set code:
@@ -447,12 +464,11 @@ card style:
 			color: white
 	copyright:
 		right: 350
-		top: { if card.pt != "" and not center_pt() then 500 else 488 }
-		width: 140
+		top: { if card.pt != "" and not center_pt() then 500 else if use_vorthos() then 500 else 488 }
+		width: {if set.automatic_copyright then 0 else 140}
 		height: 10
 		z index: 2
-		visible: {not set.automatic_copyright}
-		alignment: middle right shrink-overflow
+		alignment: middle right
 		font:
 			name: Matrix
 			size: 7
@@ -502,7 +518,7 @@ extra card field:
 extra card field:
 	type: choice
 	name: legend crown
-	choice: crown
+	script: card.card_color
 	editable: false
 	save value: false
 	show statistics: false
@@ -523,6 +539,49 @@ extra card field:
 	name: plate
 	choice: plate
 	save value: false
+	editable: false
+extra card field:
+	type: choice
+	name: snow overlay
+	choice: plate
+	save value: false
+	editable: false
+extra card field:
+	type: choice
+	name: nyx overlay
+	script: card.card_color
+	save value: false
+	editable: false
+extra card field:
+	type: choice
+	name: vehicle overlay
+	choice: plate
+	save value: false
+	editable: false
+extra card field:
+	type: text
+	name: vorthos box
+	save value: true
+	editable: true
+	description: Where they put mtgstory.com on story spotlights.
+extra card field:
+	type: choice
+	name: evobar tip
+	choice: evo
+	save value: false
+	editable: false
+extra card field:
+	type: choice
+	name: evobar
+	choice: evo
+	save value: false
+	editable: false
+extra card field:
+	type: choice
+	name: alias bar
+	script: card.card_color
+	save value: false
+	editable: false
 extra card style:
 	card code:
 		left: 24
@@ -551,7 +610,7 @@ extra card style:
 		z index: 1
 		visible: { card.pt != "" }
 		render style: image
-		image: { if is_clear() then "xpt.png" else card_ptbox() }
+		image: { if is_vehicle() then "vpt.png" else if is_clear() then "xpt.png" else card_ptbox() }
 	foil layer:
 		left: 0
 		top : 0
@@ -570,11 +629,11 @@ extra card style:
 		image: { "xcard" + text_shape() + ".png" }
 	auto copyright:
 		right: 350
-		top: { if card.pt != "" and not center_pt() then 500 else 488 }
-		width: 140
+		top: { if card.pt != "" and not center_pt() then 500 else if use_vorthos() then 500 else 488 }
+		width: {if set.automatic_copyright then 140 else 0}
 		height: 10
 		z index: 2
-		alignment: middle right shrink-overflow
+		alignment: middle right
 		visible: {set.automatic_copyright}
 		font:
 			name: Matrix
@@ -586,10 +645,10 @@ extra card style:
 		top: 0
 		width: 375
 		height: 523
-		z index: 0
+		z index: 2
 		render style: image
 		visible: {is_legend()}
-		image: {"crown" + (if is_m20() then "_m20") + ".png"}
+		image: {if is_m20() then crown_background() else "crown.png"}
 	promo label:
 		left: 40
 		top: { if is_tall() then 262 else if is_textless() then 399 else 324 }
@@ -610,7 +669,7 @@ extra card style:
 		render style: image
 		image: bar.png
 		visible: { card.rule_text != "" and remove_tags(card.flavor_text) != "" and set.use_flavor_bar }
-	flavor bar:
+	plate:
 		left: 19
 		top: { if is_tall() then 291 else if is_textless() then 425 else 351 }
 		width: 336
@@ -619,3 +678,73 @@ extra card style:
 		render style: image
 		image: plate.png
 		visible: { mtgo_abil() }
+	nyx overlay:
+		left: 15
+		top: 15
+		width: 345
+		height: 471
+		z index: 1
+		render style: image
+		image: {color_background(type:"card4", base_hybrid:card_hybrid)}
+		mask: {"v_" + if is_tall() then "tall_mask.png" else if is_textless() then "short_mask.png" else "mid_mask.png"}
+		visible: { is_nyx() }
+	snow overlay:
+		left: 15
+		top: 15
+		width: 345
+		height: 471
+		z index: 1
+		render style: image
+		image: {color_background(type:"snowtexture", base_hybrid:card_hybrid)}
+		mask: {"v_" + if is_tall() then "tall_mask.png" else if is_textless() then "short_mask.png" else "mid_mask.png"}
+		visible: { is_snow() }
+	vehicle overlay:
+		left: 15
+		top: 15
+		width: 345
+		height: 471
+		z index: 1
+		render style: image
+		image: voverlay.png
+		mask: {"v_" + (if is_nyx() or is_snow() then "nyx_" else "") + if is_tall() then "tall_mask.png" else if is_textless() then "short_mask.png" else "mid_mask.png"}
+		visible: { is_vehicle() }
+	vorthos box:
+		right: { if card.pt != "" then 275 else 350 }
+		top: 488
+		left: 210
+		height: {if use_vorthos() then 10 else 0}
+		z index: 3
+		alignment: middle right
+		font:
+			name: Relay-Medium
+			size: 7
+			color: white
+			weight: bold
+	alias bar:
+		left: 38
+		top: {if is_m20() and is_legend() then 61 else if is_m20() then 55 else 56}
+		width: 298
+		height: 21
+		z index: 2
+		render style: image
+		image: {if is_m20() then alias_bar() else "alias/malias.png"}
+		visible: {is_skinned() and not use_evobar()}
+	evobar:
+		left: 15
+		top: 57
+		width: {card_style.alias.content_width}
+		height: 27
+		z index: 2
+		render style: image
+		image: evobar.png
+		visible: {use_evobar()}
+	evobar tip:
+		left: {14.6 + card_style.alias.content_width}
+		top: 57
+		width: 36
+		height: 27
+		z index: 2
+		render style: image
+		image: evobar_tip.png
+		visible: {use_evobar()}
+

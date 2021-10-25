@@ -6,7 +6,7 @@ icon: card-sample.png
 installer group: magic/m15 style/normal cards
 position hint: 001
 
-version: 2015-12-20
+version: 2018-02-09
 depends on:
 	package: magic.mse-game
 	version: 2014-06-25
@@ -31,7 +31,6 @@ card height: 523
 card dpi: 150
 ############################################################## Extra scripts
 init script:
-	var:=2
 	# Load scripts for image box
 	include file: /magic-default-image.mse-include/scripts
 	
@@ -42,7 +41,7 @@ init script:
 	mask_multi_land_with_color := { styling.colored_multicolor_land_name }
 	
 	template_prefix := [card: "" pt: "" stamp: "" identity: "/magic-identity-new.mse-include/"]
-	template_suffix := [card: "card.jpg" pt: "pt.png", stamp: "stamp.jpg" identity: "identity.png"]
+	template_suffix := [card: "card.jpg" pt: "pt.png" stamp: "stamp.jpg" identity: "identity.png"]
 	template      := { template_prefix[type] + input + template_suffix[type] }
 	land_template := { template_prefix[type] + (if input == "a" then "c" else input) + "l" + template_suffix[type] }
 	# Use land templates for previews because they show more contrast
@@ -60,7 +59,15 @@ init script:
 	
 	# Is the card a promo card?
 	is_promo := { styling.promo }
-	
+	mana_sort := {
+		if styling.unsorted_casting_cost then
+			input
+		else
+			sort_text@(order: "XYZI[0123456789]HSCA(WUBRG)")()
+	}
+	ancestral_mana := { styling.ancestral_mana_symbols }
+	has_identity := { styling.color_indicator_dot }
+	is_unsorted := {styling.remove_from_autocount}
 ############################################################## Set info fields
 set info style:
 	symbol:
@@ -72,13 +79,33 @@ set info style:
 			border color: rgb(0,0,0)
 ############################################################## Extra style options
 styling field:
-	type: text
-	name: offset
-	description: ""
+	type: boolean
+	name: use holofoil stamps
+	description: Change to no to disable rare holofoil stamps
+styling field:
+	type: boolean
+	name: color indicator dot
+	description: Use the color indicator dot
+	initial: no
+styling field:
+	type: boolean
+	name: remove from autocount
+	description: Removes the automatic card number for specific cards, to allow for overcounted cards like in Planeswalker Decks.
+	initial: no
 styling field:
 	type: boolean
 	name: grey hybrid name
 	description: Use a grey background for the name and type line on hybrid cards. This is done on real cards.
+styling field:
+	type: boolean
+	name: unsorted casting cost
+	description: Disables automatic mana symbol sorting.
+	initial: no
+styling field:
+	type: boolean
+	name: ancestral mana symbols
+	description: Enables ancestral's modified generic mana.
+	initial: no
 styling field:
 	type: boolean
 	name: colored multicolor land name
@@ -113,6 +140,11 @@ styling field:
 	type: boolean
 	name: promo
 	description: Is this card a promo card, with the "P" rarity?
+	initial: no
+styling field:
+	type: boolean
+	name: masterpiece
+	description: Is this card a Masterpiece?
 	initial: no
 styling field:
 	type: boolean
@@ -169,7 +201,7 @@ card style:
 		z index: 0
 		render style: image
 		popup style: in place
-		image: { card_background(offset: styling.offset) }
+		image: { card_background() }
 	############################# Name line
 	name:
 		left: { if card.card_symbol=="none" then 32 else 50 }
@@ -215,14 +247,14 @@ card style:
 		width: 316
 		height:	231
 		z index: 1
-		default: {default_image(offset: styling.offset, card.card_color)}
+		default: {default_image(card.card_color)}
 	############################# Card type
 	indicator:
 		left: 31
 		top: 300
 		width: 17
 		height: 17
-		z index: 2
+		z index: 1
 		render style: image
 		visible: { has_identity() }
 		image: { card_identity() }
@@ -261,6 +293,7 @@ card style:
 			rare:       script: symbol_variation(symbol: set.symbol, variation: "rare")
 			mythic rare:       script: symbol_variation(symbol: set.symbol, variation: "mythic rare")
 			special:    script: symbol_variation(symbol: set.symbol, variation: "special")
+			masterpiece: script: symbol_variation(symbol: set.masterpiece_symbol, variation: "mythic rare")
 	############################# Text box
 	text:
 		left: 29
@@ -345,6 +378,7 @@ card style:
 		width: 140
 		height: 10
 		z index: 2
+		visible: {not set.automatic_copyright}
 		alignment: middle right shrink-overflow
 		font:
 			name: Matrix
@@ -357,7 +391,7 @@ extra card field:
 	name: card code
 	save value: false
 	script:
-		if set.automatic_card_numbers then
+		if set.automatic_card_numbers and not styling.remove_from_autocount then
 			forward_editor(prefix: card_number_m15() + "/" + card_count_m15() + " " + rarity_code() + " ", field: card.card_code_text)
 		else
 			combined_editor(field1: card.custom_card_number, separator: " " + rarity_code() + " ", field2: card.card_code_text)
@@ -375,12 +409,6 @@ extra card field:
 	save value: false
 extra card field:
 	type: choice
-	name: stamp
-	script: card.card_color
-	editable: false
-	save value: false
-extra card field:
-	type: choice
 	name: foil stamp
 	choice: stamp
 	save value: false
@@ -391,6 +419,49 @@ extra card field:
 	choice: foil
 	save value: false
 	editable: false
+extra card field:
+	type: multiple choice
+	name: stamp
+	empty choice: colorless
+	choice: white
+	choice: blue
+	choice: black
+	choice: red
+	choice:
+		name: green
+		line below: true
+	choice: artifact
+	choice: land
+	choice: multicolor
+	choice:
+		name: hybrid
+		line below: true
+	choice:
+		name: horizontal
+		type: radio
+	choice:
+		name: vertical
+		type: radio
+	choice:
+		name: radial
+		type: radio
+	choice:
+		name: diagonal
+		type: radio
+	choice:
+		name: overlay
+		type: radio
+	choice:
+		name: reversed
+	script: card_color_filter(value)
+	default: card_color(casting_cost: card.casting_cost, rules_text: card.rule_text, type: card.super_type, watermark: card.watermark, card_name: card.name)
+extra card field:
+	type: text
+	name: auto copyright
+	script: set.copyright
+	save value: false
+	editable: false
+	show statistics: false
 extra card style:
 	card code:
 		left: 24
@@ -419,25 +490,7 @@ extra card style:
 		z index: 1
 		visible: { card.pt != "" }
 		render style: image
-		image: { card_ptbox(offset: styling.offset) }
-	stamp:
-		left: 165
-		top: 472
-		width: 46
-		height: 26
-		z index: 1
-		visible: { is_rare() }
-		render style: image
-		image: { card_stamp(offset: styling.offset) }
-	foil stamp:
-		left: 165
-		top: 472
-		width: 46
-		height: 26
-		z index: 1
-		visible: { is_rare() }
-		render style: image
-		image: foil_stamp.png
+		image: { card_ptbox() }
 	foil layer:
 		left: 0
 		top : 0
@@ -447,3 +500,34 @@ extra card style:
 		render style: image
 		image: {if styling.overlay == "" then nil else styling.overlay + "/overlay.png"}
 		mask: { if is_rare() then "foil_mask_rare.png" else "foil_mask.png" }
+	stamp:
+		left: 165
+		top: 472
+		width: 46
+		height: 26
+		z index: 1
+		visible: { is_rare() and styling.use_holofoil_stamps }
+		render style: image
+		image: { card_stamp() }
+	foil stamp:
+		left: 165
+		top: 472
+		width: 46
+		height: 26
+		z index: 2
+		visible: { is_rare() and styling.use_holofoil_stamps }
+		render style: image
+		image: foil_stamp.png
+	auto copyright:
+		right: 350
+		top: { if card.pt != "" then 500 else 488 }
+		width: 140
+		height: 10
+		z index: 2
+		alignment: middle right shrink-overflow
+		visible: {set.automatic_copyright}
+		font:
+			name: Matrix
+			size: 7
+			color: white
+			weight: bold
