@@ -1,0 +1,467 @@
+﻿mse version: 0.3.8
+game: magic
+short name: DF Planechase
+full name: Double Face Kula Mini Cards
+installer group: Magic Planes/normal style
+icon: card-sample.png
+position hint: 07
+
+version: 2018-06-02
+depends on:
+	package: magic.mse-game
+	version: 2009-08-11
+depends on:
+	package: magic-mana-small.mse-symbol-font
+	version: 2009-08-10
+depends on:
+	package: magic-kula-planechase.mse-style
+	version: 2020-10-13
+
+card width: 523
+card height: 750
+card dpi: 170
+#By HydraheadHunter
+############################################################## Extra scripts
+############################################################## Extra scripts
+init script:
+	# Use the normal tap symbol
+	mana_t := "new"
+	guild_mana := { contains(card.type, match:"Ravnica") }
+
+	is_phenomenon	:=	{ contains(card.type, match:"Phenomenon") }
+	is_phenomenon_2:=	{ contains(card.type_2, match:"Phenomenon") }
+	card_shape	:=	{ "plane card" }
+	
+	include file: /magic-kula-planechase.mse-style/variables.txt
+############################################################## Set info fields
+
+############################################################## Extra style options
+styling field:
+	type: text
+	name: font size
+	description: Set the maximum font size. Default is 16.
+styling field:
+	type: text
+	name: chaos divider
+	description: Places the break for the chaos ability of the card's front.
+styling field:
+	type: text
+	name: chaos divider back
+	description: Places the break for the chaos ability of the card's back.
+styling field:
+	type: package choice
+	name: text box mana symbols
+	match: magic-mana-*.mse-symbol-font
+	initial: magic-mana-small.mse-symbol-font
+styling field:
+	type: boolean
+	name: remove from autocount
+	description: Removes the automatic card number for specific cards, to allow for overcounted cards like in Planeswalker Decks.
+	initial: no
+
+############################################################## Card fields
+card style:
+	name:
+		left:			{name_pos.left		}
+		top:				{name_pos.top		}
+		width:			{name_pos.width	}
+		height:			{name_pos.height	}
+		alignment:		 middle center shrink-overflow
+		z index:			 2
+		font:
+			name:		 Beleren Bold
+			size:		 16
+			color:		 black
+	image:
+		left:			{image_pos.left	}
+		top:				{image_pos.top		}
+		width:			{image_pos.width	}
+		height:			{image_pos.height	}
+		z index:			 -1
+		mask:			mask.png
+	type:
+		left:			{type_pos.left		}
+		top:				{type_pos.top		}
+		width:			{type_pos.width	}
+		height:			{type_pos.height	}
+		alignment:		 bottom center shrink-overflow
+		z index:			 2
+		font:
+			name:		 Beleren Bold
+			size:		 10
+			color:		 black
+	rarity:
+		right:			{rarity_pos.right	}
+		top:				{rarity_pos.top	}
+		width:			{rarity_pos.width	}
+		height:			{rarity_pos.height	}
+		z index:			 2
+		render style:		 image
+		alignment:		 middle right
+		choice images:
+			common:		script: symbol_variation(symbol: set.symbol, variation: "common")
+			uncommon:		script: symbol_variation(symbol: set.symbol, variation: "uncommon")
+			rare:		script: symbol_variation(symbol: set.symbol, variation: "rare")
+			mythic rare:	script: symbol_variation(symbol: set.symbol, variation: "mythic rare")
+			special:		script: symbol_variation(symbol: set.symbol, variation: "special")
+			masterpiece:	script: symbol_variation(symbol: set.masterpiece_symbol, variation: "mythic rare")
+	
+############################# Text box
+	rule text:
+		left:			{text_pos.left		}
+		top:				{text_pos.top		}
+		width:			{text_pos.width	}
+		height:			{ decide_text_height(styling.chaos_divider) }
+		font:
+			name:		 MPlantin
+			italic name:	 MPlantin-Italic
+			size: 		 10
+			scale down to:	 1
+			color:		 black
+		symbol font:
+			name:		{styling.text_box_mana_symbols }
+			size:		{if styling.font_size != "" then styling.font_size else 10 }
+		alignment:		 middle left
+		z index:			 2
+		line height hard:	 1.15
+		line height soft:	 1.0
+		
+	rule text 2:
+		right:			{chaos_text_pos.right		}
+		bottom:			{chaos_text_pos.bot			}
+		width:			{decide_chaos_text_width (styling.chaos_divider)		}
+		height:			{decide_chaos_text_height(styling.chaos_divider)	}
+		font:
+			name:		 MPlantin
+			italic name:	 MPlantin-Italic
+			size:		 { if styling.font_size != "" then styling.font_size else 10 }
+			scale down to:	 1
+			color:		 black
+		symbol font:
+			name:		 { styling.text_box_mana_symbols }
+			size:		 { if styling.font_size != "" then styling.font_size else 10 }
+		alignment:		 middle left
+		z index:			 2
+		line height hard:	 1.2
+
+############################# Copyright stuff
+	illustrator:
+		right:			{illustrator_pos.right	}
+		top:				{illustrator_pos.top	}
+		width:			{illustrator_pos.width	}
+		height:			{illustrator_pos.height	}
+		z index:			 2
+		alignment:		 center
+		font:
+			name:		 Beleren Small Caps Bold
+			size:		 6
+			color:		 white
+	copyright:
+		right:			{copyright_pos.right		}
+		top:				{copyright_pos.top			}
+		width:			{decide_copyright_width()	}
+		height:			{decide_copyright_height()	}
+		z index:			 2
+		alignment:		 middle right shrink-overflow
+		font:
+			name:		 Matrix
+			size:		 7
+			color:		 white
+			weight:		 bold
+		visible:			{not set.automatic_copyright}
+	set code:
+		left:			{decide_set_code_left()	+ card_style.card_number_m15.content_width	}
+		top:				{set_code_pos.top			}
+		width:			{set_code_pos.width			}
+		height:			{set_code_pos.height		}
+		z index:			 1
+		font:
+			name:		 Relay-Medium
+			size:		 6.25
+			color:		 white
+			weight:		 bold
+	card number m15:
+		left:			{decide_card_code_left()		}
+		top:				{card_code_pos.top			}
+		width:			{card_code_pos.width		}
+		height:			{card_code_pos.height		}
+		z index:			 1
+		font:
+			name:		 Relay-Medium
+			size:		 6.25
+			color:		 white
+			weight:		 bold
+############################################################## Extra card fields
+extra card field:
+	type:				 choice
+	name:				 background
+	editable:				 false
+	save value:			 false
+	choice:				 frame
+extra card field:
+	type:				 text
+	name:				 auto copyright
+	script:				 set.copyright
+	save value:			 false
+	editable:				 false
+	show statistics:		 false
+extra card field:
+	type:				 choice
+	name:				 chaos symbol
+	editable:				 false
+	save value:			 false
+	choice:				 chaos
+extra card field:
+	type:				 choice
+	name:				 artist arrow
+	save value:			 false
+	choice:				 white
+	editable:				 false
+extra card style:
+	background:
+		left:			{background_pos.left			}
+		top:				{background_pos.top				}
+		width:			{background_pos.width			}
+		height:			{background_pos.height			}
+		z index:			 -2
+		render style:		 image
+		choice images:
+			frame:		 card_day.png
+	chaos symbol:
+		left:			{chaos_symbol_pos.left		}
+		bottom:			{decide_chaos_symbol_bot		  (styling.chaos_divider)		}
+		width:			{decide_chaos_symbol_size.width (styling.chaos_divider)		}
+		height:			{decide_chaos_symbol_size.height(styling.chaos_divider)	}
+		z index:			 6
+		render style:		 image
+		choice images:
+			chaos: /magic-mana-small.mse-symbol-font/mana_chaos.png
+		visible:			{not(is_phenomenon())	}
+	artist arrow:
+		left:			{artist_arrow_pos.left - card_style.illustrator.content_width * 0.5 }
+		top:				{artist_arrow_pos.top			}
+		width:			{artist_arrow_pos.width			}
+		height:			{artist_arrow_pos.height			}
+		z index:			 6
+		render style:		 image
+		image:			 artist_arrow.png
+	auto copyright:
+		right:			{auto_copyright_pos.right		}
+		top:				{auto_copyright_pos.top			}
+		width:			{auto_copyright_pos.width		}
+		height:			{auto_copyright_pos.height		}
+		z index:			 2
+		alignment:		 middle right shrink-overflow
+		font:
+			name:		 Matrix
+			size:		 7
+			color:		 white
+			weight:		 bold
+		visible:			 {set.automatic_copyright}
+############################################################## 
+############################################################## Second fields
+############################################################## 
+card style:
+	name_2:
+		left:			{name_pos.left		}
+		top:				{name_pos.top +375	}
+		width:			{name_pos.width	}
+		height:			{name_pos.height	}
+		alignment:		 middle center shrink-overflow
+		z index:			 2
+		font:
+			name:		 Beleren Bold
+			size:		 16
+			color:		 black
+	image_2:
+		left:			{image_pos.left	}
+		top:				{image_pos.top +375	}
+		width:			{image_pos.width	}
+		height:			{image_pos.height	}
+		z index:			 -1
+		mask:			mask.png
+	type_2:
+		left:			{type_pos.left		}
+		top:				{type_pos.top +375	}
+		width:			{type_pos.width	}
+		height:			{type_pos.height	}
+		alignment:		 bottom center shrink-overflow
+		z index:			 2
+		font:
+			name:		 Beleren Bold
+			size:		 10
+			color:		 black
+	rarity_2:
+		right:			{rarity_pos.right	}
+		top:				{rarity_pos.top +375	}
+		width:			{rarity_pos.width	}
+		height:			{rarity_pos.height	}
+		z index:			 2
+		render style:		 image
+		alignment:		 middle right
+		choice images:
+			common:		script: symbol_variation(symbol: set.symbol, variation: "common")
+			uncommon:		script: symbol_variation(symbol: set.symbol, variation: "uncommon")
+			rare:		script: symbol_variation(symbol: set.symbol, variation: "rare")
+			mythic rare:	script: symbol_variation(symbol: set.symbol, variation: "mythic rare")
+			special:		script: symbol_variation(symbol: set.symbol, variation: "special")
+			masterpiece:	script: symbol_variation(symbol: set.masterpiece_symbol, variation: "mythic rare")
+	
+############################# Text box
+	rule text 3:
+		left:			{text_pos.left		}
+		top:				{text_pos.top +375		}
+		width:			{text_pos.width	}
+		height:			{ decide_text_height_2(styling.chaos_divider_back) }
+		font:
+			name:		 MPlantin
+			italic name:	 MPlantin-Italic
+			size: 		 10
+			scale down to:	 1
+			color:		 black
+		symbol font:
+			name:		{styling.text_box_mana_symbols }
+			size:		{if styling.font_size != "" then styling.font_size else 10 }
+		alignment:		 middle left
+		z index:			 2
+		line height hard:	 1.15
+		line height soft:	 1.0
+		
+	rule text 4:
+		right:			{chaos_text_pos.right		}
+		bottom:			{chaos_text_pos.bot	+375		}
+		width:			{decide_chaos_text_width_2(styling.chaos_divider_back)	}
+		height:			{decide_chaos_text_height_2(styling.chaos_divider_back)	}
+		font:
+			name:		 MPlantin
+			italic name:	 MPlantin-Italic
+			size:		 { if styling.font_size != "" then styling.font_size else 10 }
+			scale down to:	 1
+			color:		 black
+		symbol font:
+			name:		 { styling.text_box_mana_symbols }
+			size:		 { if styling.font_size != "" then styling.font_size else 10 }
+		alignment:		 middle left
+		z index:			 2
+		line height hard:	 1.2
+
+############################# Copyright stuff
+	illustrator_2:
+		right:			{illustrator_pos.right	}
+		top:				{illustrator_pos.top +375	}
+		width:			{illustrator_pos.width	}
+		height:			{illustrator_pos.height	}
+		z index:			 2
+		alignment:		 center
+		font:
+			name:		 Beleren Small Caps Bold
+			size:		 6
+			color:		 white
+	copyright_2:
+		right:			{copyright_pos.right		}
+		top:				{copyright_pos.top +375			}
+		width:			{decide_copyright_width()	}
+		height:			{decide_copyright_height()	}
+		z index:			 2
+		alignment:		 middle right shrink-overflow
+		font:
+			name:		 Matrix
+			size:		 7
+			color:		 white
+			weight:		 bold
+		visible:			{not set.automatic_copyright}
+	set code_2:
+		left:			{decide_set_code_left()	+ card_style.card_number_m15.content_width	}
+		top:				{set_code_pos.top +375		}
+		width:			{set_code_pos.width			}
+		height:			{set_code_pos.height		}
+		z index:			 1
+		font:
+			name:		 Relay-Medium
+			size:		 6.25
+			color:		 white
+			weight:		 bold
+
+############################################################## Extra card fields
+extra card field:
+	type:				 choice
+	name:				 background_2
+	editable:				 false
+	save value:			 false
+	choice:				 frame
+extra card field:
+	type:				 text
+	name:				 auto copyright_2
+	script:				 set.copyright
+	save value:			 false
+	editable:				 false
+	show statistics:		 false
+extra card field:
+	type:				 choice
+	name:				 chaos symbol_2
+	editable:				 false
+	save value:			 false
+	choice:				 chaos
+extra card field:
+	type:				 choice
+	name:				 artist arrow_2
+	save value:			 false
+	choice:				 white
+	editable:				 false
+extra card field:
+	type:				 text
+	name:				 card number m15 2
+	editable:				 false
+	script:				card.card_number_m15
+extra card style:
+	background_2:
+		left:			{background_pos.left			}
+		top:				{background_pos.top +375				}
+		width:			{background_pos.width			}
+		height:			{background_pos.height			}
+		z index:			 -2
+		render style:		 image
+		choice images:
+			frame:		card_night.png
+	chaos symbol 2:
+		left:			{chaos_symbol_pos.left		}
+		bottom:			{decide_chaos_symbol_bot_2	    (styling.chaos_divider_back)	+375	}
+		width:			{decide_chaos_symbol_size_2.width (styling.chaos_divider_back)		}
+		height:			{decide_chaos_symbol_size_2.height(styling.chaos_divider_back)	}
+		z index:			 6
+		render style:		 image
+		choice images:
+			chaos: /magic-mana-small.mse-symbol-font/mana_chaos.png
+		visible:			{not(is_phenomenon_2())	}
+	artist arrow_2:
+		left:			{artist_arrow_pos.left - card_style.illustrator.content_width * 0.5 }
+		top:				{artist_arrow_pos.top +375			}
+		width:			{artist_arrow_pos.width			}
+		height:			{artist_arrow_pos.height			}
+		z index:			 6
+		render style:		 image
+		image:			 artist_arrow.png
+	auto copyright_2:
+		right:			{auto_copyright_pos.right		}
+		top:				{auto_copyright_pos.top +375			}
+		width:			{auto_copyright_pos.width		}
+		height:			{auto_copyright_pos.height		}
+		z index:			 2
+		alignment:		 middle right shrink-overflow
+		font:
+			name:		 Matrix
+			size:		 7
+			color:		 white
+			weight:		 bold
+		visible:			 {set.automatic_copyright}
+	card number m15_2:
+		left:			{decide_card_code_left()		}
+		top:				{card_code_pos.top +375		}
+		width:			{card_code_pos.width		}
+		height:			{card_code_pos.height		}
+		z index:			 1
+		font:
+			name:		 Relay-Medium
+			size:		 6.25
+			color:		 white
+			weight:		 bold

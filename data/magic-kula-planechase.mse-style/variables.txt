@@ -1,0 +1,101 @@
+background_pos:= 		[left:0,		top:0,	width:523,	height:375	]
+
+name_pos:=			[left:54,		top:16,	width:414,	height:30		]
+image_pos:=			[left:0		top:0,	width:523,	height:375	]
+type_pos:=			[left:90,		top:246,	width:346,	height:21		]
+rarity_pos:=			[right:434,	top:253,	width:28,		height:14		]
+
+sterilize_cd_input:={ min(55, max(22, to_number(input)))}
+
+
+text_h:=											    [phen:84, plane:35]
+text_pos:=			[left:24,		top:268,	width:481,	height:text_h	]
+	decide_text_height:={
+						if is_phenomenon()					then text_pos.height.phen
+						else	if input != ""					then sterilize_cd_input(input)
+						else								     text_pos.height.plane
+					}
+	decide_text_height_2:={
+						if is_phenomenon_2()				then text_pos.height.phen
+						else	if input != ""					then sterilize_cd_input(input)
+						else								     text_pos.height.plane
+					}
+
+cst	:=					    [phen:0, plane:350]
+chaos_symbol_pos:=		[left:27,	bot:cst,	width:45.5,		height:42	]
+  decide_chaos_symbol_bot:={
+						if is_phenomenon()					then chaos_symbol_pos.bot.phen
+						else if input !=""					then chaos_symbol_pos.bot.plane
+						else								     chaos_symbol_pos.bot.plane
+					}
+	decide_chaos_symbol_bot_2:={
+						if is_phenomenon_2()					then chaos_symbol_pos.bot.phen
+						else if input !=""					then chaos_symbol_pos.bot.plane
+						else								     chaos_symbol_pos.bot.plane
+					}
+ decide_chaos_symbol_size:=[	height:{
+							if is_phenomenon() 				then 0
+							else if input != "" 			then 77 - sterilize_cd_input(input)
+							else				 			     chaos_symbol_pos.height
+						}, 
+						width: { 
+							decide_chaos_symbol_size.height(input)*1.085
+						}
+					]
+	decide_chaos_symbol_size_2:=[	height:{
+							if is_phenomenon_2() 				then 0
+							else if input != "" 			then 77 - sterilize_cd_input(input)
+							else				 			     chaos_symbol_pos.height
+						}, 
+						width: { 
+							decide_chaos_symbol_size_2.height(input)*1.085
+						}
+					]
+
+	chaos_text_h:=									    [phen:0, plane:42]
+chaos_text_pos:=		[right:500,	bot:347,	width:470,	height:chaos_text_h	]
+  decide_chaos_text_height:={
+						if is_phenomenon()					then chaos_text_pos.height.phen
+						else if input != ""					then 77 - sterilize_cd_input(input)
+						else								     chaos_text_pos.height.plane
+					}
+    decide_chaos_text_height_2:={
+						if is_phenomenon_2()					then chaos_text_pos.height.phen
+						else if input != ""					then 77 - sterilize_cd_input(input)
+						else								     chaos_text_pos.height.plane
+					}
+	decide_chaos_text_width  :={ chaos_text_pos.width - decide_chaos_symbol_size.width(input) }
+	decide_chaos_text_width_2:={ chaos_text_pos.width - decide_chaos_symbol_size_2.width(input) }
+
+
+illustrator_pos:=		[right:314,	top:354,	width:92,		height:7		]
+
+cr_w:=									[ye:130, no:0]
+cr_h:=												[ye:7, no:0]
+copyright_pos:=		[right:385,	top:364,	width:cr_w,	height:cr_h	]
+	decide_copyright_width:={	if true				 			then copyright_pos.width. ye 
+							else								     copyright_pos.width. no}
+	decide_copyright_height:={	if true				 			then copyright_pos.height.ye 
+							else								     copyright_pos.height.no}
+	
+sc_l:=				[cen:225, left:165]
+set_code_pos:=			[left:sc_l,	top:362,	width:34,		height:12		]
+	decide_set_code_left:={	if true							then set_code_pos.left.cen
+						else								     set_code_pos.left.left
+					}
+
+cc_l:=				[cen:222, left:161]
+card_code_pos:=		[left:cc_l,	top:362,	width:81,		height:12		]
+	decide_card_code_left:={	if true								then card_code_pos.left.cen
+						else									     card_code_pos.left.left
+					}
+
+artist_arrow_pos:=		[left:256,	top:356,	width:10,		height:6		]
+auto_copyright_pos:=	[right:385,	top:364,	width:130,	height:7		]
+
+
+
+
+
+
+
