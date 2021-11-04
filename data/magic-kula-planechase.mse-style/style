@@ -23,7 +23,7 @@ card dpi: 170
 ############################################################## Extra scripts
 init script:
 	# Use the normal tap symbol
-	mana_t := "new"
+	mana_t := {"new"}
 	guild_mana := { contains(card.type, match:"Ravnica") }
 
 	is_phenomenon	:=	{ contains(card.type, match:"Phenomenon") }
